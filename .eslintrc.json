@@ -1,0 +1,39 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:storybook/recommended",
+        "next/core-web-vitals",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
+        "prettier"
+    ],
+    "overrides": [
+        {
+            "files": ["*.stories.@(ts|tsx|js|jsx|mjs|cjs)"],
+            "rules": {
+                // example of overriding a rule
+                "storybook/hierarchy-separator": "error"
+            }
+        },
+        {
+            "files": ["*.js"],
+            "rules": {
+                "@typescript-eslint/no-var-requires": "off"
+            }
+        }
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["react", "@typescript-eslint", "prettier"],
+    "rules": { "react/react-in-jsx-scope": "off" }
+}
