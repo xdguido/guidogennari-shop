@@ -35,39 +35,37 @@ export default function Header() {
     return (
         <header
             className={clsx(
-                'fixed  w-full z-30 md:bg-opacity-90 transition duration-150 ease-in-out',
-                !top && 'bg-white backdrop-blur-sm shadow-lg'
+                'fixed  w-full z-30 md:bg-opacity-90 bg-base-100 transition duration-150 ease-in-out',
+                !top && ' backdrop-blur-sm shadow-lg'
             )}
         >
-            {/* <div className="relative max-w-6xl mx-auto px-5 sm:px-6 lg:px-8"> */}
             <div
                 className={clsx(
                     'relative flex flex-1 items-center justify-between',
                     'max-w-6xl h-16 mx-auto px-5 sm:px-6 lg:px-8'
                 )}
             >
-                {/* <div className="flex flex-1 items-center justify-between h-16"> */}
-                <div className="hidden sm:flex flex-shrink-0 items-center">
-                    <Logo />
-                </div>
                 <div className="hidden sm:flex items-center">
+                    <div className="hidden sm:flex flex-shrink-0 items-center">
+                        <Logo />
+                    </div>
                     {/* Large screen navigation */}
                     <nav className="sm:ml-6 flex items-center">
-                        <ul className="flex items-center gap-5">
+                        <ul className="flex items-center gap-1">
                             {mainNav.map((item) => (
                                 <li key={item.name}>
-                                    <Link
+                                    <Button
                                         href={item.href}
-                                        className="font-medium text-sm hover:text-blue-600"
+                                        className="btn-link btn-sm no-underline no-animation"
                                     >
                                         {item.name}
-                                    </Link>
+                                    </Button>
                                 </li>
                             ))}
                         </ul>
-                        <div className="flex justify-center items-center pl-5 ml-5 border-l border-l-slate-200">
+                        <div className="flex justify-center items-center pl-5 ml-5 border-l border-l-base-300">
                             <ThemeToggler />
-                            <Button>
+                            <Button className="btn-ghost btn-square">
                                 <FaGithub className="h-5 w-5" />
                             </Button>
                         </div>
@@ -77,9 +75,12 @@ export default function Header() {
                 <Menu as="div" className="relative sm:hidden">
                     {({ open }) => (
                         <>
-                            <div className="flex items-center sm:hidden">
+                            <div className="flex sm:hidden">
                                 {/* Mobile menu button */}
-                                <Menu.Button as={Button}>
+                                <Menu.Button
+                                    as={Button}
+                                    className="btn-ghost btn-square no-animation"
+                                >
                                     <span className="sr-only">Open main menu</span>
                                     {open ? (
                                         <XMarkIcon className="block h-7 w-7" aria-hidden="true" />
@@ -99,14 +100,17 @@ export default function Header() {
                             >
                                 <Menu.Items
                                     as="nav"
-                                    className="absolute right-0 top-[4rem] min-w-[16rem] bg-gray-50 font-semibold rounded-md shadow px-8 py-5"
+                                    className="absolute left-0 top-[4rem] min-w-[16rem] bg-base-100 font-semibold rounded-md shadow px-8 py-5"
                                 >
-                                    <div className="flex flex-col gap-5 pt-2 pb-4 mb-4 border-b border-b-gray-200">
+                                    <div className="flex flex-col gap-3 items-start pt-2 pb-4 mb-4 border-b border-b-base-300">
                                         {mainNav.map((item) => (
                                             <Menu.Item key={item.name}>
-                                                <Link href={item.href} className="w-full">
+                                                <Button
+                                                    href={item.href}
+                                                    className="btn-link btn-sm no-underline no-animation"
+                                                >
                                                     {item.name}
-                                                </Link>
+                                                </Button>
                                             </Menu.Item>
                                         ))}
                                     </div>
@@ -116,7 +120,7 @@ export default function Header() {
                                         </div>
                                         <div className="flex items-center">
                                             GitHub
-                                            <Button>
+                                            <Button className="btn-ghost btn-square">
                                                 <FaGithub className="h-5 w-5" />
                                             </Button>
                                         </div>
@@ -140,7 +144,10 @@ export default function Header() {
                         {/* Profile dropdown */}
                         <Menu as="div" className="relative ml-3">
                             <div>
-                                <Menu.Button className="">
+                                <Menu.Button
+                                    as={Button}
+                                    className="btn-ghost btn-circle no-animation"
+                                >
                                     <span className="sr-only">Open user menu</span>
                                     {/* <img
                                         className="h-8 w-8 rounded-full"
@@ -149,7 +156,6 @@ export default function Header() {
                                         alt={user.name}
                                     /> */}
                                     <Image
-                                        priority
                                         src="/images/profile.jpg"
                                         className="rounded-full"
                                         height={50}
@@ -167,26 +173,31 @@ export default function Header() {
                                 leaveFrom="transform opacity-100 scale-100"
                                 leaveTo="transform opacity-0 scale-95"
                             >
-                                <Menu.Items className="absolute right-0 z-10 mt-2 w-min-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                    <span className="block px-4 py-2 text-sm text-gray-400">
+                                <Menu.Items className="flex flex-col items-start w-56 absolute right-0 z-10 mt-2 w-min-48 origin-top-right rounded-md bg-base-100 p-3 shadow-lg ">
+                                    <span className=" text-sm align-middle text-base-content">
                                         {/* {user.email} */}
-                                        guidogennari95@gmail.com
+                                        asdasd@gmail.com
                                     </span>
+                                    <div className="divider my-1"></div>
                                     {profileNav.map((item) => (
-                                        <Menu.Item key={item.name}>
-                                            {({ active }) => <Button>{item.name}</Button>}
-                                        </Menu.Item>
+                                        <Button
+                                            key={item.name}
+                                            href={item.href}
+                                            className="mb-2 btn-link btn-sm no-underline no-animation"
+                                        >
+                                            {item.name}
+                                        </Button>
                                     ))}
-                                    <Menu.Item>
-                                        {({ active }) => <Button>Log out</Button>}
-                                    </Menu.Item>
+                                    <Button className="mt-2 btn-secondary btn-sm btn-block">
+                                        Log out
+                                    </Button>
                                 </Menu.Items>
                             </Transition>
                         </Menu>
                     </div>
                 ) : (
                     <>
-                        <Button>Log In</Button>
+                        <Button className="btn-outline">Log In</Button>
                         <Button>Sign Up</Button>
                     </>
                 )}
