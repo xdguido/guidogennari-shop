@@ -1,6 +1,5 @@
 import { useState, useEffect, Fragment } from 'react';
 import clsx from 'clsx';
-import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '@ui/Logo';
 import Button from '@ui/Button';
@@ -100,24 +99,31 @@ export default function Header() {
                             >
                                 <Menu.Items
                                     as="nav"
-                                    className="absolute left-0 top-[4rem] min-w-[16rem] bg-base-100 font-semibold rounded-md shadow px-8 py-5"
+                                    className="absolute left-0 top-[4rem] min-w-[16rem] bg-base-100 font-semibold rounded-md shadow-2xl px-8 py-5"
                                 >
-                                    <div className="flex flex-col gap-3 items-start pt-2 pb-4 mb-4 border-b border-b-base-300">
+                                    <div className="flex flex-col gap-3 items-start py-2">
                                         {mainNav.map((item) => (
                                             <Menu.Item key={item.name}>
-                                                <Button
-                                                    href={item.href}
-                                                    className="btn-link btn-sm no-underline no-animation"
-                                                >
-                                                    {item.name}
-                                                </Button>
+                                                {({ active }) => (
+                                                    <Button
+                                                        href={item.href}
+                                                        className={`${
+                                                            active ? 'bg-base-200' : ''
+                                                        } btn-link btn-sm no-underline no-animation`}
+                                                    >
+                                                        {item.name}
+                                                    </Button>
+                                                )}
                                             </Menu.Item>
                                         ))}
                                     </div>
+                                    <div className="divider"></div>
                                     <div className="flex flex-col gap-3">
-                                        <div className="flex items-center">
-                                            Change theme <ThemeToggler />
-                                        </div>
+                                        <Menu.Item>
+                                            <div className="flex items-center">
+                                                Change theme <ThemeToggler />
+                                            </div>
+                                        </Menu.Item>
                                         <div className="flex items-center">
                                             GitHub
                                             <Button className="btn-ghost btn-square">
@@ -132,7 +138,8 @@ export default function Header() {
                 </Menu>
                 {/* User navigation  */}
                 {true ? (
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <>
+                        {/* <div className="flex items-center justify-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"> */}
                         {/* <button
                             type="button"
                             className="rounded-full bg-slate-100 p-1 text-gray-600 "
@@ -140,30 +147,18 @@ export default function Header() {
                             <span className="sr-only">View notifications</span>
                             <BellIcon className="h-6 w-6" aria-hidden="true" />
                         </button> */}
-
                         {/* Profile dropdown */}
-                        <Menu as="div" className="relative ml-3">
-                            <div>
-                                <Menu.Button
-                                    as={Button}
-                                    className="btn-ghost btn-circle no-animation"
-                                >
-                                    <span className="sr-only">Open user menu</span>
-                                    {/* <img
-                                        className="h-8 w-8 rounded-full"
-                                        src={user.image_url || profilePicture}
-                                        referrerPolicy="no-referrer"
-                                        alt={user.name}
-                                    /> */}
-                                    <Image
-                                        src="/images/profile.jpg"
-                                        className="rounded-full"
-                                        height={50}
-                                        width={50}
-                                        alt="user pic"
-                                    />
-                                </Menu.Button>
-                            </div>
+                        <Menu as="div" className="relative flex">
+                            <Menu.Button as={Button} className="btn-ghost btn-circle no-animation">
+                                <span className="sr-only">Open user menu</span>
+                                <Image
+                                    src="/images/profile.jpg"
+                                    className="rounded-full"
+                                    height={50}
+                                    width={50}
+                                    alt="user pic"
+                                />
+                            </Menu.Button>
                             <Transition
                                 as={Fragment}
                                 enter="transition ease-out duration-100"
@@ -173,28 +168,45 @@ export default function Header() {
                                 leaveFrom="transform opacity-100 scale-100"
                                 leaveTo="transform opacity-0 scale-95"
                             >
-                                <Menu.Items className="flex flex-col items-start w-56 absolute right-0 z-10 mt-2 w-min-48 origin-top-right rounded-md bg-base-100 p-3 shadow-lg ">
-                                    <span className=" text-sm align-middle text-base-content">
+                                <Menu.Items
+                                    className="truncate w-56 absolute right-0 top-[4rem] z-10 rounded-md bg-base-100 p-3 shadow-2xl"
+                                    // className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none transform opacity-100 scale-100"
+                                >
+                                    <span className="text-sm text-base-content">
                                         {/* {user.email} */}
-                                        asdasd@gmail.com
+                                        dasdasdasdasddaasdsd@gmail.com
                                     </span>
-                                    <div className="divider my-1"></div>
+                                    <div className="divider"></div>
                                     {profileNav.map((item) => (
-                                        <Button
-                                            key={item.name}
-                                            href={item.href}
-                                            className="mb-2 btn-link btn-sm no-underline no-animation"
-                                        >
-                                            {item.name}
-                                        </Button>
+                                        <Menu.Item key={item.name}>
+                                            {({ active }) => (
+                                                <Button
+                                                    href={item.href}
+                                                    className={`${
+                                                        active ? 'bg-base-200' : ''
+                                                    } flex justify-start mb-2 btn-link btn-sm no-underline no-animation`}
+                                                >
+                                                    {item.name}
+                                                </Button>
+                                            )}
+                                        </Menu.Item>
                                     ))}
-                                    <Button className="mt-2 btn-secondary btn-sm btn-block">
-                                        Log out
-                                    </Button>
+                                    <Menu.Item>
+                                        {({ active }) => (
+                                            <Button
+                                                className={`${
+                                                    active ? 'ring ring-primary' : ''
+                                                } mt-2 btn-default btn-block btn-sm`}
+                                            >
+                                                Log out
+                                            </Button>
+                                        )}
+                                    </Menu.Item>
                                 </Menu.Items>
                             </Transition>
                         </Menu>
-                    </div>
+                        {/* </div> */}
+                    </>
                 ) : (
                     <>
                         <Button className="btn-outline">Log In</Button>
