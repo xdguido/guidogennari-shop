@@ -17,3 +17,30 @@ model User {
   email String @unique
   avatar String? 
 }
+
+model Product {
+  id Int @id @default(autoincrement()) 
+  createdAt DateTime @default(now())
+  internalId String? 
+  name String
+  description String?
+  price Float
+  visibility Boolean @default(true)
+  stock Boolean @default(true)
+  categories CategoriesOnProducts[]
+}
+
+model Category {
+  id Int @id @default(autoincrement()) 
+  name String @unique
+  products CategoriesOnProducts[]
+}
+
+model CategoriesOnProducts {
+  product       Product     @relation(fields: [productId], references: [id])
+  productId     Int // relation scalar field (used in the `@relation` attribute above)
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int // relation scalar field (used in the `@relation` attribute above)
+
+  @@id([productId, categoryId])
+} 
