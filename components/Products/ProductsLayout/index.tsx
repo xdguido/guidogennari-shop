@@ -14,7 +14,7 @@ export default function ProductsLayout({ children }: { children: React.ReactNode
         <>
             <div>
                 <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-baseline justify-between border-b border-base-content pt-12 pb-6">
+                    <div className="flex items-baseline justify-between border-b border-base-300 pt-12 pb-6">
                         <h1 className="text-4xl font-bold tracking-tight ">New Arrivals</h1>
 
                         <div className="flex items-center">
