@@ -13,7 +13,7 @@ export default function Header() {
             </p>
 
             <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="border-b border-base-content">
+                <div className="border-b border-base-300">
                     <div className="flex h-16 items-center">
                         {/* Mobile menu */}
                         <MobileMenu />
