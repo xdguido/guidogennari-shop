@@ -45,7 +45,7 @@ export default function MobileMenu() {
                                     <h2 className="text-lg font-medium ">Filters</h2>
                                     <button
                                         type="button"
-                                        className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md  p-2 text-base-300"
+                                        className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md  p-2 text-base-content"
                                         onClick={() => setMobileFiltersOpen(false)}
                                     >
                                         <span className="sr-only">Close menu</span>

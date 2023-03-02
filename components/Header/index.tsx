@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 import MobileMenu from './MobileMenu';
 import FlyoutMenu from './FlyoutMenu';
+import Logo from '@ui/Logo';
+import ThemeToggler from '@ui/ThemeToggler';
 
 export default function Header() {
     return (
@@ -11,23 +13,14 @@ export default function Header() {
             </p>
 
             <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="border-b border-base-200">
+                <div className="border-b border-base-content">
                     <div className="flex h-16 items-center">
                         {/* Mobile menu */}
                         <MobileMenu />
 
                         {/* Logo */}
                         <div className="ml-4 flex lg:ml-0">
-                            <a href="#">
-                                <span className="sr-only">Your Company</span>
-                                <Image
-                                    className="h-8 w-auto"
-                                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                    alt=""
-                                    width={100}
-                                    height={100}
-                                />
-                            </a>
+                            <Logo />
                         </div>
 
                         {/* Flyout menus */}
@@ -35,26 +28,16 @@ export default function Header() {
 
                         <div className="ml-auto flex items-center">
                             <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                <a
-                                    href="#"
-                                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                                >
+                                <a href="#" className="text-sm font-medium ">
                                     Sign in
                                 </a>
-                                <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                                <a
-                                    href="#"
-                                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                                >
+                                <a href="#" className="text-sm font-medium ">
                                     Create account
                                 </a>
                             </div>
 
                             <div className="hidden lg:ml-8 lg:flex">
-                                <a
-                                    href="#"
-                                    className="flex items-center text-gray-700 hover:text-gray-800"
-                                >
+                                <a href="#" className="flex items-center ">
                                     <Image
                                         src="https://tailwindui.com/img/flags/flag-canada.svg"
                                         alt=""
@@ -66,10 +49,13 @@ export default function Header() {
                                     <span className="sr-only">, change currency</span>
                                 </a>
                             </div>
+                            <div className="hidden lg:ml-8 lg:flex">
+                                <ThemeToggler />
+                            </div>
 
                             {/* Search */}
                             <div className="flex lg:ml-6">
-                                <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                                <a href="#" className="p-2 ">
                                     <span className="sr-only">Search</span>
                                     <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
                                 </a>
@@ -79,12 +65,10 @@ export default function Header() {
                             <div className="ml-4 flow-root lg:ml-6">
                                 <a href="#" className="group -m-2 flex items-center p-2">
                                     <ShoppingBagIcon
-                                        className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                        className="h-6 w-6 flex-shrink-0 "
                                         aria-hidden="true"
                                     />
-                                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                                        0
-                                    </span>
+                                    <span className="ml-2 text-sm font-medium ">0</span>
                                     <span className="sr-only">items in cart, view bag</span>
                                 </a>
                             </div>

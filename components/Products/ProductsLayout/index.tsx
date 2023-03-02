@@ -14,7 +14,7 @@ export default function ProductsLayout({ children }: { children: React.ReactNode
         <>
             <div>
                 <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-baseline justify-between border-b border-base-200 pt-12 pb-6">
+                    <div className="flex items-baseline justify-between border-b border-base-content pt-12 pb-6">
                         <h1 className="text-4xl font-bold tracking-tight ">New Arrivals</h1>
 
                         <div className="flex items-center">
@@ -23,7 +23,7 @@ export default function ProductsLayout({ children }: { children: React.ReactNode
                                     <Menu.Button className="group inline-flex justify-center text-sm font-medium ">
                                         Sort
                                         <ChevronDownIcon
-                                            className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-base-300 "
+                                            className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-base-content"
                                             aria-hidden="true"
                                         />
                                     </Menu.Button>
@@ -38,7 +38,7 @@ export default function ProductsLayout({ children }: { children: React.ReactNode
                                     leaveFrom="transform opacity-100 scale-100"
                                     leaveTo="transform opacity-0 scale-95"
                                 >
-                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-base-100 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-base-200 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <div className="py-1">
                                             {sortOptions.map((option) => (
                                                 <Menu.Item key={option.name}>
@@ -102,7 +102,7 @@ export default function ProductsLayout({ children }: { children: React.ReactNode
                                         {({ open }) => (
                                             <>
                                                 <h3 className="-my-3 flow-root">
-                                                    <Disclosure.Button className="flex w-full items-center justify-between bg-base-100 py-3 text-sm ">
+                                                    <Disclosure.Button className="flex w-full items-center justify-between bg-base-200 py-3 text-sm ">
                                                         <span className="font-medium ">
                                                             {section.name}
                                                         </span>
