@@ -8,6 +8,16 @@ const nextConfig = {
         locales: ['en', 'es'],
         defaultLocale: 'en',
         localeDetection: false
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'tailwindui.com',
+                port: '',
+                pathname: '/img/**'
+            }
+        ]
     }
 };
 

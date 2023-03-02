@@ -13,7 +13,7 @@ module.exports = {
                     secondary: '#6746ea',
                     accent: '#ffcfcc',
                     neutral: '#14161F',
-                    'base-100': '#e7e5e4',
+                    'base-100': '#f3f4f6',
                     info: '#94BFE6',
                     success: '#1C977A',
                     warning: '#F2BC07',
@@ -24,7 +24,7 @@ module.exports = {
                     secondary: '#6746ea',
                     accent: '#ffcfcc',
                     neutral: '#14161F',
-                    'base-100': '#382A47',
+                    'base-100': '#1f2937',
                     info: '#94BFE6',
                     success: '#1C977A',
                     warning: '#F2BC07',
@@ -33,5 +33,12 @@ module.exports = {
             }
         ]
     },
-    plugins: [require('daisyui')]
+    corePlugins: {
+        aspectRatio: false
+    },
+    plugins: [
+        require('daisyui'),
+        require('@tailwindcss/aspect-ratio'),
+        require('@tailwindcss/forms')
+    ]
 };
