@@ -5,26 +5,30 @@ type ErrorConfig = {
 
 export enum ErrorCode {
     // status 400-499
-    Unauthenticated = 'Unauthenticated',
-    Forbidden = 'Forbidden',
-    Duplicated = 'Duplicated',
-    UnverifiedAccount = 'UnverifiedAccount',
-    InvalidCredentials = 'InvalidCredentials',
-    InvalidInput = 'InvalidInput',
-    RequestLimit = 'RequestLimit',
-    NotFound = 'NotFound',
-    MethodNotAllowed = 'MethodNotAllowed',
+    InvalidInput = 'InvalidInput', // 400
+    InvalidFileFormat = 'InvalidFileFormat', // 400
+    InvalidCredentials = 'InvalidCredentials', // 401
+    Unauthenticated = 'Unauthenticated', // 401
+    UnverifiedAccount = 'UnverifiedAccount', // 401
+    Forbidden = 'Forbidden', // 403
+    NotFound = 'NotFound', // 404
+    MethodNotAllowed = 'MethodNotAllowed', // 405
+    Duplicated = 'Duplicated', // 409
+    RequestLimit = 'RequestLimit', // 429
 
     // status 500-599
-    UnknownError = 'UnknownError'
+    UnknownError = 'UnknownError', // 500
+    ServerError = 'ServerError', // 500
+    DatabaseError = 'DatabaseError', // 500
+    NetworkError = 'NetworkError' // 500
 }
 
 const errorConfigMap: Record<ErrorCode, ErrorConfig> = {
-    [ErrorCode.InvalidCredentials]: {
+    [ErrorCode.InvalidFileFormat]: {
         status: 400,
         clientString: {
-            en: 'Invalid credentials',
-            es: 'Credenciales inválidas'
+            en: 'Invalid file format',
+            es: 'Formato de archivo inválido'
         }
     },
     [ErrorCode.InvalidInput]: {
@@ -34,60 +38,88 @@ const errorConfigMap: Record<ErrorCode, ErrorConfig> = {
             es: 'Entrada inválida'
         }
     },
-    [ErrorCode.Duplicated]: {
-        status: 400,
-        clientString: {
-            en: 'Duplicated content',
-            es: 'Contenido duplicado'
-        }
-    },
     [ErrorCode.Unauthenticated]: {
         status: 401,
         clientString: {
-            en: 'Unauthenticated, login required',
-            es: 'No autenticado, accesso requerido'
+            en: 'User is not authenticated',
+            es: 'El usuario no está autenticado'
+        }
+    },
+    [ErrorCode.InvalidCredentials]: {
+        status: 401,
+        clientString: {
+            en: 'Invalid credentials',
+            es: 'Credenciales inválidas'
         }
     },
     [ErrorCode.UnverifiedAccount]: {
         status: 401,
         clientString: {
-            en: 'Unverified account',
-            es: 'Cuenta no verificada'
+            en: 'User account is not verified',
+            es: 'La cuenta de usuario no está verificada'
         }
     },
     [ErrorCode.Forbidden]: {
         status: 403,
         clientString: {
-            en: 'Access denied',
-            es: 'Accesso no permitido'
+            en: 'User does not have permission to access this resource',
+            es: 'El usuario no tiene permiso para acceder a este recurso'
+        }
+    },
+    [ErrorCode.Duplicated]: {
+        status: 409,
+        clientString: {
+            en: 'Duplicated content',
+            es: 'Contenido duplicado'
+        }
+    },
+    [ErrorCode.RequestLimit]: {
+        status: 429,
+        clientString: {
+            en: 'Request limit exceeded',
+            es: 'Límite de solicitudes excedido'
         }
     },
     [ErrorCode.NotFound]: {
         status: 404,
         clientString: {
-            en: 'Content not found',
-            es: 'Contenido no encontrado'
+            en: 'Resource not found',
+            es: 'Recurso no encontrado'
         }
     },
     [ErrorCode.MethodNotAllowed]: {
         status: 405,
         clientString: {
             en: 'Method not allowed',
-            es: 'Metodo no permitido'
-        }
-    },
-    [ErrorCode.RequestLimit]: {
-        status: 429,
-        clientString: {
-            en: 'Request limit exceeded, try again later',
-            es: 'Límite de solicitudes excedido, intenta mas tarde'
+            es: 'Método no permitido'
         }
     },
     [ErrorCode.UnknownError]: {
         status: 500,
         clientString: {
-            en: 'Something went wrong',
-            es: 'Algo salio mal'
+            en: 'Unknown error occurred',
+            es: 'Ocurrió un error desconocido'
+        }
+    },
+    [ErrorCode.ServerError]: {
+        status: 500,
+        clientString: {
+            en: 'Server error occurred',
+            es: 'Ocurrió un error en el servidor'
+        }
+    },
+    [ErrorCode.DatabaseError]: {
+        status: 500,
+        clientString: {
+            en: 'Database error occurred',
+            es: 'Ocurrió un error en la base de datos'
+        }
+    },
+    [ErrorCode.NetworkError]: {
+        status: 500,
+        clientString: {
+            en: 'Network error occurred',
+            es: 'Ocurrió un error de red'
         }
     }
 };
