@@ -16,7 +16,7 @@
         "jsx": "preserve",
         "paths": {
             "@ui/*": ["./components/ui/*"],
-            "@interfaces": ["./interfaces/index"],
+            "@types": ["./types/index"],
             "@lib/*": ["./lib/*"]
         }
     },

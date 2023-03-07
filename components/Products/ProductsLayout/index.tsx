@@ -1,15 +1,26 @@
-import MobileMenu from './MobileMenu';
-import { Fragment } from 'react';
+import type { Product } from '@prisma/client';
+import { Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
+import useSwr from 'swr';
+import fetcher from '@lib/fetcher';
 
+import { SortOption } from '@types';
+import MobileMenu from './MobileMenu';
+import ProductsList from './ProductsList';
 import { sortOptions, subCategories, filters } from './filters';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
-export default function ProductsLayout({ children }: { children: React.ReactNode }) {
+export default function ProductsLayout() {
+    const [sort, setSort] = useState(SortOption.CreatedAtDesc);
+    const {
+        data: products,
+        error,
+        isLoading
+    } = useSwr<Product[]>(`/api/products?sort=${sort}`, fetcher);
     return (
         <>
             <div>
@@ -39,22 +50,22 @@ export default function ProductsLayout({ children }: { children: React.ReactNode
                                     leaveTo="transform opacity-0 scale-95"
                                 >
                                     <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-base-200 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                        <div className="py-1">
+                                        <div className="flex flex-col py-1">
                                             {sortOptions.map((option) => (
                                                 <Menu.Item key={option.name}>
                                                     {({ active }) => (
-                                                        <a
-                                                            href={option.href}
+                                                        <button
+                                                            onClick={() => setSort(option.value)}
                                                             className={classNames(
-                                                                option.current
+                                                                option.value === sort
                                                                     ? 'font-medium'
                                                                     : 'text-base-content',
-                                                                active ? 'bg-base-200' : '',
-                                                                'block px-4 py-2 text-sm'
+                                                                active ? 'bg-base-300' : '',
+                                                                'block px-4 py-2 text-sm text-left'
                                                             )}
                                                         >
                                                             {option.name}
-                                                        </a>
+                                                        </button>
                                                     )}
                                                 </Menu.Item>
                                             ))}
@@ -157,7 +168,13 @@ export default function ProductsLayout({ children }: { children: React.ReactNode
                             </form>
 
                             {/* Product grid */}
-                            <div className="lg:col-span-3">{children}</div>
+                            <div className="lg:col-span-3">
+                                <ProductsList
+                                    products={products}
+                                    error={error}
+                                    isLoading={isLoading}
+                                />
+                            </div>
                         </div>
                     </section>
                 </main>

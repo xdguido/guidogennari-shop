@@ -1,9 +1,10 @@
+import { SortOption } from '@types';
+
 export const sortOptions = [
-    { name: 'Most Popular', href: '#', current: true },
-    { name: 'Best Rating', href: '#', current: false },
-    { name: 'Newest', href: '#', current: false },
-    { name: 'Price: Low to High', href: '#', current: false },
-    { name: 'Price: High to Low', href: '#', current: false }
+    // { name: 'Most Popular' },
+    { name: 'Newest', value: SortOption.CreatedAtDesc },
+    { name: 'Price: Low to High', value: SortOption.PriceAsc },
+    { name: 'Price: High to Low', value: SortOption.PriceDesc }
 ];
 export const subCategories = [
     { name: 'Totes', href: '#' },

@@ -24,6 +24,7 @@ model Product {
   internalId String? 
   name String
   description String?
+  imageSrc String?
   price Float
   visibility Boolean @default(true)
   stock Boolean @default(true)

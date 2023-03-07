@@ -17,18 +17,18 @@ export default function App({ Component, pageProps }: AppProps) {
                 value={{
                     errorRetryCount: 0,
                     onError: (error, key) => {
-                        // switch (locale) {
-                        //     case 'es':
-                        //         if (navigator.onLine) {
-                        //             return toast.error(error.clientString.es);
-                        //         }
-                        //         return toast.error('Sin conexion de internet');
-                        //     default:
-                        //         if (navigator.onLine) {
-                        //             return toast.error(error.clientString.en);
-                        //         }
-                        //         return toast.error('No internet connection');
-                        // }
+                        switch (locale) {
+                            case 'es':
+                                if (navigator.onLine) {
+                                    return toast.error(error.clientString.es);
+                                }
+                                return toast.error('Sin conexion de internet');
+                            default:
+                                if (navigator.onLine) {
+                                    return toast.error(error.clientString.en);
+                                }
+                                return toast.error('No internet connection');
+                        }
                     }
                 }}
             >

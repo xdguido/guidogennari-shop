@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 const products = Array.from({ length: 100 }).map(() => ({
-    name: faker.commerce.product(),
+    name: `Product ${faker.random.numeric(6)}`,
     price: faker.datatype.float({ min: 1000, max: 9999, precision: 0.01 })
 }));
 
