@@ -3,7 +3,7 @@
     "author": "Guido Gennari",
     "private": true,
     "scripts": {
-        "dev": "concurrently --kill-others \"cross-env NODE_OPTIONS='--inspect' next dev\" \"prisma db push && prisma generate --watch prisma/schema.prisma\" \"prisma studio\"",
+        "dev": "concurrently --kill-others \"cross-env NODE_OPTIONS='--inspect' next dev\" \"prisma db push --watch & prisma generate --watch prisma/schema.prisma\" \"prisma studio\"",
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
