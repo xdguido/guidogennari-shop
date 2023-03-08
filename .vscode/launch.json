@@ -23,6 +23,13 @@
                 "uriFormat": "%s",
                 "action": "debugWithChrome"
             }
+        },
+        {
+            "name": "Attach",
+            "port": 9229,
+            "request": "attach",
+            "skipFiles": ["<node_internals>/**"],
+            "type": "node"
         }
     ],
     "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"]
