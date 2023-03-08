@@ -33,11 +33,12 @@ export default function ProductsLayout() {
     useEffect(() => {
         setCurrentPageIndex(1);
     }, [sort]);
+
     return (
         <>
             <div>
                 <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-baseline justify-between border-b border-base-300 pt-12 pb-6">
+                    <div className="flex items-baseline justify-between border-b border-base-300 pt-10 pb-6">
                         <h1 className="text-4xl font-bold tracking-tight ">New Arrivals</h1>
 
                         <div className="flex items-center">
@@ -181,6 +182,12 @@ export default function ProductsLayout() {
 
                             {/* Product grid */}
                             <div className="lg:col-span-3">
+                                <PaginationButtons
+                                    currentPageIndex={currentPageIndex}
+                                    setCurrentPageIndex={setCurrentPageIndex}
+                                    maxPageIndex={maxPageIndex}
+                                    isTop
+                                />
                                 <ProductsList
                                     products={products}
                                     error={error}
