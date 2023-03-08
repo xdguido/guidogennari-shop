@@ -6,8 +6,7 @@ export function errorHandler(err: Exception | Error, _: NextApiRequest, res: Nex
         return res.status(err.status).send(err);
     }
     console.error(err);
-    const errCause = err.toString();
-    const unknownErr = new Exception(ErrorCode.UnknownError, errCause);
+    const unknownErr = new Exception(ErrorCode.UnknownError, err.stack);
     return res.status(500).send(unknownErr);
 }
 
