@@ -126,7 +126,7 @@ export default function ProductsLayout() {
                                         {({ open }) => (
                                             <>
                                                 <h3 className="-my-3 flow-root">
-                                                    <Disclosure.Button className="flex w-full items-center justify-between bg-base-200 py-3 text-sm ">
+                                                    <Disclosure.Button className="flex w-full items-center justify-between bg-base-100 py-3 text-sm ">
                                                         <span className="font-medium ">
                                                             {section.name}
                                                         </span>
