@@ -1,5 +1,5 @@
 import type { Product } from '@prisma/client';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
 import useSwr from 'swr';
@@ -30,6 +30,9 @@ export default function ProductsLayout() {
     );
     const { data: productsLength } = useSwr(`/api/products/length`, fetcher);
     const maxPageIndex = Math.ceil(Number(productsLength) / size);
+    useEffect(() => {
+        setCurrentPageIndex(1);
+    }, [sort]);
     return (
         <>
             <div>
