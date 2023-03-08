@@ -8,6 +8,8 @@ import fetcher from '@lib/fetcher';
 import { SortOption } from '@types';
 import MobileMenu from './MobileMenu';
 import ProductsList from './ProductsList';
+import PaginationButtons from './PaginationButtons';
+
 import { sortOptions, subCategories, filters } from './filters';
 
 function classNames(...classes) {
@@ -16,11 +18,18 @@ function classNames(...classes) {
 
 export default function ProductsLayout() {
     const [sort, setSort] = useState(SortOption.CreatedAtDesc);
+    const [currentPageIndex, setCurrentPageIndex] = useState(1);
+    const [size, setSize] = useState(16);
     const {
         data: products,
         error,
         isLoading
-    } = useSwr<Product[]>(`/api/products?sort=${sort}`, fetcher);
+    } = useSwr<Product[]>(
+        `/api/products?sort=${sort}&pageIndex=${currentPageIndex}&size=${size}`,
+        fetcher
+    );
+    const { data: productsLength } = useSwr(`/api/products/length`, fetcher);
+    const maxPageIndex = Math.round(Number(productsLength) / size);
     return (
         <>
             <div>
@@ -173,6 +182,11 @@ export default function ProductsLayout() {
                                     products={products}
                                     error={error}
                                     isLoading={isLoading}
+                                />
+                                <PaginationButtons
+                                    currentPageIndex={currentPageIndex}
+                                    setCurrentPageIndex={setCurrentPageIndex}
+                                    maxPageIndex={maxPageIndex}
                                 />
                             </div>
                         </div>

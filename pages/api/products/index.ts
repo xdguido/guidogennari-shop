@@ -8,13 +8,18 @@ import { SortOption } from '@types';
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
 const prisma = new PrismaClient();
+
 router.get(async (req, res) => {
-    const { sort }: { sort?: SortOption } = req.query;
     try {
+        const { sort, pageIndex, size } = req.query;
+        const takeNumber = Number(size);
+        const skipNumber = (Number(pageIndex) - 1) * takeNumber;
         let products: Product[] = [];
         switch (sort) {
             case SortOption.PriceAsc:
                 products = await prisma.product.findMany({
+                    skip: skipNumber,
+                    take: takeNumber,
                     orderBy: {
                         price: 'asc'
                     }
@@ -22,6 +27,8 @@ router.get(async (req, res) => {
                 break;
             case SortOption.PriceDesc:
                 products = await prisma.product.findMany({
+                    skip: skipNumber,
+                    take: takeNumber,
                     orderBy: {
                         price: 'desc'
                     }
@@ -29,6 +36,8 @@ router.get(async (req, res) => {
                 break;
             case SortOption.CreatedAtDesc:
                 products = await prisma.product.findMany({
+                    skip: skipNumber,
+                    take: takeNumber,
                     orderBy: {
                         createdAt: 'desc'
                     }
@@ -36,6 +45,8 @@ router.get(async (req, res) => {
                 break;
             default:
                 products = await prisma.product.findMany({
+                    skip: skipNumber,
+                    take: takeNumber,
                     orderBy: {
                         createdAt: 'desc'
                     }
