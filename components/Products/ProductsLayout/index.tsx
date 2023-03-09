@@ -2,7 +2,7 @@ import type { Product } from '@prisma/client';
 import { Fragment, useState, useEffect } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
-import useSwr from 'swr';
+import useSwr, { preload } from 'swr';
 import fetcher from '@lib/fetcher';
 
 import { SortOption } from '@types';
@@ -30,6 +30,14 @@ export default function ProductsLayout() {
     );
     const { data: productsLength } = useSwr(`/api/products/length`, fetcher);
     const maxPageIndex = Math.ceil(Number(productsLength) / size);
+    function runPreload() {
+        if (currentPageIndex < maxPageIndex) {
+            preload(
+                `/api/products?sort=${sort}&pageIndex=${currentPageIndex + 1}&size=${size}`,
+                fetcher
+            );
+        }
+    }
     useEffect(() => {
         setCurrentPageIndex(1);
     }, [sort]);
@@ -187,6 +195,7 @@ export default function ProductsLayout() {
                                     setCurrentPageIndex={setCurrentPageIndex}
                                     maxPageIndex={maxPageIndex}
                                     isTop
+                                    runPreload={runPreload}
                                 />
                                 <ProductsList
                                     products={products}
@@ -197,6 +206,7 @@ export default function ProductsLayout() {
                                     currentPageIndex={currentPageIndex}
                                     setCurrentPageIndex={setCurrentPageIndex}
                                     maxPageIndex={maxPageIndex}
+                                    runPreload={runPreload}
                                 />
                             </div>
                         </div>

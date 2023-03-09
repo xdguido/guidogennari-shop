@@ -2,6 +2,7 @@ import clsx from 'clsx';
 type Props = {
     currentPageIndex: number;
     setCurrentPageIndex: (n: number) => void;
+    runPreload?: () => void;
     maxPageIndex: number;
     isTop?: boolean;
 };
@@ -9,7 +10,8 @@ export default function PaginationButtons({
     currentPageIndex,
     setCurrentPageIndex,
     maxPageIndex,
-    isTop = false
+    isTop = false,
+    runPreload
 }: Props) {
     const isBrowser = () => typeof window !== 'undefined';
     function scrollToTop() {
@@ -51,6 +53,7 @@ export default function PaginationButtons({
                             setCurrentPageIndex(currentPageIndex + 1);
                             isTop ? null : scrollToTop();
                         }}
+                        onMouseOver={() => runPreload()}
                         className="relative ml-3 inline-flex items-center rounded-md border border-base-300  px-4 py-2 text-sm font-medium bg-base-100 enabled:hover:bg-base-200 disabled:text-base-300"
                         disabled={currentPageIndex === maxPageIndex}
                     >
