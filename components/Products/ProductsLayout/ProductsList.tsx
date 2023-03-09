@@ -61,7 +61,7 @@ export default function ProductsList({ products, error, isLoading }: Props) {
                                 )}
                             </div>
                             <h3 className="mt-4 text-sm ">{product.name}</h3>
-                            <p className="mt-1 text-lg font-medium ">{product.price}</p>
+                            <p className="mt-1 text-lg font-medium ">$ {product.price}</p>
                         </Link>
                     ))}
                 </div>
