@@ -29,7 +29,7 @@ export default function ProductsLayout() {
         fetcher
     );
     const { data: productsLength } = useSwr(`/api/products/length`, fetcher);
-    const maxPageIndex = Math.ceil(Number(productsLength) / size);
+    const maxPageIndex = productsLength ? Math.ceil(Number(productsLength) / size) : 1;
     function runPreload() {
         if (currentPageIndex < maxPageIndex) {
             preload(
