@@ -20,14 +20,20 @@ export default function ProductsLayout({ children, sort, setSort }: Props) {
 
                         <div className="flex items-center">
                             <Menu as="div" className="relative inline-block text-left">
-                                <div>
-                                    <Menu.Button className="group inline-flex justify-center text-sm font-medium">
-                                        Sort
+                                <div className="inline-flex justify-center text-sm">
+                                    <span
+                                        className="hidden sm:block font-medium"
+                                        aria-hidden="true"
+                                    >
+                                        Sort by
+                                    </span>
+                                    <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm">
+                                        <span className="sr-only">Sort by</span>
+                                        {sort}
                                         <ChevronDownIcon
                                             className="ml-1 h-5 w-5 flex-shrink-0 text-base-content"
                                             aria-hidden="true"
                                         />
-                                        <span className="ml-2 font-normal">{sort}</span>
                                     </Menu.Button>
                                 </div>
 
