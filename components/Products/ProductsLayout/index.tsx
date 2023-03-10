@@ -1,47 +1,18 @@
-import type { Product } from '@prisma/client';
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
-import useSwr, { preload } from 'swr';
-import fetcher from '@lib/fetcher';
 
 import { SortOption } from '@types';
 import MobileMenu from './MobileMenu';
-import ProductsList from './ProductsList';
-import PaginationButtons from './PaginationButtons';
 
 import { sortOptions, subCategories, filters } from './filters';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
+type Props = { children: React.ReactNode; sort: SortOption; setSort: (value: SortOption) => void };
 
-export default function ProductsLayout() {
-    const [sort, setSort] = useState(SortOption.CreatedAtDesc);
-    const [currentPageIndex, setCurrentPageIndex] = useState(1);
-    const [size, setSize] = useState(16);
-    const {
-        data: products,
-        error,
-        isLoading
-    } = useSwr<Product[]>(
-        `/api/products?sort=${sort}&pageIndex=${currentPageIndex}&size=${size}`,
-        fetcher
-    );
-    const { data: productsLength } = useSwr(`/api/products/length`, fetcher);
-    const maxPageIndex = productsLength ? Math.ceil(Number(productsLength) / size) : 1;
-    function runPreload() {
-        if (currentPageIndex < maxPageIndex) {
-            preload(
-                `/api/products?sort=${sort}&pageIndex=${currentPageIndex + 1}&size=${size}`,
-                fetcher
-            );
-        }
-    }
-    useEffect(() => {
-        setCurrentPageIndex(1);
-    }, [sort]);
-
+export default function ProductsLayout({ children, sort, setSort }: Props) {
     return (
         <>
             <div>
@@ -187,28 +158,8 @@ export default function ProductsLayout() {
                                     </Disclosure>
                                 ))}
                             </form>
-
                             {/* Product grid */}
-                            <div className="lg:col-span-3">
-                                <PaginationButtons
-                                    currentPageIndex={currentPageIndex}
-                                    setCurrentPageIndex={setCurrentPageIndex}
-                                    maxPageIndex={maxPageIndex}
-                                    isTop
-                                    runPreload={runPreload}
-                                />
-                                <ProductsList
-                                    products={products}
-                                    error={error}
-                                    isLoading={isLoading}
-                                />
-                                <PaginationButtons
-                                    currentPageIndex={currentPageIndex}
-                                    setCurrentPageIndex={setCurrentPageIndex}
-                                    maxPageIndex={maxPageIndex}
-                                    runPreload={runPreload}
-                                />
-                            </div>
+                            <div className="lg:col-span-3">{children}</div>
                         </div>
                     </section>
                 </main>

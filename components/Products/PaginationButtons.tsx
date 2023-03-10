@@ -10,8 +10,7 @@ export default function PaginationButtons({
     currentPageIndex,
     setCurrentPageIndex,
     maxPageIndex,
-    isTop = false,
-    runPreload
+    isTop = false
 }: Props) {
     const isBrowser = () => typeof window !== 'undefined';
     function scrollToTop() {
@@ -53,7 +52,7 @@ export default function PaginationButtons({
                             setCurrentPageIndex(currentPageIndex + 1);
                             isTop ? null : scrollToTop();
                         }}
-                        onMouseOver={() => runPreload()}
+                        // onMouseEnter={() => runPreload()}
                         className="relative ml-3 inline-flex items-center rounded-md border border-base-300  px-4 py-2 text-sm font-medium bg-base-100 enabled:hover:bg-base-200 disabled:text-base-300"
                         disabled={currentPageIndex === maxPageIndex}
                     >

@@ -12,8 +12,19 @@ type Props = {
 };
 export default function ProductsList({ products, error, isLoading }: Props) {
     const displayProducts = products ? products : fakeProducts;
+    if (products?.length == 0) {
+        return (
+            <div className="bg-base-100 mx-auto max-w-2xl p-4 sm:p-6 lg:max-w-7xl lg:p-8">
+                No products to display
+            </div>
+        );
+    }
     if (error) {
-        return <div>error</div>;
+        return (
+            <div className="bg-base-100 mx-auto max-w-2xl p-4 sm:p-6 lg:max-w-7xl lg:p-8">
+                error
+            </div>
+        );
     }
     if (isLoading) {
         return (
