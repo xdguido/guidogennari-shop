@@ -1,15 +1,13 @@
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
+import clsx from 'clsx';
 
 import { SortOption } from '@types';
 import MobileMenu from './MobileMenu';
 
-import { sortOptions, subCategories, filters } from './filters';
+import { subCategories, filters } from './filters';
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ');
-}
 type Props = { children: React.ReactNode; sort: SortOption; setSort: (value: SortOption) => void };
 
 export default function ProductsLayout({ children, sort, setSort }: Props) {
@@ -23,12 +21,13 @@ export default function ProductsLayout({ children, sort, setSort }: Props) {
                         <div className="flex items-center">
                             <Menu as="div" className="relative inline-block text-left">
                                 <div>
-                                    <Menu.Button className="group inline-flex justify-center text-sm font-medium ">
+                                    <Menu.Button className="group inline-flex justify-center text-sm font-medium">
                                         Sort
                                         <ChevronDownIcon
-                                            className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-base-content"
+                                            className="ml-1 h-5 w-5 flex-shrink-0 text-base-content"
                                             aria-hidden="true"
                                         />
+                                        <span className="ml-2 font-normal">{sort}</span>
                                     </Menu.Button>
                                 </div>
 
@@ -41,22 +40,24 @@ export default function ProductsLayout({ children, sort, setSort }: Props) {
                                     leaveFrom="transform opacity-100 scale-100"
                                     leaveTo="transform opacity-0 scale-95"
                                 >
-                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-base-200 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-base-100 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <div className="flex flex-col py-1">
-                                            {sortOptions.map((option) => (
-                                                <Menu.Item key={option.name}>
+                                            {Object.keys(SortOption).map((sortKey: string) => (
+                                                <Menu.Item key={sortKey}>
                                                     {({ active }) => (
                                                         <button
-                                                            onClick={() => setSort(option.value)}
-                                                            className={classNames(
-                                                                option.value === sort
+                                                            onClick={() =>
+                                                                setSort(SortOption[sortKey])
+                                                            }
+                                                            className={clsx(
+                                                                SortOption[sortKey] === sort
                                                                     ? 'font-medium'
                                                                     : 'text-base-content',
                                                                 active ? 'bg-base-300' : '',
                                                                 'block px-4 py-2 text-sm text-left'
                                                             )}
                                                         >
-                                                            {option.name}
+                                                            {SortOption[sortKey]}
                                                         </button>
                                                     )}
                                                 </Menu.Item>

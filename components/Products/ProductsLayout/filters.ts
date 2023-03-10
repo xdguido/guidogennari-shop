@@ -1,11 +1,3 @@
-import { SortOption } from '@types';
-
-export const sortOptions = [
-    // { name: 'Most Popular' },
-    { name: 'Newest', value: SortOption.CreatedAtDesc },
-    { name: 'Price: Low to High', value: SortOption.PriceAsc },
-    { name: 'Price: High to Low', value: SortOption.PriceDesc }
-];
 export const subCategories = [
     { name: 'Totes', href: '#' },
     { name: 'Backpacks', href: '#' },
