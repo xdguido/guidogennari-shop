@@ -7,13 +7,13 @@ export default function Footer() {
     return (
         <footer className="bg-base-100 text-center text-base-content  lg:text-left">
             <div className="flex gap-3 items-center justify-end border-b-2 border-base-200 p-6">
-                <Button href="#!" className="btn-circle btn-sm md:btn-md btn-base-200 ">
+                <Button href="#!" className="btn-circle btn-sm md:btn-md btn-ghost ">
                     <FaFacebook className="h-5 w-5" />
                 </Button>
-                <Button href="#!" className="btn-circle btn-sm md:btn-md btn-base-200 ">
+                <Button href="#!" className="btn-circle btn-sm md:btn-md btn-ghost ">
                     <FaTwitter className="h-5 w-5" />
                 </Button>
-                <Button href="#!" className="btn-circle btn-sm md:btn-md btn-base-200 ">
+                <Button href="#!" className="btn-circle btn-sm md:btn-md btn-ghost ">
                     <FaInstagram className="h-5 w-5" />
                 </Button>
             </div>
@@ -26,70 +26,67 @@ export default function Footer() {
                             ipsum dolor sit amet, consectetur adipisicing elit.
                         </p>
                     </div>
-                    <div></div>
-                    <div className="flex flex-col items-center md:items-start">
-                        <h6 className="mb-3 flex justify-center font-semibold uppercase md:justify-start">
+                    <div className="flex flex-col gap-3 lg:col-start-3 items-center md:items-start">
+                        <h6 className=" flex justify-center font-semibold uppercase md:justify-start">
                             Products
                         </h6>
-                        <div className="flex items-center mb-3">
+                        <div className="flex items-center ">
                             <ArrowUpRightIcon className="h-4 w-4" />
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Clothing
                             </Button>
                         </div>
-                        <div className="flex items-center mb-3">
+                        <div className="flex items-center ">
                             <ArrowUpRightIcon className="h-4 w-4" />
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Accessories
                             </Button>
                         </div>
-                        <div className="flex items-center mb-3">
+                        <div className="flex items-center ">
                             <ArrowUpRightIcon className="h-4 w-4" />
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Brands
                             </Button>
                         </div>
                     </div>
-                    <div className="flex flex-col items-center md:items-start">
-                        <h6 className="mb-3 flex justify-center font-semibold uppercase md:justify-start">
+                    <div className="flex flex-col gap-3  lg:col-start-4 items-center md:items-start">
+                        <h6 className=" flex justify-center font-semibold uppercase md:justify-start">
                             Useful links
                         </h6>
-                        <div className="flex items-center mb-3">
+                        <div className="flex items-center ">
                             <ArrowUpRightIcon className="h-4 w-4" />
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Frequent questions
                             </Button>
                         </div>
-                        <div className="flex items-center mb-3">
+                        <div className="flex items-center ">
                             <ArrowUpRightIcon className="h-4 w-4" />
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Settings
                             </Button>
                         </div>
-                        <div className="flex items-center mb-3">
+                        <div className="flex items-center ">
                             <ArrowUpRightIcon className="h-4 w-4" />
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Orders
                             </Button>
                         </div>
-                        <div className="flex items-center mb-3">
+                        <div className="flex items-center ">
                             <ArrowUpRightIcon className="h-4 w-4" />
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Help
                             </Button>
                         </div>
                     </div>
-                    <div>
-                        <h6 className="mb-3 flex justify-center font-semibold uppercase md:justify-start">
-                            Contact
-                        </h6>
-                        <div className="mb-3 flex items-center justify-center md:justify-start">
+                    <div className="flex flex-col gap-3  lg:col-start-5 items-center md:items-start">
+                        <h6 className=" font-semibold uppercase md:justify-start">Contact</h6>
+                        <div className=" flex items-center justify-center md:justify-start">
                             <MapPinIcon className="h-5 w-5" />
                             <Button className="btn-link btn-sm normal-case no-underline text-base-content">
                                 Neuquen Capital, Argentina
                             </Button>
                         </div>
-                        <div className="mb-3 flex items-center justify-center md:justify-start">
+                        <div className=" flex items-center justify-center md:justify-start">
                             <EnvelopeIcon className="h-5 w-5" />
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 info@example.com
