@@ -11,7 +11,7 @@ import PaginationButtons from './PaginationButtons';
 export default function Products() {
     const [sort, setSort] = useState(SortOption.CreatedAtDesc);
     const [currentPageIndex, setCurrentPageIndex] = useState(1);
-    const [size, setSize] = useState(16);
+    const [size, setSize] = useState(15);
     const {
         data: products,
         error,
