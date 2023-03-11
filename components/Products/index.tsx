@@ -21,7 +21,7 @@ export default function Products() {
         fetcher
     );
     const { data: productsLength } = useSwr(`/api/products/length`, fetcher);
-    const maxPageIndex = productsLength ? Math.ceil(Number(productsLength) / size) : 1;
+    const maxPageIndex = productsLength ? Math.ceil(productsLength / size) : currentPageIndex;
     useEffect(() => {
         setCurrentPageIndex(1);
     }, [sort]);
