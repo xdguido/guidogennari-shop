@@ -26,6 +26,7 @@ export default function Footer() {
                             ipsum dolor sit amet, consectetur adipisicing elit.
                         </p>
                     </div>
+                    <div></div>
                     <div className="flex flex-col items-center md:items-start">
                         <h6 className="mb-3 flex justify-center font-semibold uppercase md:justify-start">
                             Products
