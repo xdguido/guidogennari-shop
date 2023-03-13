@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
