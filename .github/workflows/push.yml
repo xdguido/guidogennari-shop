@@ -10,11 +10,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Check for changes
               id: changes
               run: |
-                  CHANGED_FILES=$(git diff HEAD^ --name-only)
+                  CHANGED_FILES=$(git diff HEAD~1 --name-only)
                   echo ::set-output name=changes::$CHANGED_FILES
     prisma_migrate:
         needs: check_changes
@@ -22,7 +22,7 @@ jobs:
         if: contains(github.event.changes, 'prisma/schema.prisma')
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Install Prisma
               run: npm install prisma -D
             - name: Deploy migrations
