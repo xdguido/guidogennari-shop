@@ -1,4 +1,4 @@
-name: Deployment workflow
+name: Prod deployment workflow
 
 on:
     push:
@@ -6,20 +6,8 @@ on:
             - master
 
 jobs:
-    check_changes:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
-            - name: Check for changes
-              id: changes
-              run: |
-                  CHANGED_FILES=$(git diff --name-only $(git merge-base HEAD $(git rev-parse --symbolic-full-name --abbrev-ref @{u})) HEAD)
-                  echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_OUTPUT
     prisma_migrate:
-        needs: check_changes
         runs-on: ubuntu-latest
-        if: contains(github.event.changes, 'prisma/schema.prisma')
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
