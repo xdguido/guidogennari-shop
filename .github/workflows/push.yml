@@ -15,7 +15,7 @@ jobs:
               id: changes
               run: |
                   CHANGED_FILES=$(git diff --name-only $(git merge-base HEAD $(git rev-parse --symbolic-full-name --abbrev-ref @{u})) HEAD)
-                  echo ::set-output name=changes::$CHANGED_FILES
+                  echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_OUTPUT
     prisma_migrate:
         needs: check_changes
         runs-on: ubuntu-latest
