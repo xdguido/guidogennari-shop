@@ -1,0 +1,19 @@
+name: Production deployment workflow
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    prisma_migrate:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            - name: Install Prisma
+              run: npm install prisma -D
+            - name: Deploy migrations
+              env:
+                  DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+              run: npx prisma migrate deploy

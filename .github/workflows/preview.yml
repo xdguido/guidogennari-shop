@@ -1,8 +1,8 @@
-name: Prod deployment workflow
+name: Preview deployment workflow
 
 on:
     push:
-        branches:
+        branches-ignore:
             - master
 
 jobs:
@@ -15,5 +15,5 @@ jobs:
               run: npm install prisma -D
             - name: Deploy migrations
               env:
-                  DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+                  DATABASE_URL: ${{ secrets.PREVIEW_DATABASE_URL }}
               run: npx prisma migrate deploy
