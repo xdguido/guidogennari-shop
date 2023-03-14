@@ -11,37 +11,31 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement()) 
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  name String
-  email String @unique
-  avatar String? 
+  name      String
+  email     String   @unique
+  avatar    String?
 }
 
 model Product {
-  id Int @id @default(autoincrement()) 
-  createdAt DateTime @default(now())
-  internalId String? 
-  name String
-  description String?
-  imageSrc String?
-  price Float
-  visibility Boolean @default(true)
-  stock Boolean @default(true)
-  categories CategoriesOnProducts[]
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  internalId   String?
+  name         String
+  description  String?
+  imageSrc     String?
+  price        Float
+  visibility   Boolean  @default(true)
+  stock        Boolean  @default(true)
+  categoryName String
+  category     Category @relation(fields: [categoryName], references: [name])
 }
 
 model Category {
-  id Int @id @default(autoincrement()) 
-  name String @unique
-  products CategoriesOnProducts[]
+  name       String     @unique
+  parentName String?
+  parent     Category?  @relation("ChildCategories", fields: [parentName], references: [name])
+  children   Category[] @relation("ChildCategories")
+  products   Product[]
 }
-
-model CategoriesOnProducts {
-  product       Product     @relation(fields: [productId], references: [id])
-  productId     Int // relation scalar field (used in the `@relation` attribute above)
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId Int // relation scalar field (used in the `@relation` attribute above)
-
-  @@id([productId, categoryId])
-} 
