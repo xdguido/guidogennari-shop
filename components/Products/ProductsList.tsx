@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { CameraIcon } from '@heroicons/react/24/outline';
 import PropTypes from 'prop-types';
 import type { Product } from '@prisma/client';
-import { fakeProducts } from './products';
 
 type Props = {
     products: Product[];
@@ -11,7 +10,6 @@ type Props = {
     isLoading: boolean;
 };
 export default function ProductsList({ products, error, isLoading }: Props) {
-    const displayProducts = products ? products : fakeProducts;
     if (products?.length == 0) {
         return (
             <div className="bg-base-100 mx-auto max-w-2xl p-4 sm:p-6 lg:max-w-7xl lg:p-8">
@@ -55,7 +53,7 @@ export default function ProductsList({ products, error, isLoading }: Props) {
                 <h2 className="sr-only">Products</h2>
 
                 <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
-                    {displayProducts.map((product) => (
+                    {products.map((product) => (
                         <Link key={product.id} href="/" className="group">
                             <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8">
                                 {product.imageSrc ? (
