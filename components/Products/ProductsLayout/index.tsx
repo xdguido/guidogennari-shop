@@ -29,7 +29,18 @@ export default function ProductsLayout({ children, sort, setSort }: Props) {
                                     </span>
                                     <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm">
                                         <span className="sr-only">Sort by</span>
-                                        {sort}
+                                        {(() => {
+                                            switch (sort) {
+                                                case SortOption.CreatedAtDesc:
+                                                    return 'Newest';
+                                                case SortOption.PriceAsc:
+                                                    return 'Lower price';
+                                                case SortOption.PriceDesc:
+                                                    return 'Higher price';
+                                                default:
+                                                    return sort;
+                                            }
+                                        })()}
                                         <ChevronDownIcon
                                             className="ml-1 h-5 w-5 flex-shrink-0 text-base-content"
                                             aria-hidden="true"
@@ -63,7 +74,18 @@ export default function ProductsLayout({ children, sort, setSort }: Props) {
                                                                 'block px-4 py-2 text-sm text-left'
                                                             )}
                                                         >
-                                                            {SortOption[sortKey]}
+                                                            {(() => {
+                                                                switch (SortOption[sortKey]) {
+                                                                    case SortOption.CreatedAtDesc:
+                                                                        return 'Newest';
+                                                                    case SortOption.PriceAsc:
+                                                                        return 'Lower price';
+                                                                    case SortOption.PriceDesc:
+                                                                        return 'Higher price';
+                                                                    default:
+                                                                        return SortOption[sortKey];
+                                                                }
+                                                            })()}
                                                         </button>
                                                     )}
                                                 </Menu.Item>
