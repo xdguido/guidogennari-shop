@@ -1,0 +1,39 @@
+/* eslint-disable react/prop-types */
+import { GetStaticProps } from 'next';
+import { SWRConfig, unstable_serialize } from 'swr';
+import getProducts from '@lib/getProducts';
+import Layout from '@components/Layout';
+import Products from '@components/Products';
+
+export const getStaticProps: GetStaticProps = async () => {
+    // `getStaticProps` is executed on the server side.
+    const page = 1;
+    // const category = params?.category || 'new_arrivals';
+    const data = await getProducts(page);
+
+    if (!data.total) {
+        return {
+            notFound: true
+        };
+    }
+    return {
+        props: {
+            // category,
+            page,
+            fallback: {
+                [unstable_serialize([`/api/products/${page}`])]: JSON.parse(JSON.stringify(data))
+            }
+        },
+        revalidate: 60
+    };
+};
+
+export default function Index({ fallback, category, page }) {
+    return (
+        <Layout>
+            <SWRConfig value={{ fallback }}>
+                <Products category={category} page={page} />
+            </SWRConfig>
+        </Layout>
+    );
+}

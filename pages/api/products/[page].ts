@@ -11,9 +11,9 @@ const prisma = new PrismaClient();
 
 router.get(async (req, res) => {
     try {
-        const { sort, pageIndex, size } = req.query;
-        const takeNumber = Number(size);
-        const skipNumber = (Number(pageIndex) - 1) * takeNumber;
+        const { sort, page, size } = req.query;
+        const takeNumber = Number(size) || 12;
+        const skipNumber = (Number(page) - 1) * takeNumber;
         let products: Product[] = [];
         switch (sort) {
             case SortOption.PriceAsc:
@@ -53,7 +53,8 @@ router.get(async (req, res) => {
                 });
                 break;
         }
-        return res.status(200).json(products);
+        const total: number = await prisma.product.count();
+        return res.status(200).json({ products, total });
     } finally {
         await prisma.$disconnect();
     }

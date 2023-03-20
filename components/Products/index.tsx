@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import type { Product } from '@prisma/client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import useSwr, { preload } from 'swr';
+import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 
 import { SortOption } from '@types';
@@ -9,59 +10,42 @@ import ProductsLayout from './ProductsLayout';
 import ProductsList from './ProductsList';
 import PaginationButtons from './PaginationButtons';
 
-export default function Products() {
+export default function Products({ category, page }) {
     const router = useRouter();
-    const sortParsed = Object.values(SortOption).find(
-        (option) => option === (router.query.sort as string)
-    );
-    const defaultSize = 12;
+    const [sort, setSort] = useState(SortOption.CreatedAtDesc);
+    const size = 12;
 
-    const sort = sortParsed ?? SortOption.CreatedAtDesc;
-    const pageIndex = router.query.page ? parseInt(router.query.page as string) : 1;
-    const size = router.query.size ? parseInt(router.query.size as string) : defaultSize;
+    const { data, error } = useSwr([`/api/products/${page}`], fetcher);
+    const { products, total } = data;
+    const maxPageIndex = total ? Math.ceil(total / size) : page;
 
-    const {
-        data: products,
-        error,
-        isLoading
-    } = useSwr<Product[]>(
-        `/api/products?sort=${sort}&pageIndex=${pageIndex}&size=${size}`,
-        fetcher
-    );
-    const { data: productsLength } = useSwr(`/api/products/length`, fetcher);
+    // useEffect(() => {
+    //     function runPreload() {
+    //         if (page < maxPageIndex) {
+    //             preload(
+    //                 `/api/products?sort=${sort}&page=${page + 1}&size=${size}`,
+    //                 fetcher
+    //             );
+    //         }
+    //     }
+    //     runPreload();
+    // }, [page, maxPageIndex, size, sort]);
 
-    const maxPageIndex = productsLength ? Math.ceil(productsLength / size) : pageIndex;
-
-    useEffect(() => {
-        function runPreload() {
-            if (pageIndex < maxPageIndex) {
-                preload(
-                    `/api/products?sort=${sort}&pageIndex=${pageIndex + 1}&size=${size}`,
-                    fetcher
-                );
-            }
-        }
-        runPreload();
-    }, [pageIndex, maxPageIndex, size, sort]);
-
-    const setSort = (value: SortOption) => {
-        router.push(`/?page=1&size=${size}&sort=${value}`);
-    };
     const setPageIndex = (value: number) => {
-        router.push(`/?page=${value}&size=${size}&sort=${sort}`);
+        router.push(`/products/${value}`);
     };
 
     return (
         <ProductsLayout sort={sort} setSort={setSort}>
             <PaginationButtons
-                currentPageIndex={pageIndex}
+                currentPageIndex={page}
                 setCurrentPageIndex={setPageIndex}
                 maxPageIndex={maxPageIndex}
                 isTop
             />
-            <ProductsList products={products} error={error} isLoading={isLoading} />
+            <ProductsList products={products} />
             <PaginationButtons
-                currentPageIndex={pageIndex}
+                currentPageIndex={page}
                 setCurrentPageIndex={setPageIndex}
                 maxPageIndex={maxPageIndex}
             />
