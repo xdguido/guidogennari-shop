@@ -18,6 +18,15 @@ const nextConfig = {
                 pathname: '/img/**'
             }
         ]
+    },
+    async redirects() {
+        return [
+            {
+                source: '/products',
+                destination: '/products/newest',
+                permanent: true
+            }
+        ];
     }
 };
 

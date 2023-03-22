@@ -4,31 +4,35 @@ import { SWRConfig, unstable_serialize } from 'swr';
 import getProducts from '@lib/getProducts';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
+import { SortOption } from '@types';
 
 export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsContext) => {
     // `getStaticProps` is executed on the server side.
     const page = Number(params?.page) || 1;
-    const data = await getProducts(page);
+    const sort = params?.sort || SortOption.CreatedAtDesc;
+    const data = await getProducts(page, sort);
 
     if (!data?.products?.length) {
         return {
             notFound: true
         };
     }
-    // Redirect the first page to `/category` to avoid duplicated content
     if (page === 1) {
         return {
             redirect: {
-                destination: `/products`,
+                destination: `/products/${sort}`,
                 permanent: false
             }
         };
     }
     return {
         props: {
+            sort,
             page,
             fallback: {
-                [unstable_serialize(`/api/products/${page}`)]: JSON.parse(JSON.stringify(data))
+                [unstable_serialize(`/api/products/${sort}/${page}`)]: JSON.parse(
+                    JSON.stringify(data)
+                )
             }
         },
         revalidate: 60
@@ -51,6 +55,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         // Other pages will be prerendered at runtime.
         paths: Array.from({ length: 2 }).map((_, i) => ({
             params: {
+                sort: SortOption.CreatedAtDesc,
                 page: '' + (i + 2)
             }
         })),
@@ -59,11 +64,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, page }) {
+export default function Index({ fallback, sort, page }) {
     return (
         <Layout>
             <SWRConfig value={{ fallback }}>
-                <Products page={page} />
+                <Products page={page} sort={sort} />
             </SWRConfig>
         </Layout>
     );

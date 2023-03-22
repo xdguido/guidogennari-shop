@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import Link from 'next/link';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
@@ -8,9 +9,9 @@ import MobileMenu from './MobileMenu';
 
 import { subCategories, filters } from './filters';
 
-type Props = { children: React.ReactNode; sort: SortOption; setSort: (value: SortOption) => void };
+type Props = { children: React.ReactNode; sort: SortOption };
 
-export default function ProductsLayout({ children, sort, setSort }: Props) {
+export default function ProductsLayout({ children, sort }: Props) {
     return (
         <>
             <div>
@@ -62,10 +63,8 @@ export default function ProductsLayout({ children, sort, setSort }: Props) {
                                             {Object.keys(SortOption).map((sortKey: string) => (
                                                 <Menu.Item key={sortKey}>
                                                     {({ active }) => (
-                                                        <button
-                                                            onClick={() =>
-                                                                setSort(SortOption[sortKey])
-                                                            }
+                                                        <Link
+                                                            href={`/products/${SortOption[sortKey]}`}
                                                             className={clsx(
                                                                 SortOption[sortKey] === sort
                                                                     ? 'font-medium'
@@ -86,7 +85,7 @@ export default function ProductsLayout({ children, sort, setSort }: Props) {
                                                                         return SortOption[sortKey];
                                                                 }
                                                             })()}
-                                                        </button>
+                                                        </Link>
                                                     )}
                                                 </Menu.Item>
                                             ))}

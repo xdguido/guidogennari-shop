@@ -11,9 +11,9 @@ const router = createRouter<NextApiRequest, NextApiResponse>();
 router.get(async (req, res) => {
     const { sort, page } = req.query;
     const pageIndex = Number(page);
-    const sortOption = Object.keys(SortOption).find((option) => option === sort);
+    // const sortOption = Object.keys(SortOption).find((option) => option === sort);
 
-    const data = await getProducts(pageIndex, sortOption);
+    const data = await getProducts(pageIndex, sort);
     return res.status(200).json(data);
 });
 

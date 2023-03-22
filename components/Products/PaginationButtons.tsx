@@ -2,13 +2,14 @@ import clsx from 'clsx';
 import Link from 'next/link';
 type Props = {
     currentPageIndex: number;
-    runPreload?: () => void;
+    sort: string;
     maxPageIndex: number;
     isTop?: boolean;
 };
 export default function PaginationButtons({
     currentPageIndex,
     maxPageIndex,
+    sort,
     isTop = false
 }: Props) {
     return (
@@ -21,7 +22,7 @@ export default function PaginationButtons({
             <div>
                 <nav className="isolate inline-flex -space-x-px" aria-label="Pagination">
                     <Link
-                        href={`/products/${currentPageIndex - 1}`}
+                        href={`/products/${sort}/${currentPageIndex - 1}`}
                         className={clsx(
                             'relative inline-flex items-center rounded-md border border-base-300  px-4 py-2 text-sm font-medium bg-base-100',
                             currentPageIndex === 1
@@ -43,7 +44,7 @@ export default function PaginationButtons({
                         </span>
                     </div>
                     <Link
-                        href={`/products/${currentPageIndex + 1}`}
+                        href={`/products/${sort}/${currentPageIndex + 1}`}
                         className={clsx(
                             'relative inline-flex items-center rounded-md border border-base-300  px-4 py-2 text-sm font-medium bg-base-100',
                             currentPageIndex === maxPageIndex

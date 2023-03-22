@@ -4,7 +4,7 @@ import { SortOption } from '@types';
 
 const prisma = new PrismaClient();
 
-export default async function getProducts(page: number, sort?: string) {
+export default async function getProducts(page: number, sort?: any) {
     try {
         const takeNumber = 12;
         const skipNumber = (Number(page) - 1) * takeNumber;
