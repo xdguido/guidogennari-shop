@@ -16,4 +16,4 @@ jobs:
             - name: Deploy migrations
               env:
                   DATABASE_URL: ${{ secrets.PREVIEW_DATABASE_URL }}
-              run: npx prisma migrate reset --force
+              run: npx prisma migrate deploy
