@@ -1,5 +1,5 @@
 export enum SortOption {
-    CreatedAtDesc = 'Newest',
-    PriceAsc = 'Lower price',
-    PriceDesc = 'Higher price'
+    CreatedAtDesc = 'newest',
+    PriceAsc = 'lower-price',
+    PriceDesc = 'higher-price'
 }

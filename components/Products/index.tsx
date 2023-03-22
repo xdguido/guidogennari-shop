@@ -1,57 +1,30 @@
-import type { Product } from '@prisma/client';
-import { useState, useEffect } from 'react';
-import useSwr, { preload } from 'swr';
+/* eslint-disable react/prop-types */
+// import { useRouter } from 'next/router';
+import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 
-import { SortOption } from '@types';
 import ProductsLayout from './ProductsLayout';
 import ProductsList from './ProductsList';
 import PaginationButtons from './PaginationButtons';
 
-export default function Products() {
-    const [sort, setSort] = useState(SortOption.CreatedAtDesc);
-    const [currentPageIndex, setCurrentPageIndex] = useState(1);
-    // const [size, setSize] = useState(15);
-    const size = 15;
-    const {
-        data: products,
-        error,
-        isLoading
-    } = useSwr<Product[]>(
-        `/api/products?sort=${sort}&pageIndex=${currentPageIndex}&size=${size}`,
-        fetcher
-    );
-    const { data: productsLength } = useSwr(`/api/products/length`, fetcher);
-    const maxPageIndex = productsLength ? Math.ceil(productsLength / size) : currentPageIndex;
-    useEffect(() => {
-        setCurrentPageIndex(1);
-    }, [sort]);
-    useEffect(() => {
-        function runPreload() {
-            if (currentPageIndex < maxPageIndex) {
-                preload(
-                    `/api/products?sort=${sort}&pageIndex=${currentPageIndex + 1}&size=${size}`,
-                    fetcher
-                );
-            }
-        }
-        runPreload();
-    }, [currentPageIndex, maxPageIndex, size, sort]);
+export default function Products({ page, sort }) {
+    // const router = useRouter();
+    const size = 12;
+
+    const { data } = useSwr(`/api/products/${sort}/${page}`, fetcher);
+
+    const maxPageIndex = data?.total ? Math.ceil(data.total / size) : page;
 
     return (
-        <ProductsLayout sort={sort} setSort={setSort}>
+        <ProductsLayout sort={sort}>
             <PaginationButtons
-                currentPageIndex={currentPageIndex}
-                setCurrentPageIndex={setCurrentPageIndex}
+                sort={sort}
+                currentPageIndex={page}
                 maxPageIndex={maxPageIndex}
                 isTop
             />
-            <ProductsList products={products} error={error} isLoading={isLoading} />
-            <PaginationButtons
-                currentPageIndex={currentPageIndex}
-                setCurrentPageIndex={setCurrentPageIndex}
-                maxPageIndex={maxPageIndex}
-            />
+            <ProductsList products={data?.products} />
+            <PaginationButtons sort={sort} currentPageIndex={page} maxPageIndex={maxPageIndex} />
         </ProductsLayout>
     );
 }

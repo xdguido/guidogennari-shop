@@ -1,17 +1,17 @@
-import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createRouter } from 'next-connect';
 import { errorHandler, noMatchHandler } from '@lib/api/errorHandler';
+import getProducts from '@lib/getProducts';
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
-const prisma = new PrismaClient();
+
 router.get(async (req, res) => {
-    try {
-        const productLength = await prisma.product.count();
-        return res.status(200).json(productLength);
-    } finally {
-        await prisma.$disconnect();
-    }
+    const { sort, page } = req.query;
+    const pageIndex = Number(page);
+    // const sortOption = Object.keys(SortOption).find((option) => option === sort);
+
+    const data = await getProducts(pageIndex, sort);
+    return res.status(200).json(data);
 });
 
 export default router.handler({

@@ -1,10 +1,10 @@
 import Layout from '../components/Layout';
-import Products from '../components/Products';
+import Button from '@ui/Button';
 
 export default function Index() {
     return (
         <Layout>
-            <Products />
+            <Button href="/products">Go to Products</Button>
         </Layout>
     );
 }

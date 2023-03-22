@@ -1,22 +1,17 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 type Props = {
     currentPageIndex: number;
-    setCurrentPageIndex: (n: number) => void;
-    runPreload?: () => void;
+    sort: string;
     maxPageIndex: number;
     isTop?: boolean;
 };
 export default function PaginationButtons({
     currentPageIndex,
-    setCurrentPageIndex,
     maxPageIndex,
+    sort,
     isTop = false
 }: Props) {
-    const isBrowser = () => typeof window !== 'undefined';
-    function scrollToTop() {
-        if (!isBrowser()) return;
-        window.scrollTo({ top: 0 });
-    }
     return (
         <div
             className={clsx(
@@ -26,16 +21,17 @@ export default function PaginationButtons({
         >
             <div>
                 <nav className="isolate inline-flex -space-x-px" aria-label="Pagination">
-                    <button
-                        onClick={() => {
-                            setCurrentPageIndex(currentPageIndex - 1);
-                            isTop ? null : scrollToTop();
-                        }}
-                        className="relative inline-flex items-center rounded-md border border-base-300  px-4 py-2 text-sm font-medium bg-base-100  enabled:hover:bg-base-200 disabled:text-base-300"
-                        disabled={currentPageIndex === 1}
+                    <Link
+                        href={`/products/${sort}/${currentPageIndex - 1}`}
+                        className={clsx(
+                            'relative inline-flex items-center rounded-md border border-base-300  px-4 py-2 text-sm font-medium bg-base-100',
+                            currentPageIndex === 1
+                                ? 'text-base-300 pointer-events-none'
+                                : 'hover:bg-base-200'
+                        )}
                     >
                         Previous
-                    </button>
+                    </Link>
                     <div className="flex items-center px-4 gap-2">
                         <span
                             aria-current="page"
@@ -47,17 +43,17 @@ export default function PaginationButtons({
                             of <span className="font-medium">{maxPageIndex}</span>
                         </span>
                     </div>
-                    <button
-                        onClick={() => {
-                            setCurrentPageIndex(currentPageIndex + 1);
-                            isTop ? null : scrollToTop();
-                        }}
-                        // onMouseEnter={() => runPreload()}
-                        className="relative ml-3 inline-flex items-center rounded-md border border-base-300  px-4 py-2 text-sm font-medium bg-base-100 enabled:hover:bg-base-200 disabled:text-base-300"
-                        disabled={currentPageIndex === maxPageIndex}
+                    <Link
+                        href={`/products/${sort}/${currentPageIndex + 1}`}
+                        className={clsx(
+                            'relative inline-flex items-center rounded-md border border-base-300  px-4 py-2 text-sm font-medium bg-base-100',
+                            currentPageIndex === maxPageIndex
+                                ? 'text-base-300 pointer-events-none'
+                                : 'hover:bg-base-200'
+                        )}
                     >
                         Next
-                    </button>
+                    </Link>
                 </nav>
             </div>
         </div>

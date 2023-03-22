@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import Link from 'next/link';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
@@ -8,9 +9,9 @@ import MobileMenu from './MobileMenu';
 
 import { subCategories, filters } from './filters';
 
-type Props = { children: React.ReactNode; sort: SortOption; setSort: (value: SortOption) => void };
+type Props = { children: React.ReactNode; sort: SortOption };
 
-export default function ProductsLayout({ children, sort, setSort }: Props) {
+export default function ProductsLayout({ children, sort }: Props) {
     return (
         <>
             <div>
@@ -29,7 +30,18 @@ export default function ProductsLayout({ children, sort, setSort }: Props) {
                                     </span>
                                     <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm">
                                         <span className="sr-only">Sort by</span>
-                                        {sort}
+                                        {(() => {
+                                            switch (sort) {
+                                                case SortOption.CreatedAtDesc:
+                                                    return 'Newest';
+                                                case SortOption.PriceAsc:
+                                                    return 'Lower price';
+                                                case SortOption.PriceDesc:
+                                                    return 'Higher price';
+                                                default:
+                                                    return sort;
+                                            }
+                                        })()}
                                         <ChevronDownIcon
                                             className="ml-1 h-5 w-5 flex-shrink-0 text-base-content"
                                             aria-hidden="true"
@@ -51,10 +63,8 @@ export default function ProductsLayout({ children, sort, setSort }: Props) {
                                             {Object.keys(SortOption).map((sortKey: string) => (
                                                 <Menu.Item key={sortKey}>
                                                     {({ active }) => (
-                                                        <button
-                                                            onClick={() =>
-                                                                setSort(SortOption[sortKey])
-                                                            }
+                                                        <Link
+                                                            href={`/products/${SortOption[sortKey]}`}
                                                             className={clsx(
                                                                 SortOption[sortKey] === sort
                                                                     ? 'font-medium'
@@ -63,8 +73,19 @@ export default function ProductsLayout({ children, sort, setSort }: Props) {
                                                                 'block px-4 py-2 text-sm text-left'
                                                             )}
                                                         >
-                                                            {SortOption[sortKey]}
-                                                        </button>
+                                                            {(() => {
+                                                                switch (SortOption[sortKey]) {
+                                                                    case SortOption.CreatedAtDesc:
+                                                                        return 'Newest';
+                                                                    case SortOption.PriceAsc:
+                                                                        return 'Lower price';
+                                                                    case SortOption.PriceDesc:
+                                                                        return 'Higher price';
+                                                                    default:
+                                                                        return SortOption[sortKey];
+                                                                }
+                                                            })()}
+                                                        </Link>
                                                     )}
                                                 </Menu.Item>
                                             ))}
