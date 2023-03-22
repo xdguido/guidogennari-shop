@@ -4,60 +4,17 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { createRouter } from 'next-connect';
 import { errorHandler, noMatchHandler } from '@lib/api/errorHandler';
 import { SortOption } from '@types';
+import getProducts from '@lib/getProducts';
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
-const prisma = new PrismaClient();
-
 router.get(async (req, res) => {
-    try {
-        const { sort, page, size } = req.query;
-        const takeNumber = Number(size) || 12;
-        const skipNumber = (Number(page) - 1) * takeNumber;
-        let products: Product[] = [];
-        switch (sort) {
-            case SortOption.PriceAsc:
-                products = await prisma.product.findMany({
-                    skip: skipNumber,
-                    take: takeNumber,
-                    orderBy: {
-                        price: 'asc'
-                    }
-                });
-                break;
-            case SortOption.PriceDesc:
-                products = await prisma.product.findMany({
-                    skip: skipNumber,
-                    take: takeNumber,
-                    orderBy: {
-                        price: 'desc'
-                    }
-                });
-                break;
-            case SortOption.CreatedAtDesc:
-                products = await prisma.product.findMany({
-                    skip: skipNumber,
-                    take: takeNumber,
-                    orderBy: {
-                        createdAt: 'desc'
-                    }
-                });
-                break;
-            default:
-                products = await prisma.product.findMany({
-                    skip: skipNumber,
-                    take: takeNumber,
-                    orderBy: {
-                        createdAt: 'desc'
-                    }
-                });
-                break;
-        }
-        const total: number = await prisma.product.count();
-        return res.status(200).json({ products, total });
-    } finally {
-        await prisma.$disconnect();
-    }
+    const { sort, page } = req.query;
+    const pageIndex = Number(page);
+    const sortOption = Object.keys(SortOption).find((option) => option === sort);
+
+    const data = await getProducts(pageIndex, sortOption);
+    return res.status(200).json(data);
 });
 
 export default router.handler({
