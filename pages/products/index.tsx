@@ -8,31 +8,29 @@ import Products from '@components/Products';
 export const getStaticProps: GetStaticProps = async () => {
     // `getStaticProps` is executed on the server side.
     const page = 1;
-    // const category = params?.category || 'new_arrivals';
     const data = await getProducts(page);
 
-    if (!data.total) {
+    if (!data?.products?.length) {
         return {
             notFound: true
         };
     }
     return {
         props: {
-            // category,
             page,
             fallback: {
-                [unstable_serialize([`/api/products/${page}`])]: JSON.parse(JSON.stringify(data))
+                [unstable_serialize(`/api/products/${page}`)]: JSON.parse(JSON.stringify(data))
             }
         },
         revalidate: 60
     };
 };
 
-export default function Index({ fallback, category, page }) {
+export default function Index({ fallback, page }) {
     return (
         <Layout>
             <SWRConfig value={{ fallback }}>
-                <Products category={category} page={page} />
+                <Products page={page} />
             </SWRConfig>
         </Layout>
     );
