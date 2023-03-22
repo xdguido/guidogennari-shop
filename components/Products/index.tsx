@@ -1,11 +1,8 @@
 /* eslint-disable react/prop-types */
-import type { Product } from '@prisma/client';
-import { useEffect, useState } from 'react';
 // import { useRouter } from 'next/router';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 
-import { SortOption } from '@types';
 import ProductsLayout from './ProductsLayout';
 import ProductsList from './ProductsList';
 import PaginationButtons from './PaginationButtons';

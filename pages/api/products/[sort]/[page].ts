@@ -1,9 +1,6 @@
-import { PrismaClient } from '@prisma/client';
-import type { Product } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createRouter } from 'next-connect';
 import { errorHandler, noMatchHandler } from '@lib/api/errorHandler';
-import { SortOption } from '@types';
 import getProducts from '@lib/getProducts';
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
