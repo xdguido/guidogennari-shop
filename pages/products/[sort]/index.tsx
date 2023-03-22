@@ -52,7 +52,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
             }
         ],
         // Block the request for non-generated pages and cache them in the background
-        fallback: 'blocking'
+        fallback: false
     };
 };
 
