@@ -4,11 +4,11 @@
 const nextConfig = {
     /* config options here */
     reactStrictMode: true,
-    i18n: {
-        locales: ['en', 'es'],
-        defaultLocale: 'en',
-        localeDetection: false
-    },
+    // i18n: {
+    //     locales: ['en', 'es'],
+    //     defaultLocale: 'en',
+    //     localeDetection: false
+    // },
     images: {
         remotePatterns: [
             {
