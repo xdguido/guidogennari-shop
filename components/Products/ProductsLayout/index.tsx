@@ -28,7 +28,7 @@ export default function ProductsLayout({ children, sort }: Props) {
                                     >
                                         Sort by
                                     </span>
-                                    <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm">
+                                    <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm w-32">
                                         <span className="sr-only">Sort by</span>
                                         {(() => {
                                             switch (sort) {
@@ -94,10 +94,10 @@ export default function ProductsLayout({ children, sort }: Props) {
                                 </Transition>
                             </Menu>
 
-                            <button type="button" className="-m-2 ml-5 p-2  sm:ml-7">
+                            {/* <button type="button" className="-m-2 ml-5 p-2  sm:ml-7">
                                 <span className="sr-only">View grid</span>
                                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-                            </button>
+                            </button> */}
 
                             {/* Mobile filter dialog */}
                             <MobileMenu />
