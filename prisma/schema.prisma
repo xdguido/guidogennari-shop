@@ -19,23 +19,25 @@ model User {
 }
 
 model Product {
-  id           String   @id @default(cuid())
-  createdAt    DateTime @default(now())
-  internalId   String?
-  name         String
-  description  String?
-  imageSrc     String?
-  price        Float
-  visibility   Boolean  @default(true)
-  stock        Boolean  @default(true)
-  categoryName String
-  category     Category @relation(fields: [categoryName], references: [name])
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now())
+  internalId  String?
+  name        String     @db.VarChar(50)
+  slug        String     @unique
+  description String?
+  imageSrc    String?
+  price       Float
+  visibility  Boolean    @default(true)
+  stock       Boolean    @default(true)
+  category    Category[]
 }
 
 model Category {
-  name       String     @unique
+  id         String     @id @default(cuid())
+  name       String     @unique @db.VarChar(50)
+  slug       String     @unique
   parentName String?
   parent     Category?  @relation("ChildCategories", fields: [parentName], references: [name])
   children   Category[] @relation("ChildCategories")
-  products   Product[]
+  product    Product[]
 }
