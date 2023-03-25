@@ -10,7 +10,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     // `getStaticProps` is executed on the server side.
     const page = 1;
     const sort = params?.sort || SortOption.CreatedAtDesc;
-    const data = await getProducts(page, sort);
+    const category = params?.category || 'all';
+    const data = await getProducts(page, sort, category);
 
     if (!data?.products?.length) {
         return {
@@ -19,10 +20,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
     return {
         props: {
+            category,
             sort,
             page,
             fallback: {
-                [unstable_serialize(`/api/products/${sort}/${page}`)]: JSON.parse(
+                [unstable_serialize(`/api/products/${category}/${sort}/${page}`)]: JSON.parse(
                     JSON.stringify(data)
                 )
             }
@@ -37,30 +39,33 @@ export const getStaticPaths: GetStaticPaths = async () => {
         paths: [
             {
                 params: {
+                    category: 'all',
                     sort: SortOption.CreatedAtDesc
                 }
             },
             {
                 params: {
+                    category: 'all',
                     sort: SortOption.PriceAsc
                 }
             },
             {
                 params: {
+                    category: 'all',
                     sort: SortOption.PriceDesc
                 }
             }
         ],
         // Block the request for non-generated pages and cache them in the background
-        fallback: false
+        fallback: 'blocking'
     };
 };
 
-export default function Index({ fallback, sort, page }) {
+export default function Index({ fallback, sort, page, category }) {
     return (
         <Layout>
             <SWRConfig value={{ fallback }}>
-                <Products page={page} sort={sort} />
+                <Products page={page} sort={sort} category={category} />
             </SWRConfig>
         </Layout>
     );

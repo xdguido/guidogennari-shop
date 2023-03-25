@@ -4,16 +4,22 @@ import { SortOption } from '@types';
 
 const prisma = new PrismaClient();
 
-export default async function getProducts(page: number, sort?: any) {
+export default async function getProducts(page: number, sort: any, category: any) {
     try {
         const takeNumber = 12;
         const skipNumber = (Number(page) - 1) * takeNumber;
+
         let products: Product[] = [];
+        let total = 0;
+
         switch (sort) {
             case SortOption.PriceAsc:
                 products = await prisma.product.findMany({
                     skip: skipNumber,
                     take: takeNumber,
+                    ...(category === 'all'
+                        ? {}
+                        : { where: { category: { some: { slug: category } } } }),
                     orderBy: {
                         price: 'asc'
                     }
@@ -23,6 +29,9 @@ export default async function getProducts(page: number, sort?: any) {
                 products = await prisma.product.findMany({
                     skip: skipNumber,
                     take: takeNumber,
+                    ...(category === 'all'
+                        ? {}
+                        : { where: { category: { some: { slug: category } } } }),
                     orderBy: {
                         price: 'desc'
                     }
@@ -32,22 +41,29 @@ export default async function getProducts(page: number, sort?: any) {
                 products = await prisma.product.findMany({
                     skip: skipNumber,
                     take: takeNumber,
+                    ...(category === 'all'
+                        ? {}
+                        : { where: { category: { some: { slug: category } } } }),
                     orderBy: {
                         createdAt: 'desc'
                     }
                 });
                 break;
             default:
-                products = await prisma.product.findMany({
-                    skip: skipNumber,
-                    take: takeNumber,
-                    orderBy: {
-                        createdAt: 'desc'
-                    }
+                products = null;
+                break;
+        }
+
+        switch (category) {
+            case 'all':
+                total = await prisma.product.count();
+                break;
+            default:
+                total = await prisma.product.count({
+                    where: { category: { some: { slug: category } } }
                 });
                 break;
         }
-        const total: number = await prisma.product.count();
         return { products, total };
     } finally {
         await prisma.$disconnect();

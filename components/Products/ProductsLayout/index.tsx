@@ -9,9 +9,9 @@ import MobileMenu from './MobileMenu';
 
 import { subCategories, filters } from './filters';
 
-type Props = { children: React.ReactNode; sort: SortOption };
+type Props = { children: React.ReactNode; sort: SortOption; category: string };
 
-export default function ProductsLayout({ children, sort }: Props) {
+export default function ProductsLayout({ children, sort, category }: Props) {
     return (
         <>
             <div>
@@ -38,8 +38,6 @@ export default function ProductsLayout({ children, sort }: Props) {
                                                     return 'Lower price';
                                                 case SortOption.PriceDesc:
                                                     return 'Higher price';
-                                                default:
-                                                    return sort;
                                             }
                                         })()}
                                         <ChevronDownIcon
@@ -64,7 +62,7 @@ export default function ProductsLayout({ children, sort }: Props) {
                                                 <Menu.Item key={sortKey}>
                                                     {({ active }) => (
                                                         <Link
-                                                            href={`/products/${SortOption[sortKey]}`}
+                                                            href={`/products/${category}/${SortOption[sortKey]}`}
                                                             className={clsx(
                                                                 SortOption[sortKey] === sort
                                                                     ? 'font-medium'
