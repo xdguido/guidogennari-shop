@@ -7,7 +7,7 @@ export default function Footer() {
     return (
         <footer className="bg-base-100 text-center text-base-content  lg:text-left border-t-2 border-base-200">
             <div className="mx-6 py-10 text-center md:text-left">
-                <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-5">
+                <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                     <div className="flex flex-col items-center  ">
                         <Logo />
                         <p className="my-2 text-sm text-center font-medium">
@@ -26,7 +26,7 @@ export default function Footer() {
                         </div>
                     </div>
                     <div className="flex flex-col gap-2 lg:col-start-3 items-center lg:items-start">
-                        <h6 className=" flex justify-center font-semibold uppercase md:justify-start">
+                        <h6 className="lg:ml-3 flex justify-center font-semibold uppercase md:justify-start">
                             Products
                         </h6>
                         <div className="flex items-center ">
@@ -46,7 +46,7 @@ export default function Footer() {
                         </div>
                     </div>
                     <div className="flex flex-col gap-2  lg:col-start-4 items-center lg:items-start">
-                        <h6 className=" flex justify-center font-semibold uppercase md:justify-start">
+                        <h6 className="lg:ml-3 flex justify-center font-semibold uppercase md:justify-start">
                             Useful links
                         </h6>
                         <div className="flex items-center ">
@@ -71,7 +71,9 @@ export default function Footer() {
                         </div>
                     </div>
                     <div className="flex flex-col gap-2  lg:col-start-5 items-center lg:items-start">
-                        <h6 className=" font-semibold uppercase md:justify-start">Contact</h6>
+                        <h6 className="lg:ml-3 font-semibold uppercase md:justify-start">
+                            Contact
+                        </h6>
                         <div className="ml-2  flex items-center justify-center md:justify-start">
                             <MapPinIcon className="hidden sm:block h-5 w-5" aria-hidden="true" />
                             <Button className="btn-link btn-sm normal-case no-underline text-base-content">
