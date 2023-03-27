@@ -127,7 +127,7 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
                             {/* Filters */}
                             <form className="hidden lg:block">
-                                <h3 className="sr-only">Sub-Categories</h3>
+                                <h3 className="sr-only">Categories</h3>
                                 <ul role="list" className="space-y-4 pb-6 text-sm font-medium ">
                                     {categoryNode.children.map((category) => (
                                         <li key={category.name}>

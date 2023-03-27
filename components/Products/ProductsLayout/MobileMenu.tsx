@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon, FunnelIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, AdjustmentsHorizontalIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import type { CategoryNode } from '@lib/getProducts';
 import { SortOption } from '@types';
 
@@ -58,7 +58,22 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                                 {/* Filters */}
                                 <form className="mt-4 border-t border-base-200">
                                     <h3 className="sr-only">Categories</h3>
-                                    <ul role="list" className="space-y-4 px-2 py-3 font-medium ">
+                                    <ul role="list" className="space-y-4 p-4 font-medium ">
+                                        <li>
+                                            {categoryNode.parent ? (
+                                                <Link
+                                                    href={`/products/${categoryNode.parent.slug}/${sort}`}
+                                                    className="flex items-center gap-2"
+                                                >
+                                                    <ArrowLeftIcon
+                                                        className="h-5 w-5"
+                                                        aria-hidden="true"
+                                                    />
+                                                    <span className="sr-only">go back to</span>{' '}
+                                                    {categoryNode.parent.name}
+                                                </Link>
+                                            ) : null}
+                                        </li>
                                         {categoryNode.children.map((category) => (
                                             <li key={category.name}>
                                                 <Link href={`/products/${category.slug}/${sort}`}>
