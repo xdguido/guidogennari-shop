@@ -17,13 +17,13 @@ export default function Products({ page, sort, category }) {
 
     return (
         <ProductsLayout sort={sort} categoryNode={data.categoryNode}>
-            <PaginationButtons
+            {/* <PaginationButtons
                 sort={sort}
                 category={category}
                 currentPageIndex={page}
                 maxPageIndex={maxPageIndex}
                 isTop
-            />
+            /> */}
             <ProductsList products={data?.products} />
             <PaginationButtons
                 sort={sort}

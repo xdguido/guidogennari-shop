@@ -5,8 +5,11 @@ import MobileMenu from './MobileMenu';
 import FlyoutMenu from './FlyoutMenu';
 import Logo from '@ui/Logo';
 import ThemeToggler from '@ui/ThemeToggler';
+import { CategoryWithChildren } from '@lib/getProducts';
 
-export default function Header() {
+type Props = { categoryTree: CategoryWithChildren[] };
+
+export default function Header({ categoryTree }: Props) {
     const [top, setTop] = useState(true);
     // detect whether user has scrolled the page down by 10px
     useEffect(() => {
@@ -25,16 +28,16 @@ export default function Header() {
         >
             <p
                 className={clsx(
-                    'h-10 items-center justify-center bg-primary px-4 text-sm text-primary-content font-medium sm:px-6 lg:px-8',
+                    'h-10 text-center items-center justify-center bg-primary px-4 text-sm text-primary-content font-medium sm:px-6 lg:px-8',
                     top ? 'flex' : 'hidden'
                 )}
             >
-                Get free delivery on orders over $100
+                Site under construction. There may be broken links or buttons.
             </p>
             <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className={clsx('flex items-center', top ? 'h-20' : 'h-16')}>
                     {/* Mobile menu */}
-                    <MobileMenu />
+                    <MobileMenu categoryTree={categoryTree} />
 
                     {/* Logo */}
                     <div className="ml-4 flex lg:ml-0">
@@ -42,7 +45,7 @@ export default function Header() {
                     </div>
 
                     {/* Flyout menus */}
-                    <FlyoutMenu />
+                    <FlyoutMenu categoryTree={categoryTree} />
 
                     <div className="ml-auto flex items-center">
                         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">

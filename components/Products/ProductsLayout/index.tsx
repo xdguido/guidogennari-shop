@@ -45,7 +45,7 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                     >
                                         Sort by:
                                     </span>
-                                    <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm w-28 sm:w-20">
+                                    <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm w-28">
                                         <span className="sr-only">Sort by</span>
                                         {(() => {
                                             switch (sort) {

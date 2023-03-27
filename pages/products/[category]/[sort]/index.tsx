@@ -2,6 +2,8 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { SWRConfig, unstable_serialize } from 'swr';
 import getProducts from '@lib/getProducts';
+import type { CategoryWithChildren } from '@lib/getProducts';
+import getCategories from '@lib/getCategories';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
 import { SortOption } from '@types';
@@ -18,6 +20,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         };
     }
 
+    const categoryTree: CategoryWithChildren[] = await getCategories();
     const data = await getProducts(page, sort as SortOption, category as string);
 
     if (!data?.products?.length) {
@@ -28,6 +31,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return {
         props: {
             category,
+            categoryTree,
             sort,
             page,
             fallback: {
@@ -68,9 +72,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, sort, page, category }) {
+export default function Index({ fallback, sort, page, category, categoryTree }) {
     return (
-        <Layout>
+        <Layout categoryTree={categoryTree}>
             <SWRConfig value={{ fallback }}>
                 <Products page={page} sort={sort} category={category} />
             </SWRConfig>

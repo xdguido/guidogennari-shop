@@ -1,14 +1,21 @@
 import { Fragment, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { navigation } from './navigation';
+import { CategoryWithChildren } from '@lib/getProducts';
+import ThemeToggler from '@ui/ThemeToggler';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
-export default function MobileMenu() {
+type Props = {
+    categoryTree: CategoryWithChildren[];
+};
+
+export default function MobileMenu({ categoryTree }: Props) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -46,7 +53,7 @@ export default function MobileMenu() {
                             leaveTo="-translate-x-full"
                         >
                             <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-base-100 pb-12 shadow-xl">
-                                <div className="flex px-4 pt-5 pb-2">
+                                <div className="flex justify-between px-4 pt-5 pb-2">
                                     <button
                                         type="button"
                                         className="-m-2 inline-flex items-center justify-center rounded-md p-2"
@@ -55,36 +62,30 @@ export default function MobileMenu() {
                                         <span className="sr-only">Close menu</span>
                                         <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                                     </button>
+                                    <ThemeToggler />
                                 </div>
 
                                 {/* Links */}
                                 <Tab.Group as="div" className="mt-2">
                                     <div className="border-b border-base-200">
                                         <Tab.List className="-mb-px flex space-x-8 px-4">
-                                            {navigation.categories.map((category) => (
-                                                <Tab
-                                                    key={category.name}
-                                                    className={({ selected }) =>
-                                                        classNames(
-                                                            selected
-                                                                ? 'border-primary text-primary'
-                                                                : 'border-transparent ',
-                                                            'flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium'
-                                                        )
-                                                    }
-                                                >
-                                                    {category.name}
-                                                </Tab>
-                                            ))}
+                                            <Tab
+                                                className={({ selected }) =>
+                                                    classNames(
+                                                        selected
+                                                            ? 'border-primary text-primary'
+                                                            : 'border-transparent ',
+                                                        'flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium'
+                                                    )
+                                                }
+                                            >
+                                                Products
+                                            </Tab>
                                         </Tab.List>
                                     </div>
                                     <Tab.Panels as={Fragment}>
-                                        {navigation.categories.map((category) => (
-                                            <Tab.Panel
-                                                key={category.name}
-                                                className="space-y-10 px-4 pt-10 pb-8"
-                                            >
-                                                <div className="grid grid-cols-2 gap-x-4">
+                                        <Tab.Panel className="space-y-10 px-4 pt-10 pb-8">
+                                            {/* <div className="grid grid-cols-2 gap-x-4">
                                                     {category.featured.map((item) => (
                                                         <div
                                                             key={item.name}
@@ -114,38 +115,42 @@ export default function MobileMenu() {
                                                             </p>
                                                         </div>
                                                     ))}
-                                                </div>
-                                                {category.sections.map((section) => (
-                                                    <div key={section.name}>
-                                                        <p
-                                                            id={`${category.id}-${section.id}-heading-mobile`}
-                                                            className="font-medium "
-                                                        >
-                                                            {section.name}
-                                                        </p>
-                                                        <ul
-                                                            role="list"
-                                                            aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
-                                                            className="mt-6 flex flex-col space-y-6"
-                                                        >
-                                                            {section.items.map((item) => (
-                                                                <li
-                                                                    key={item.name}
-                                                                    className="flow-root"
+                                                </div> */}
+                                            {categoryTree.map((section) => (
+                                                <div key={section.name}>
+                                                    <p
+                                                        id={`${section.id}-heading-mobile`}
+                                                        className="font-medium "
+                                                    >
+                                                        {section.name}
+                                                    </p>
+                                                    <ul
+                                                        role="list"
+                                                        aria-labelledby={`${section.name}-heading`}
+                                                        className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
+                                                    >
+                                                        <li className="flex">
+                                                            <Link
+                                                                href={`/products/${section.slug}`}
+                                                                className=""
+                                                            >
+                                                                View all
+                                                            </Link>
+                                                        </li>
+                                                        {section.children.map((item) => (
+                                                            <li key={item.name} className="flex">
+                                                                <Link
+                                                                    href={`/products/${item.slug}`}
+                                                                    className=""
                                                                 >
-                                                                    <a
-                                                                        href={item.href}
-                                                                        className="-m-2 block p-2 "
-                                                                    >
-                                                                        {item.name}
-                                                                    </a>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                ))}
-                                            </Tab.Panel>
-                                        ))}
+                                                                    {item.name}
+                                                                </Link>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            ))}
+                                        </Tab.Panel>
                                     </Tab.Panels>
                                 </Tab.Group>
 
@@ -175,7 +180,7 @@ export default function MobileMenu() {
                                     </div>
                                 </div>
 
-                                <div className="border-t border-gray-200 py-6 px-4">
+                                {/* <div className="border-t border-gray-200 py-6 px-4">
                                     <a href="#" className="-m-2 flex items-center p-2">
                                         <Image
                                             src="https://tailwindui.com/img/flags/flag-canada.svg"
@@ -189,7 +194,8 @@ export default function MobileMenu() {
                                         </span>
                                         <span className="sr-only">, change currency</span>
                                     </a>
-                                </div>
+                                    
+                                </div> */}
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
