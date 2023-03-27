@@ -10,8 +10,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     // `getStaticProps` is executed on the server side.
     const page = 1;
     const sort = params?.sort || SortOption.CreatedAtDesc;
-    const category = params?.category || 'all';
-    const data = await getProducts(page, sort, category);
+    const category = params?.category || 'all-products';
+
+    if (!Object.values(SortOption).includes(sort as SortOption)) {
+        return {
+            notFound: true
+        };
+    }
+
+    const data = await getProducts(page, sort as SortOption, category as string);
 
     if (!data?.products?.length) {
         return {
@@ -39,19 +46,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
         paths: [
             {
                 params: {
-                    category: 'all',
+                    category: 'all-products',
                     sort: SortOption.CreatedAtDesc
                 }
             },
             {
                 params: {
-                    category: 'all',
+                    category: 'all-products',
                     sort: SortOption.PriceAsc
                 }
             },
             {
                 params: {
-                    category: 'all',
+                    category: 'all-products',
                     sort: SortOption.PriceDesc
                 }
             }

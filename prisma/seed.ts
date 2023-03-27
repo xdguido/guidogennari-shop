@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Category, PrismaClient } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 import slugify from 'slugify';
 import { customAlphabet } from 'nanoid';
@@ -6,8 +6,12 @@ const nanoid = customAlphabet('1234567890abcdefghijk', 4);
 
 const createProductsWithCategories = async () => {
     const categories = await createCategoryTree();
+    const randomizeCategories = [
+        ...categories.furnitureCategories,
+        ...categories.outdoorCategories
+    ];
 
-    const productsPromises = Array.from({ length: 100 }).map(() => {
+    const productsPromises = Array.from({ length: 500 }).map(() => {
         const productName = faker.commerce.product();
         const productSlug = slugify(productName, { remove: /[*+~.()'"!?:@]/g, lower: true });
         const id = nanoid();
@@ -19,7 +23,9 @@ const createProductsWithCategories = async () => {
                 description: faker.commerce.productDescription(),
                 category: {
                     connect: {
-                        name: categories[Math.floor(Math.random() * categories.length)].name
+                        id: randomizeCategories[
+                            Math.floor(Math.random() * randomizeCategories.length)
+                        ].id
                     }
                 }
             }
@@ -29,34 +35,77 @@ const createProductsWithCategories = async () => {
 };
 
 const createCategoryTree = async () => {
-    const firstOrderCategoriesPromises = Array.from({ length: 5 }).map(() => {
-        const categoryName = `1st Order Category ${faker.random.numeric(4)}`;
-        const categorySlug = slugify(categoryName, { remove: /[*+~.()'"!?:@]/g, lower: true });
-        return prisma.category.create({
-            data: { name: categoryName, slug: categorySlug }
-        });
-    });
-    const firstOrderCategories = await prisma.$transaction(firstOrderCategoriesPromises);
+    const globalCategory = await createGlobalCategory();
+    // 1st order categories.
+    const furnitureCategory = await createSubCategory('Furniture', globalCategory);
+    const outdoorCategory = await createSubCategory('Outdoor products', globalCategory);
 
-    const secondOrderCategoriesPromises = Array.from({ length: 20 }).map(() => {
-        const categoryName = `2nd Order Category ${faker.random.numeric(4)}`;
+    //2nd order categories of furnitureCategory.
+    const furnitureCategoriesData = [
+        'Tables & desks',
+        'Wardrobes',
+        'Cabinets & cupboards',
+        'TV & media furniture',
+        'Chairs'
+    ];
+    const furnitureCategoriesPromises = furnitureCategoriesData.map((category) => {
+        const categoryName = category;
         const categorySlug = slugify(categoryName, { remove: /[*+~.()'"!?:@]/g, lower: true });
         return prisma.category.create({
             data: {
                 name: categoryName,
                 slug: categorySlug,
-                parent: {
-                    connect: {
-                        name: firstOrderCategories[
-                            Math.floor(Math.random() * firstOrderCategories.length)
-                        ].name
-                    }
-                }
+                parent: { connect: { id: furnitureCategory.id } }
             }
         });
     });
-    const secondOrderCategories = await prisma.$transaction(secondOrderCategoriesPromises);
-    return [...firstOrderCategories, ...secondOrderCategories];
+    const furnitureCategories = await prisma.$transaction(furnitureCategoriesPromises);
+
+    //2nd order categories of outdoorCategory.
+    const outdoorCategoriesData = [
+        'Outdoor furniture',
+        'Outdoor storage',
+        'Outdoor flooring',
+        'Outdoor accessories',
+        'Outdoor chairs'
+    ];
+    const outdoorCategoriesPromises = outdoorCategoriesData.map((category) => {
+        const categoryName = category;
+        const categorySlug = slugify(categoryName, { remove: /[*+~.()'"!?:@]/g, lower: true });
+        return prisma.category.create({
+            data: {
+                name: categoryName,
+                slug: categorySlug,
+                parent: { connect: { id: outdoorCategory.id } }
+            }
+        });
+    });
+    const outdoorCategories = await prisma.$transaction(outdoorCategoriesPromises);
+    return { furnitureCategories, outdoorCategories };
+};
+
+const createGlobalCategory = async () => {
+    const categoryName = 'All products';
+    const categorySlug = slugify(categoryName, { remove: /[*+~.()'"!?:@]/g, lower: true });
+    return await prisma.category.create({
+        data: { name: categoryName, slug: categorySlug }
+    });
+};
+
+const createSubCategory = async (name: string, parent: Category) => {
+    const categoryName = name;
+    const categorySlug = slugify(categoryName, { remove: /[*+~.()'"!?:@]/g, lower: true });
+    return await prisma.category.create({
+        data: {
+            name: categoryName,
+            slug: categorySlug,
+            parent: {
+                connect: {
+                    id: parent.id
+                }
+            }
+        }
+    });
 };
 
 const prisma = new PrismaClient();

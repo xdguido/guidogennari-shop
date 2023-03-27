@@ -33,11 +33,11 @@ model Product {
 }
 
 model Category {
-  id         String     @id @default(cuid())
-  name       String     @unique @db.VarChar(50)
-  slug       String     @unique
-  parentName String?
-  parent     Category?  @relation("ChildCategories", fields: [parentName], references: [name])
-  children   Category[] @relation("ChildCategories")
-  product    Product[]
+  id       String     @id @default(cuid())
+  name     String     @unique @db.VarChar(50)
+  slug     String     @unique
+  parentId String?
+  parent   Category?  @relation("ChildCategories", fields: [parentId], references: [id])
+  children Category[] @relation("ChildCategories")
+  product  Product[]
 }

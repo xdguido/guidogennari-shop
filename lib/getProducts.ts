@@ -1,70 +1,99 @@
-import { PrismaClient } from '@prisma/client';
-import type { Product } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { SortOption } from '@types';
+
+export type CategoryNode = Prisma.CategoryGetPayload<{
+    include: { children: true; parent: true };
+}>;
+export type CategoryWithChildren = Prisma.CategoryGetPayload<{
+    include: { children: true };
+}>;
 
 const prisma = new PrismaClient();
 
-export default async function getProducts(page: number, sort: any, category: any) {
+async function getCategoryTree(categorySlug: string): Promise<CategoryWithChildren[]> {
+    const categoryNode = await prisma.category.findUnique({
+        where: { slug: categorySlug },
+        include: { children: true }
+    });
+
+    if (!categoryNode) {
+        return null;
+    }
+
+    const childCategories: CategoryWithChildren[] = [categoryNode];
+
+    async function getChildCategories(node: CategoryWithChildren): Promise<void> {
+        if (node.children.length > 0) {
+            for (const child of node.children) {
+                const childNode = await prisma.category.findUnique({
+                    where: { slug: child.slug },
+                    include: { children: true }
+                });
+                childCategories.push(childNode);
+                await getChildCategories(childNode);
+            }
+        }
+    }
+
+    await getChildCategories(categoryNode);
+
+    return childCategories;
+}
+
+export default async function getProducts(page: number, sort: SortOption, category: string) {
     try {
         const takeNumber = 12;
         const skipNumber = (Number(page) - 1) * takeNumber;
 
-        let products: Product[] = [];
-        let total = 0;
+        const categoryTree: CategoryWithChildren[] = await getCategoryTree(category);
 
-        switch (sort) {
-            case SortOption.PriceAsc:
-                products = await prisma.product.findMany({
-                    skip: skipNumber,
-                    take: takeNumber,
-                    ...(category === 'all'
-                        ? {}
-                        : { where: { category: { some: { slug: category } } } }),
-                    orderBy: {
-                        price: 'asc'
-                    }
-                });
-                break;
-            case SortOption.PriceDesc:
-                products = await prisma.product.findMany({
-                    skip: skipNumber,
-                    take: takeNumber,
-                    ...(category === 'all'
-                        ? {}
-                        : { where: { category: { some: { slug: category } } } }),
-                    orderBy: {
-                        price: 'desc'
-                    }
-                });
-                break;
-            case SortOption.CreatedAtDesc:
-                products = await prisma.product.findMany({
-                    skip: skipNumber,
-                    take: takeNumber,
-                    ...(category === 'all'
-                        ? {}
-                        : { where: { category: { some: { slug: category } } } }),
-                    orderBy: {
-                        createdAt: 'desc'
-                    }
-                });
-                break;
-            default:
-                products = null;
-                break;
+        if (!categoryTree) {
+            return null;
         }
 
-        switch (category) {
-            case 'all':
-                total = await prisma.product.count();
-                break;
-            default:
-                total = await prisma.product.count({
-                    where: { category: { some: { slug: category } } }
-                });
-                break;
-        }
-        return { products, total };
+        const products = await prisma.product.findMany({
+            skip: skipNumber,
+            take: takeNumber,
+            where: {
+                category: {
+                    some: {
+                        slug: { in: categoryTree.map((category) => category.slug) }
+                    }
+                }
+            },
+            orderBy: (() => {
+                switch (sort) {
+                    case SortOption.PriceAsc:
+                        return {
+                            price: 'asc'
+                        };
+                    case SortOption.PriceDesc:
+                        return {
+                            price: 'desc'
+                        };
+                    case SortOption.CreatedAtDesc:
+                        return {
+                            createdAt: 'desc'
+                        };
+                }
+            })()
+        });
+
+        const total = await prisma.product.count({
+            where: {
+                category: {
+                    some: {
+                        slug: { in: categoryTree.map((category) => category.slug) }
+                    }
+                }
+            }
+        });
+        const categoryNode: CategoryNode = await prisma.category.findUnique({
+            where: { slug: category },
+            include: { children: true, parent: true }
+        });
+
+        return { products, categoryNode, total };
     } finally {
         await prisma.$disconnect();
     }

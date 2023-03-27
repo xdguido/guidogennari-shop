@@ -10,8 +10,15 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
     // `getStaticProps` is executed on the server side.
     const page = Number(params?.page) || 1;
     const sort = params?.sort || SortOption.CreatedAtDesc;
-    const category = params?.category || 'all';
-    const data = await getProducts(page, sort, category);
+    const category = params?.category || 'all-products';
+
+    if (!Object.values(SortOption).includes(sort as SortOption)) {
+        return {
+            notFound: true
+        };
+    }
+
+    const data = await getProducts(page, sort as SortOption, category as string);
 
     if (!data?.products?.length) {
         return {
@@ -42,22 +49,11 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    // const allCategories = ['new_arrivals', 'brands', 'accessories'];
-    // const categoryPaginationPaths = allCategories.flatMap((category) => {
-    //     // Prerender the next 3 pages after the first page, which is handled by the index page.
-    //     const pages = Array.from({ length: 3 }).map((_, i) => i + 1);
-    //     return pages.map((page) => ({
-    //         params: {
-    //             category,
-    //             page: page.toString()
-    //         }
-    //     }));
-    // });
     return {
         // Other pages will be prerendered at runtime.
         paths: Array.from({ length: 2 }).map((_, i) => ({
             params: {
-                category: 'all',
+                category: 'all-products',
                 sort: SortOption.CreatedAtDesc,
                 page: '' + (i + 2)
             }

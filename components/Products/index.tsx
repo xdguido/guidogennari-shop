@@ -16,7 +16,7 @@ export default function Products({ page, sort, category }) {
     const maxPageIndex = data?.total ? Math.ceil(data.total / size) : page;
 
     return (
-        <ProductsLayout sort={sort} category={category}>
+        <ProductsLayout sort={sort} categoryNode={data.categoryNode}>
             <PaginationButtons
                 sort={sort}
                 category={category}
