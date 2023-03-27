@@ -1,9 +1,12 @@
-import { ArrowUpRightIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
+import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import { FaFacebook, FaTwitter, FaInstagram, FaCopyright } from 'react-icons/fa';
 import Logo from '@ui/Logo';
 import Button from '@ui/Button';
+import type { CategoryWithChildren } from '@lib/getProducts';
 
-export default function Footer() {
+type Props = { categoryTree: CategoryWithChildren[] };
+
+export default function Footer({ categoryTree }: Props) {
     return (
         <footer className="bg-base-100 text-center text-base-content  lg:text-left border-t-2 border-base-200">
             <div className="mx-6 py-10 text-center md:text-left">
@@ -29,70 +32,85 @@ export default function Footer() {
                         <h6 className="lg:ml-3 flex justify-center font-semibold uppercase md:justify-start">
                             Products
                         </h6>
-                        <div className="flex items-center ">
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                Clothing
-                            </Button>
-                        </div>
-                        <div className="flex items-center ">
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                Accessories
-                            </Button>
-                        </div>
-                        <div className="flex items-center ">
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                Brands
-                            </Button>
-                        </div>
+                        <ul>
+                            <li className="flex items-center ">
+                                <Button
+                                    href={`/products/all-products`}
+                                    className="btn-link btn-sm normal-case no-underline  text-base-content"
+                                >
+                                    View all
+                                </Button>
+                            </li>
+                            {categoryTree.map((product) => (
+                                <li key={product.name} className="flex items-center ">
+                                    <Button
+                                        href={`/products/${product.slug}`}
+                                        className="btn-link btn-sm normal-case no-underline  text-base-content"
+                                    >
+                                        {product.name}
+                                    </Button>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                     <div className="flex flex-col gap-2  lg:col-start-4 items-center lg:items-start">
                         <h6 className="lg:ml-3 flex justify-center font-semibold uppercase md:justify-start">
                             Useful links
                         </h6>
-                        <div className="flex items-center ">
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                Frequent questions
-                            </Button>
-                        </div>
-                        <div className="flex items-center ">
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                Settings
-                            </Button>
-                        </div>
-                        <div className="flex items-center ">
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                Orders
-                            </Button>
-                        </div>
-                        <div className="flex items-center ">
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                Help
-                            </Button>
-                        </div>
+                        <ul>
+                            <li className="flex items-center ">
+                                <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
+                                    Frequent questions
+                                </Button>
+                            </li>
+                            <li className="flex items-center ">
+                                <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
+                                    Settings
+                                </Button>
+                            </li>
+                            <li className="flex items-center ">
+                                <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
+                                    Orders
+                                </Button>
+                            </li>
+                            <li className="flex items-center ">
+                                <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
+                                    Help
+                                </Button>
+                            </li>
+                        </ul>
                     </div>
                     <div className="flex flex-col gap-2  lg:col-start-5 items-center lg:items-start">
                         <h6 className="lg:ml-3 font-semibold uppercase md:justify-start">
                             Contact
                         </h6>
-                        <div className="ml-2  flex items-center justify-center md:justify-start">
-                            <MapPinIcon className="hidden sm:block h-5 w-5" aria-hidden="true" />
-                            <Button className="btn-link btn-sm normal-case no-underline text-base-content">
-                                <span className="sr-only">location:</span> Neuquen Capital,
-                                Argentina
-                            </Button>
-                        </div>
-                        <div className="ml-2  flex items-center justify-center md:justify-start">
-                            <EnvelopeIcon className="hidden sm:block h-5 w-5" aria-hidden="true" />
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                <span className="sr-only">email address:</span> info@example.com
-                            </Button>
-                        </div>
-                        <div className="ml-2 flex items-center justify-center md:justify-start">
-                            <PhoneIcon className="hidden sm:block h-5 w-5" aria-hidden="true" />
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                <span className="sr-only">phone number:</span> 299-999-9999
-                            </Button>
-                        </div>
+                        <ul>
+                            <li className="ml-2  flex items-center justify-center md:justify-start">
+                                <MapPinIcon
+                                    className="hidden sm:block h-5 w-5"
+                                    aria-hidden="true"
+                                />
+                                <Button className="btn-link btn-sm normal-case no-underline text-base-content">
+                                    <span className="sr-only">location:</span> Neuquen Capital,
+                                    Argentina
+                                </Button>
+                            </li>
+                            <li className="ml-2  flex items-center justify-center md:justify-start">
+                                <EnvelopeIcon
+                                    className="hidden sm:block h-5 w-5"
+                                    aria-hidden="true"
+                                />
+                                <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
+                                    <span className="sr-only">email address:</span> info@example.com
+                                </Button>
+                            </li>
+                            <li className="ml-2 flex items-center justify-center md:justify-start">
+                                <PhoneIcon className="hidden sm:block h-5 w-5" aria-hidden="true" />
+                                <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
+                                    <span className="sr-only">phone number:</span> 299-999-9999
+                                </Button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
