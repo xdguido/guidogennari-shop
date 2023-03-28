@@ -1,34 +1,51 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
+import { Menu, Transition } from '@headlessui/react';
+import { ChevronDownIcon, ArrowLeftIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 
 import { SortOption } from '@types';
+import type { CategoryNode } from '@lib/getProducts';
 import MobileMenu from './MobileMenu';
 
-import { subCategories, filters } from './filters';
+type Props = {
+    children: React.ReactNode;
+    sort: SortOption;
+    categoryNode: CategoryNode;
+};
 
-type Props = { children: React.ReactNode; sort: SortOption };
-
-export default function ProductsLayout({ children, sort }: Props) {
+export default function ProductsLayout({ children, sort, categoryNode }: Props) {
     return (
         <>
             <div>
                 <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-baseline justify-between border-b border-base-300 pt-10 pb-6">
-                        <h1 className="text-4xl font-bold tracking-tight ">New Arrivals</h1>
+                    <div className="flex items-end justify-between border-b border-base-300 pt-10 pb-6">
+                        <div>
+                            {categoryNode.parent ? (
+                                <Link
+                                    href={`/products/${categoryNode.parent.slug}/${sort}`}
+                                    className="flex items-center gap-2"
+                                >
+                                    <ArrowLeftIcon className="h-5 w-5" aria-hidden="true" />
+                                    <span className="sr-only">go back to</span>{' '}
+                                    {categoryNode.parent.name}
+                                </Link>
+                            ) : null}
+                            <h1 className="text-4xl font-bold tracking-tight ">
+                                {categoryNode.name}
+                            </h1>
+                        </div>
 
-                        <div className="flex items-center">
+                        <div className="flex justify-center items-center">
                             <Menu as="div" className="relative inline-block text-left">
                                 <div className="inline-flex justify-center text-sm">
                                     <span
                                         className="hidden sm:block font-medium"
                                         aria-hidden="true"
                                     >
-                                        Sort by
+                                        Sort by:
                                     </span>
-                                    <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm">
+                                    <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm w-28">
                                         <span className="sr-only">Sort by</span>
                                         {(() => {
                                             switch (sort) {
@@ -38,8 +55,6 @@ export default function ProductsLayout({ children, sort }: Props) {
                                                     return 'Lower price';
                                                 case SortOption.PriceDesc:
                                                     return 'Higher price';
-                                                default:
-                                                    return sort;
                                             }
                                         })()}
                                         <ChevronDownIcon
@@ -64,7 +79,7 @@ export default function ProductsLayout({ children, sort }: Props) {
                                                 <Menu.Item key={sortKey}>
                                                     {({ active }) => (
                                                         <Link
-                                                            href={`/products/${SortOption[sortKey]}`}
+                                                            href={`/products/${categoryNode.slug}/${SortOption[sortKey]}`}
                                                             className={clsx(
                                                                 SortOption[sortKey] === sort
                                                                     ? 'font-medium'
@@ -94,13 +109,13 @@ export default function ProductsLayout({ children, sort }: Props) {
                                 </Transition>
                             </Menu>
 
-                            <button type="button" className="-m-2 ml-5 p-2  sm:ml-7">
+                            {/* <button type="button" className="-m-2 ml-5 p-2  sm:ml-7">
                                 <span className="sr-only">View grid</span>
                                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-                            </button>
+                            </button> */}
 
                             {/* Mobile filter dialog */}
-                            <MobileMenu />
+                            <MobileMenu sort={sort} categoryNode={categoryNode} />
                         </div>
                     </div>
 
@@ -113,78 +128,15 @@ export default function ProductsLayout({ children, sort }: Props) {
                             {/* Filters */}
                             <form className="hidden lg:block">
                                 <h3 className="sr-only">Categories</h3>
-                                <ul
-                                    role="list"
-                                    className="space-y-4 border-b border-base-200 pb-6 text-sm font-medium "
-                                >
-                                    {subCategories.map((category) => (
+                                <ul role="list" className="space-y-4 pb-6 text-sm font-medium ">
+                                    {categoryNode.children.map((category) => (
                                         <li key={category.name}>
-                                            <a href={category.href}>{category.name}</a>
+                                            <Link href={`/products/${category.slug}/${sort}`}>
+                                                {category.name}
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
-
-                                {filters.map((section) => (
-                                    <Disclosure
-                                        as="div"
-                                        key={section.id}
-                                        className="border-b border-base-200 py-6"
-                                    >
-                                        {({ open }) => (
-                                            <>
-                                                <h3 className="-my-3 flow-root">
-                                                    <Disclosure.Button className="flex w-full items-center justify-between bg-base-100 py-3 text-sm ">
-                                                        <span className="font-medium ">
-                                                            {section.name}
-                                                        </span>
-                                                        <span className="ml-6 flex items-center">
-                                                            {open ? (
-                                                                <MinusIcon
-                                                                    className="h-5 w-5"
-                                                                    aria-hidden="true"
-                                                                />
-                                                            ) : (
-                                                                <PlusIcon
-                                                                    className="h-5 w-5"
-                                                                    aria-hidden="true"
-                                                                />
-                                                            )}
-                                                        </span>
-                                                    </Disclosure.Button>
-                                                </h3>
-                                                <Disclosure.Panel className="pt-6">
-                                                    <div className="space-y-4">
-                                                        {section.options.map(
-                                                            (option, optionIdx) => (
-                                                                <div
-                                                                    key={option.value}
-                                                                    className="flex items-center"
-                                                                >
-                                                                    <input
-                                                                        id={`filter-${section.id}-${optionIdx}`}
-                                                                        name={`${section.id}[]`}
-                                                                        defaultValue={option.value}
-                                                                        type="checkbox"
-                                                                        defaultChecked={
-                                                                            option.checked
-                                                                        }
-                                                                        className="h-4 w-4 rounded border-base-300 text-primary focus:ring-primary"
-                                                                    />
-                                                                    <label
-                                                                        htmlFor={`filter-${section.id}-${optionIdx}`}
-                                                                        className="ml-3 text-sm "
-                                                                    >
-                                                                        {option.label}
-                                                                    </label>
-                                                                </div>
-                                                            )
-                                                        )}
-                                                    </div>
-                                                </Disclosure.Panel>
-                                            </>
-                                        )}
-                                    </Disclosure>
-                                ))}
                             </form>
                             {/* Product grid */}
                             <div className="lg:col-span-3">{children}</div>

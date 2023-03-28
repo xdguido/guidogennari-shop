@@ -10,7 +10,8 @@
         "docker-compose": "docker-compose up --build --force-recreate",
         "prepare": "husky install",
         "storybook": "start-storybook -p 6006",
-        "build-storybook": "build-storybook"
+        "build-storybook": "build-storybook",
+        "db-reset": "prisma migrate reset --skip-seed --force && prisma db push && prisma db seed"
     },
     "dependencies": {
         "@headlessui/react": "^1.7.12",
@@ -19,6 +20,7 @@
         "@prisma/client": "^4.10.1",
         "class-variance-authority": "^0.4.0",
         "daisyui": "^2.51.2",
+        "nanoid": "^3.3.4",
         "next": "^13.1.6",
         "next-connect": "^1.0.0-next.3",
         "next-seo": "^5.15.0",
@@ -28,6 +30,7 @@
         "react-dom": "18.2.0",
         "react-hot-toast": "^2.4.0",
         "react-icons": "^4.7.1",
+        "slugify": "^1.6.5",
         "swr": "^2.0.3"
     },
     "devDependencies": {

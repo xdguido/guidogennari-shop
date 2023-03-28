@@ -1,104 +1,108 @@
-import { ArrowUpRightIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
+import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import { FaFacebook, FaTwitter, FaInstagram, FaCopyright } from 'react-icons/fa';
 import Logo from '@ui/Logo';
 import Button from '@ui/Button';
+import type { CategoryWithChildren } from '@lib/getProducts';
 
-export default function Footer() {
+type Props = { categoryTree: CategoryWithChildren[] };
+
+export default function Footer({ categoryTree }: Props) {
     return (
-        <footer className="bg-base-100 text-center text-base-content  lg:text-left">
-            <div className="flex gap-3 items-center justify-end border-b-2 border-base-200 p-6">
-                <Button href="#!" className="btn-circle btn-sm md:btn-md btn-ghost ">
-                    <FaFacebook className="h-5 w-5" />
-                </Button>
-                <Button href="#!" className="btn-circle btn-sm md:btn-md btn-ghost ">
-                    <FaTwitter className="h-5 w-5" />
-                </Button>
-                <Button href="#!" className="btn-circle btn-sm md:btn-md btn-ghost ">
-                    <FaInstagram className="h-5 w-5" />
-                </Button>
-            </div>
-            <div className="mx-6 py-10 text-center md:text-left">
+        <footer className="bg-base-100 text-center text-base-content  lg:text-left border-t-2 border-base-200">
+            <div className="mx-6 lg:mx-20 py-10 text-center md:text-left">
                 <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-5">
-                    <div className="flex flex-col items-center md:items-start">
+                    <div className="flex flex-col items-center  ">
                         <Logo />
-                        <p className="mt-3 text-sm font-medium">
-                            Here you can use rows and columns to organize your footer content. Lorem
-                            ipsum dolor sit amet, consectetur adipisicing elit.
+                        <p className="my-2 text-sm text-center font-medium">
+                            Here you can use rows and columns to organize your footer content.
                         </p>
+                        <div className="flex gap-3 items-center">
+                            <Button href="#!" className="btn-circle btn-sm btn-ghost ">
+                                <FaFacebook className="h-4 w-4" />
+                            </Button>
+                            <Button href="#!" className="btn-circle btn-sm btn-ghost ">
+                                <FaTwitter className="h-4 w-4" />
+                            </Button>
+                            <Button href="#!" className="btn-circle btn-sm btn-ghost ">
+                                <FaInstagram className="h-4 w-4" />
+                            </Button>
+                        </div>
                     </div>
-                    <div className="flex flex-col gap-3 lg:col-start-3 items-center md:items-start">
-                        <h6 className=" flex justify-center font-semibold uppercase md:justify-start">
+                    <ul className="flex flex-col gap-2 lg:col-start-3 items-center lg:items-start">
+                        <h6 className="lg:ml-3 flex justify-center font-semibold uppercase md:justify-start">
                             Products
                         </h6>
-                        <div className="flex items-center ">
-                            <ArrowUpRightIcon className="h-4 w-4" />
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                Clothing
+
+                        <li className="flex items-center ">
+                            <Button
+                                href={`/products/all-products`}
+                                className="btn-link btn-sm normal-case no-underline  text-base-content"
+                            >
+                                View all
                             </Button>
-                        </div>
-                        <div className="flex items-center ">
-                            <ArrowUpRightIcon className="h-4 w-4" />
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                Accessories
-                            </Button>
-                        </div>
-                        <div className="flex items-center ">
-                            <ArrowUpRightIcon className="h-4 w-4" />
-                            <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                Brands
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-3  lg:col-start-4 items-center md:items-start">
-                        <h6 className=" flex justify-center font-semibold uppercase md:justify-start">
+                        </li>
+                        {categoryTree.map((product) => (
+                            <li key={product.name} className="flex items-center ">
+                                <Button
+                                    href={`/products/${product.slug}`}
+                                    className="btn-link btn-sm normal-case no-underline  text-base-content"
+                                >
+                                    {product.name}
+                                </Button>
+                            </li>
+                        ))}
+                    </ul>
+                    <ul className="flex flex-col gap-2  lg:col-start-4 items-center lg:items-start">
+                        <h6 className="lg:ml-3 flex justify-center font-semibold uppercase md:justify-start">
                             Useful links
                         </h6>
-                        <div className="flex items-center ">
-                            <ArrowUpRightIcon className="h-4 w-4" />
+
+                        <li className="flex items-center ">
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Frequent questions
                             </Button>
-                        </div>
-                        <div className="flex items-center ">
-                            <ArrowUpRightIcon className="h-4 w-4" />
+                        </li>
+                        <li className="flex items-center ">
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Settings
                             </Button>
-                        </div>
-                        <div className="flex items-center ">
-                            <ArrowUpRightIcon className="h-4 w-4" />
+                        </li>
+                        <li className="flex items-center ">
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Orders
                             </Button>
-                        </div>
-                        <div className="flex items-center ">
-                            <ArrowUpRightIcon className="h-4 w-4" />
+                        </li>
+                        <li className="flex items-center ">
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
                                 Help
                             </Button>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-3  lg:col-start-5 items-center md:items-start">
-                        <h6 className=" font-semibold uppercase md:justify-start">Contact</h6>
-                        <div className=" flex items-center justify-center md:justify-start">
-                            <MapPinIcon className="h-5 w-5" />
+                        </li>
+                    </ul>
+                    <ul className="flex flex-col gap-2  lg:col-start-5 items-center lg:items-start">
+                        <h6 className="lg:ml-3 font-semibold uppercase md:justify-start">
+                            Contact
+                        </h6>
+
+                        <li className="  flex items-center justify-center md:justify-start">
                             <Button className="btn-link btn-sm normal-case no-underline text-base-content">
-                                Neuquen Capital, Argentina
+                                <MapPinIcon className=" h-5 w-5 mr-2" aria-hidden="true" />
+                                <span className="sr-only">location:</span> Neuquen Capital,
+                                Argentina
                             </Button>
-                        </div>
-                        <div className=" flex items-center justify-center md:justify-start">
-                            <EnvelopeIcon className="h-5 w-5" />
+                        </li>
+                        <li className="  flex items-center justify-center md:justify-start">
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                info@example.com
+                                <EnvelopeIcon className=" h-5 w-5 mr-2" aria-hidden="true" />
+                                <span className="sr-only">email address:</span> info@example.com
                             </Button>
-                        </div>
-                        <div className="flex items-center justify-center md:justify-start">
-                            <PhoneIcon className="h-5 w-5" />
+                        </li>
+                        <li className=" flex items-center justify-center md:justify-start">
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
-                                299-999-9999
+                                <PhoneIcon className="h-5 w-5 mr-2" aria-hidden="true" />
+                                <span className="sr-only">phone number:</span> 299-999-9999
                             </Button>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div className="flex justify-center items-center bg-primary text-primary-content p-6 text-center text-sm">
@@ -110,7 +114,7 @@ export default function Footer() {
                     href="https://guidogennari.vercel.app/"
                     rel="noreferrer"
                 >
-                    <span className="font-bold">Guido</span>Gennari
+                    <span className="font-bold">Guido</span> Gennari
                 </Button>
             </div>
         </footer>

@@ -23,7 +23,12 @@ const nextConfig = {
         return [
             {
                 source: '/products',
-                destination: '/products/newest',
+                destination: '/products/all-products/newest',
+                permanent: true
+            },
+            {
+                source: '/products/:category',
+                destination: '/products/:category/newest',
                 permanent: true
             }
         ];

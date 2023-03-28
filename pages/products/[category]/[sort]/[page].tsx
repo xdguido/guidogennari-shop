@@ -2,6 +2,8 @@
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import { SWRConfig, unstable_serialize } from 'swr';
 import getProducts from '@lib/getProducts';
+import type { CategoryWithChildren } from '@lib/getProducts';
+import getCategories from '@lib/getCategories';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
 import { SortOption } from '@types';
@@ -10,7 +12,16 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
     // `getStaticProps` is executed on the server side.
     const page = Number(params?.page) || 1;
     const sort = params?.sort || SortOption.CreatedAtDesc;
-    const data = await getProducts(page, sort);
+    const category = params?.category || 'all-products';
+
+    if (!Object.values(SortOption).includes(sort as SortOption)) {
+        return {
+            notFound: true
+        };
+    }
+
+    const categoryTree: CategoryWithChildren[] = await getCategories();
+    const data = await getProducts(page, sort as SortOption, category as string);
 
     if (!data?.products?.length) {
         return {
@@ -20,17 +31,19 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
     if (page === 1) {
         return {
             redirect: {
-                destination: `/products/${sort}`,
+                destination: `/products/${category}/${sort}`,
                 permanent: false
             }
         };
     }
     return {
         props: {
+            category,
+            categoryTree,
             sort,
             page,
             fallback: {
-                [unstable_serialize(`/api/products/${sort}/${page}`)]: JSON.parse(
+                [unstable_serialize(`/api/products/${category}/${sort}/${page}`)]: JSON.parse(
                     JSON.stringify(data)
                 )
             }
@@ -40,21 +53,11 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    // const allCategories = ['new_arrivals', 'brands', 'accessories'];
-    // const categoryPaginationPaths = allCategories.flatMap((category) => {
-    //     // Prerender the next 3 pages after the first page, which is handled by the index page.
-    //     const pages = Array.from({ length: 3 }).map((_, i) => i + 1);
-    //     return pages.map((page) => ({
-    //         params: {
-    //             category,
-    //             page: page.toString()
-    //         }
-    //     }));
-    // });
     return {
         // Other pages will be prerendered at runtime.
         paths: Array.from({ length: 2 }).map((_, i) => ({
             params: {
+                category: 'all-products',
                 sort: SortOption.CreatedAtDesc,
                 page: '' + (i + 2)
             }
@@ -64,11 +67,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, sort, page }) {
+export default function Index({ fallback, sort, page, category, categoryTree }) {
     return (
-        <Layout>
+        <Layout categoryTree={categoryTree}>
             <SWRConfig value={{ fallback }}>
-                <Products page={page} sort={sort} />
+                <Products page={page} sort={sort} category={category} />
             </SWRConfig>
         </Layout>
     );
