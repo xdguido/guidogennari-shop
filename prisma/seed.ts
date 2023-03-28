@@ -23,6 +23,11 @@ const createProductsWithCategories = async () => {
     const productsPromises = Array.from({ length: 500 }).map(() => {
         const randomCategory =
             randomizeCategories[Math.floor(Math.random() * randomizeCategories.length)];
+        const randomImage = [
+            'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg',
+            'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg',
+            'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg'
+        ];
         const productName = `${randomCategory.name} example`;
         const productSlug = slugify(productName, { remove: /[*+~.()'"!?:@]/g, lower: true });
         const id = nanoid();
@@ -32,6 +37,7 @@ const createProductsWithCategories = async () => {
                 slug: `${productSlug}-${id}`,
                 price: faker.datatype.float({ min: 10, max: 1500, precision: 0.01 }),
                 description: faker.commerce.productDescription(),
+                imageSrc: randomImage[Math.floor(Math.random() * randomImage.length)],
                 category: {
                     connect: {
                         id: randomCategory.id

@@ -67,7 +67,7 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                                             {categoryNode.parent ? (
                                                 <Link
                                                     href={`/products/${categoryNode.parent.slug}/${sort}`}
-                                                    className="flex items-center gap-2"
+                                                    className="flex items-center gap-2 font-normal"
                                                 >
                                                     <ArrowLeftIcon
                                                         className="h-5 w-5"
