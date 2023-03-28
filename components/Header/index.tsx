@@ -23,7 +23,7 @@ export default function Header({ categoryTree }: Props) {
         <header
             className={clsx(
                 'fixed  w-full z-30 bg-base-100 transition duration-150 ease-in-out motion-reduce:transition-none',
-                top ? '' : 'md:bg-opacity-90 md:backdrop-blur-sm shadow-md'
+                top ? '' : 'shadow-md'
             )}
         >
             <p

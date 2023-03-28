@@ -10,36 +10,36 @@ export type CategoryWithChildren = Prisma.CategoryGetPayload<{
 
 const prisma = new PrismaClient();
 
-export default async function getProducts(page: number, sort: SortOption, category: string) {
-    async function getAllChildCategories(categorySlug: string): Promise<CategoryWithChildren[]> {
-        const categoryNode = await prisma.category.findUnique({
-            where: { slug: categorySlug },
-            include: { children: true }
-        });
+async function getAllChildCategories(categorySlug: string): Promise<CategoryWithChildren[]> {
+    const categoryNode = await prisma.category.findUnique({
+        where: { slug: categorySlug },
+        include: { children: true }
+    });
 
-        if (!categoryNode) {
-            return null;
-        }
+    if (!categoryNode) {
+        return null;
+    }
 
-        const childCategories: CategoryWithChildren[] = [categoryNode];
+    const childCategories: CategoryWithChildren[] = [categoryNode];
 
-        async function getChildCategories(node: CategoryWithChildren): Promise<void> {
-            if (node.children.length > 0) {
-                for (const child of node.children) {
-                    const childNode = await prisma.category.findUnique({
-                        where: { slug: child.slug },
-                        include: { children: true }
-                    });
-                    childCategories.push(childNode);
-                    await getChildCategories(childNode);
-                }
+    async function getChildCategories(node: CategoryWithChildren): Promise<void> {
+        if (node.children.length > 0) {
+            for (const child of node.children) {
+                const childNode = await prisma.category.findUnique({
+                    where: { slug: child.slug },
+                    include: { children: true }
+                });
+                childCategories.push(childNode);
+                await getChildCategories(childNode);
             }
         }
-
-        await getChildCategories(categoryNode);
-
-        return childCategories;
     }
+
+    await getChildCategories(categoryNode);
+
+    return childCategories;
+}
+export default async function getProducts(page: number, sort: SortOption, category: string) {
     try {
         const takeNumber = 12;
         const skipNumber = (Number(page) - 1) * takeNumber;

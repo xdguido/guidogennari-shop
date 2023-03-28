@@ -9,8 +9,8 @@ type Props = { categoryTree: CategoryWithChildren[] };
 export default function Footer({ categoryTree }: Props) {
     return (
         <footer className="bg-base-100 text-center text-base-content  lg:text-left border-t-2 border-base-200">
-            <div className="mx-6 py-10 text-center md:text-left">
-                <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-6 lg:mx-20 py-10 text-center md:text-left">
+                <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-5">
                     <div className="flex flex-col items-center  ">
                         <Logo />
                         <p className="my-2 text-sm text-center font-medium">
@@ -83,22 +83,22 @@ export default function Footer({ categoryTree }: Props) {
                             Contact
                         </h6>
 
-                        <li className="ml-2  flex items-center justify-center md:justify-start">
-                            <MapPinIcon className=" h-5 w-5" aria-hidden="true" />
+                        <li className="  flex items-center justify-center md:justify-start">
                             <Button className="btn-link btn-sm normal-case no-underline text-base-content">
+                                <MapPinIcon className=" h-5 w-5 mr-2" aria-hidden="true" />
                                 <span className="sr-only">location:</span> Neuquen Capital,
                                 Argentina
                             </Button>
                         </li>
-                        <li className="ml-2  flex items-center justify-center md:justify-start">
-                            <EnvelopeIcon className=" h-5 w-5" aria-hidden="true" />
+                        <li className="  flex items-center justify-center md:justify-start">
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
+                                <EnvelopeIcon className=" h-5 w-5 mr-2" aria-hidden="true" />
                                 <span className="sr-only">email address:</span> info@example.com
                             </Button>
                         </li>
-                        <li className="ml-2 flex items-center justify-center md:justify-start">
-                            <PhoneIcon className=" h-5 w-5" aria-hidden="true" />
+                        <li className=" flex items-center justify-center md:justify-start">
                             <Button className="btn-link btn-sm normal-case no-underline  text-base-content">
+                                <PhoneIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                                 <span className="sr-only">phone number:</span> 299-999-9999
                             </Button>
                         </li>
@@ -114,7 +114,7 @@ export default function Footer({ categoryTree }: Props) {
                     href="https://guidogennari.vercel.app/"
                     rel="noreferrer"
                 >
-                    <span className="font-bold">Guido</span>Gennari
+                    <span className="font-bold">Guido</span> Gennari
                 </Button>
             </div>
         </footer>

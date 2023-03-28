@@ -3,32 +3,42 @@ import type { CategoryWithChildren } from './getProducts';
 
 const prisma = new PrismaClient();
 
-export default async function getCategories() {
-    async function getCategoryTree(categorySlugs: string[]): Promise<CategoryWithChildren[]> {
-        const childCategories: CategoryWithChildren[] = [];
+async function getCategoryTree(categorySlugs: string[]): Promise<CategoryWithChildren[]> {
+    const childCategories: CategoryWithChildren[] = [];
 
-        async function getChildCategories(slug: string): Promise<void> {
-            const categoryNode = await prisma.category.findUnique({
-                where: { slug },
-                include: { children: true }
-            });
+    async function getChildCategories(slug: string): Promise<void> {
+        const categoryNode = await prisma.category.findUnique({
+            where: { slug },
+            include: { children: true }
+        });
 
-            if (!categoryNode) {
-                return;
-            }
-
-            childCategories.push(categoryNode);
+        if (!categoryNode) {
+            return;
         }
 
-        for (const slug of categorySlugs) {
-            await getChildCategories(slug);
-        }
-
-        return childCategories;
+        childCategories.push(categoryNode);
     }
 
+    for (const slug of categorySlugs) {
+        await getChildCategories(slug);
+    }
+
+    return childCategories;
+}
+async function getPrimaryCategories() {
+    const globalCategory = await prisma.category.findFirst({
+        where: { parentId: null },
+        include: { children: true }
+    });
+    const categorySlugs = globalCategory.children.map((categoryNode) => {
+        return categoryNode.slug;
+    });
+    return categorySlugs;
+}
+export default async function getCategories() {
     try {
-        const categoryTree = await getCategoryTree(['furniture', 'outdoor-products']);
+        const primaryCategories = await getPrimaryCategories();
+        const categoryTree = await getCategoryTree(primaryCategories);
         return categoryTree;
     } finally {
         await prisma.$disconnect();

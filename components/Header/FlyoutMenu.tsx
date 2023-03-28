@@ -51,78 +51,44 @@ export default function FlyoutMenu({ categoryTree }: Props) {
 
                                     <div className="relative bg-base-100">
                                         <div className="mx-auto max-w-7xl px-8">
-                                            <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
-                                                <div className="col-start-2 grid grid-cols-2 gap-x-8">
-                                                    {/* {category.featured.map((item) => (
-                                                        <div
-                                                            key={item.name}
-                                                            className="group relative text-base sm:text-sm"
+                                            <div className="grid grid-cols-4 gap-8 p-8 text-sm">
+                                                {categoryTree.map((section) => (
+                                                    <div key={section.name}>
+                                                        <p
+                                                            id={`${section.name}-heading`}
+                                                            className="font-medium "
                                                         >
-                                                            <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-base-200 group-hover:opacity-75">
-                                                                <Image
-                                                                    src={item.imageSrc}
-                                                                    alt={item.imageAlt}
-                                                                    // width={100}
-                                                                    // height={100}
-                                                                    fill
-                                                                    className="object-cover object-center"
-                                                                />
-                                                            </div>
-                                                            <a
-                                                                href={item.href}
-                                                                className="mt-6 block font-medium "
-                                                            >
-                                                                <span
-                                                                    className="absolute inset-0 z-50"
-                                                                    aria-hidden="true"
-                                                                />
-                                                                {item.name}
-                                                            </a>
-                                                            <p aria-hidden="true" className="mt-1">
-                                                                Shop now
-                                                            </p>
-                                                        </div>
-                                                    ))} */}
-                                                </div>
-                                                <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
-                                                    {categoryTree.map((section) => (
-                                                        <div key={section.name}>
-                                                            <p
-                                                                id={`${section.name}-heading`}
-                                                                className="font-medium "
-                                                            >
-                                                                {section.name}
-                                                            </p>
-                                                            <ul
-                                                                role="list"
-                                                                aria-labelledby={`${section.name}-heading`}
-                                                                className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                                            >
-                                                                <li className="flex">
+                                                            {section.name}
+                                                        </p>
+                                                        <ul
+                                                            role="list"
+                                                            aria-labelledby={`${section.name}-heading`}
+                                                            className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
+                                                        >
+                                                            <li className="flex">
+                                                                <Link
+                                                                    href={`/products/${section.slug}`}
+                                                                    className=""
+                                                                >
+                                                                    View all
+                                                                </Link>
+                                                            </li>
+                                                            {section.children.map((item) => (
+                                                                <li
+                                                                    key={item.name}
+                                                                    className="flex"
+                                                                >
                                                                     <Link
-                                                                        href={`/products/${section.slug}`}
+                                                                        href={`/products/${item.slug}`}
                                                                         className=""
                                                                     >
-                                                                        View all
+                                                                        {item.name}
                                                                     </Link>
                                                                 </li>
-                                                                {section.children.map((item) => (
-                                                                    <li
-                                                                        key={item.name}
-                                                                        className="flex"
-                                                                    >
-                                                                        <Link
-                                                                            href={`/products/${item.slug}`}
-                                                                            className=""
-                                                                        >
-                                                                            {item.name}
-                                                                        </Link>
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        </div>
-                                                    ))}
-                                                </div>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>

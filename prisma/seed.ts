@@ -5,14 +5,25 @@ import { customAlphabet } from 'nanoid';
 const nanoid = customAlphabet('1234567890abcdefghijk', 4);
 
 const createProductsWithCategories = async () => {
-    const categories = await createCategoryTree();
+    const {
+        furnitureCategories,
+        outdoorCategories,
+        workCategories,
+        kitchenCategories,
+        storageCategories
+    } = await createCategoryTree();
     const randomizeCategories = [
-        ...categories.furnitureCategories,
-        ...categories.outdoorCategories
+        ...furnitureCategories,
+        ...outdoorCategories,
+        ...workCategories,
+        ...kitchenCategories,
+        ...storageCategories
     ];
 
     const productsPromises = Array.from({ length: 500 }).map(() => {
-        const productName = faker.commerce.product();
+        const randomCategory =
+            randomizeCategories[Math.floor(Math.random() * randomizeCategories.length)];
+        const productName = `${randomCategory.name} example`;
         const productSlug = slugify(productName, { remove: /[*+~.()'"!?:@]/g, lower: true });
         const id = nanoid();
         return prisma.product.create({
@@ -23,9 +34,7 @@ const createProductsWithCategories = async () => {
                 description: faker.commerce.productDescription(),
                 category: {
                     connect: {
-                        id: randomizeCategories[
-                            Math.floor(Math.random() * randomizeCategories.length)
-                        ].id
+                        id: randomCategory.id
                     }
                 }
             }
@@ -36,52 +45,66 @@ const createProductsWithCategories = async () => {
 
 const createCategoryTree = async () => {
     const globalCategory = await createGlobalCategory();
-    // 1st order categories.
-    const furnitureCategory = await createSubCategory('Furniture', globalCategory);
-    const outdoorCategory = await createSubCategory('Outdoor products', globalCategory);
+    const furnitureCategory = await createCategory(globalCategory, 'Furniture');
+    const outdoorCategory = await createCategory(globalCategory, 'Outdoor products');
+    const storageCategory = await createCategory(globalCategory, 'Storage & organisation');
+    const kitchenCategory = await createCategory(globalCategory, 'Kitchen & appliances');
+    const workCategory = await createCategory(globalCategory, 'Working from home');
 
-    //2nd order categories of furnitureCategory.
-    const furnitureCategoriesData = [
-        'Tables & desks',
-        'Wardrobes',
-        'Cabinets & cupboards',
-        'TV & media furniture',
-        'Chairs'
-    ];
-    const furnitureCategoriesPromises = furnitureCategoriesData.map((category) => {
-        const categoryName = category;
-        const categorySlug = slugify(categoryName, { remove: /[*+~.()'"!?:@]/g, lower: true });
-        return prisma.category.create({
-            data: {
-                name: categoryName,
-                slug: categorySlug,
-                parent: { connect: { id: furnitureCategory.id } }
-            }
-        });
-    });
-    const furnitureCategories = await prisma.$transaction(furnitureCategoriesPromises);
+    const [
+        storageCategories,
+        kitchenCategories,
+        workCategories,
+        furnitureCategories,
+        outdoorCategories
+    ] = await Promise.all([
+        createCategories(storageCategory, [
+            'Storage & organisers',
+            'Bookcases & shelving units',
+            'Clothes stands & shoe racks',
+            'Storage solution systems',
+            'Chest of drawers & drawer units',
+            'Wall shelves'
+        ]),
+        createCategories(kitchenCategory, [
+            'Kitchen cabinets',
+            'Interior organisers',
+            'Appliances',
+            'Kitchen wall storage',
+            'Kitchen islands & trolleys',
+            'Kitchen doors & drawer fronts',
+            'Kitchenettes'
+        ]),
+        createCategories(workCategory, [
+            'Desks & computer desks',
+            'Desk chairs',
+            'Paper & media organisers',
+            'Room dividers',
+            'Desk dividers'
+        ]),
+        createCategories(furnitureCategory, [
+            'Tables & desks',
+            'Wardrobes',
+            'Cabinets & cupboards',
+            'TV & media furniture',
+            'Chairs'
+        ]),
+        createCategories(outdoorCategory, [
+            'Outdoor furniture',
+            'Outdoor storage',
+            'Outdoor flooring',
+            'Outdoor accessories',
+            'Outdoor chairs'
+        ])
+    ]);
 
-    //2nd order categories of outdoorCategory.
-    const outdoorCategoriesData = [
-        'Outdoor furniture',
-        'Outdoor storage',
-        'Outdoor flooring',
-        'Outdoor accessories',
-        'Outdoor chairs'
-    ];
-    const outdoorCategoriesPromises = outdoorCategoriesData.map((category) => {
-        const categoryName = category;
-        const categorySlug = slugify(categoryName, { remove: /[*+~.()'"!?:@]/g, lower: true });
-        return prisma.category.create({
-            data: {
-                name: categoryName,
-                slug: categorySlug,
-                parent: { connect: { id: outdoorCategory.id } }
-            }
-        });
-    });
-    const outdoorCategories = await prisma.$transaction(outdoorCategoriesPromises);
-    return { furnitureCategories, outdoorCategories };
+    return {
+        furnitureCategories,
+        outdoorCategories,
+        workCategories,
+        kitchenCategories,
+        storageCategories
+    };
 };
 
 const createGlobalCategory = async () => {
@@ -92,7 +115,16 @@ const createGlobalCategory = async () => {
     });
 };
 
-const createSubCategory = async (name: string, parent: Category) => {
+const createCategories = async (parentCategory: Category, categoryData: string[]) => {
+    const categories = [];
+    for (const category of categoryData) {
+        const createdCategory = await createCategory(parentCategory, category);
+        categories.push(createdCategory);
+    }
+    return categories;
+};
+
+const createCategory = async (parentCategory: Category, name: string) => {
     const categoryName = name;
     const categorySlug = slugify(categoryName, { remove: /[*+~.()'"!?:@]/g, lower: true });
     return await prisma.category.create({
@@ -101,7 +133,7 @@ const createSubCategory = async (name: string, parent: Category) => {
             slug: categorySlug,
             parent: {
                 connect: {
-                    id: parent.id
+                    id: parentCategory.id
                 }
             }
         }
