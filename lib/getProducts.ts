@@ -1,4 +1,5 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+import { prisma } from './db';
+import { Prisma } from '@prisma/client';
 import { SortOption } from '@types';
 
 export type CategoryNode = Prisma.CategoryGetPayload<{
@@ -7,8 +8,6 @@ export type CategoryNode = Prisma.CategoryGetPayload<{
 export type CategoryWithChildren = Prisma.CategoryGetPayload<{
     include: { children: true };
 }>;
-
-const prisma = new PrismaClient();
 
 async function getAllChildCategories(categorySlug: string): Promise<CategoryWithChildren[]> {
     const categoryNode = await prisma.category.findUnique({

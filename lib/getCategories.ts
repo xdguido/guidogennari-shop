@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from './db';
 import type { CategoryWithChildren } from './getProducts';
-
-const prisma = new PrismaClient();
 
 async function getCategoryTree(categorySlugs: string[]): Promise<CategoryWithChildren[]> {
     const childCategories: CategoryWithChildren[] = [];
