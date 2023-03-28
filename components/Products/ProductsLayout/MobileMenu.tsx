@@ -56,9 +56,13 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                                 </div>
 
                                 {/* Filters */}
-                                <form className="mt-4 border-t border-base-200">
+                                <div className="mt-4 border-t border-base-200">
                                     <h3 className="sr-only">Categories</h3>
-                                    <ul role="list" className="space-y-4 p-4 font-medium ">
+                                    <ul
+                                        role="list"
+                                        className="space-y-4 p-4 font-medium "
+                                        onClick={() => setMobileFiltersOpen(false)}
+                                    >
                                         <li>
                                             {categoryNode.parent ? (
                                                 <Link
@@ -74,6 +78,10 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                                                 </Link>
                                             ) : null}
                                         </li>
+                                        <li className="font-bold text-lg">
+                                            <span className="sr-only">current category</span>
+                                            {categoryNode.name}
+                                        </li>
                                         {categoryNode.children.map((category) => (
                                             <li key={category.name}>
                                                 <Link href={`/products/${category.slug}/${sort}`}>
@@ -82,7 +90,7 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                                             </li>
                                         ))}
                                     </ul>
-                                </form>
+                                </div>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
