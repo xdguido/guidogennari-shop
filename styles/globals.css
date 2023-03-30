@@ -3,5 +3,8 @@
 @tailwind utilities;
 
 .divider {
-    @apply my-1;
+    @apply my-6;
+}
+html {
+    scroll-padding-top: 100px;
 }
