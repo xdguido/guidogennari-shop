@@ -6,10 +6,12 @@ import { Product } from '@prisma/client';
 import { useRef } from 'react';
 import Button from '@ui/Button';
 import { ShareIcon, HeartIcon } from '@heroicons/react/24/outline';
+import Tabs from './Tabs';
+import RecomendedProducts from './RecomendedProducts';
 
-type Prop = { product: string };
-export default function Index({ product }: Prop) {
-    const { data } = useSwr<Product>(`/api/product/${product}`, fetcher);
+type Prop = { productSlug: string };
+export default function Index({ productSlug }: Prop) {
+    const { data: product } = useSwr<Product>(`/api/product/${productSlug}`, fetcher);
 
     const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -26,7 +28,7 @@ export default function Index({ product }: Prop) {
     return (
         <div className="mx-auto max-w-6xl min-h-screen px-4 py-6 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-                <div className="w-full mx-auto">
+                <div className="w-full">
                     <div className="carousel" ref={carouselRef}>
                         <div className="carousel-item aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-base-200">
                             <Image
@@ -107,13 +109,14 @@ export default function Index({ product }: Prop) {
                             />
                         </button>
                     </div>
+                    <Tabs />
                 </div>
                 <div className="px-6">
                     <h1 className="mb-2 text-2xl font-semibold tracking-tight leading-9">
-                        {data.name}
+                        {product.name}
                     </h1>
                     <div className="mb-4 flex items-center gap-4">
-                        <p className="text-xl">$ {data.price}</p>
+                        <p className="text-xl">$ {product.price.toLocaleString('es')}</p>
                         {/* <div className="rating">
                             <input type="radio" name="rating-1" className="mask mask-star" />
                             <input
@@ -127,7 +130,7 @@ export default function Index({ product }: Prop) {
                                 <input type="radio" name="rating-1" className="mask mask-star" />
                             </div> */}
                     </div>
-                    <p className="mb-4 text-md">{data.description}</p>
+                    <p className="mb-4 text-md">{product.description}</p>
                     <div className="md:grid grid-cols-2 gap-2">
                         <Button className="btn-primary btn-block mb-3">Buy now</Button>
                         <Button className="btn-outline btn-block mb-3">Add to cart</Button>
@@ -140,15 +143,15 @@ export default function Index({ product }: Prop) {
                     </Button>
                     <div className="divider"></div>
                     <h3 className="mb-4 font-semibold">Details</h3>
-                    <ul className="ml-6">
-                        <li className="mb-2 list-disc">Some detail</li>
-                        <li className="mb-2 list-disc">Another interesting detail</li>
-                        <li className="mb-2 list-disc">More details, yeah</li>
-                        <li className="mb-2 list-disc">Stop it</li>
+                    <ul className="ml-5">
+                        <li className="mb-1 list-disc">Some detail</li>
+                        <li className="mb-1 list-disc">Another interesting detail</li>
+                        <li className="mb-1 list-disc">More details, yeah</li>
+                        <li className="mb-1 list-disc">Stop it</li>
                     </ul>
-                    <div className="divider"></div>
                 </div>
             </div>
+            <RecomendedProducts />
         </div>
     );
 }

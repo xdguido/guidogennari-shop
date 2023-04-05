@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
         // Other pages will be prerendered at runtime.
-        paths: [{ params: { product: 'chest-of-drawers-and-drawer-units-example-30ff' } }],
+        paths: [],
         // Block the request for non-generated pages and cache them in the background
         fallback: 'blocking'
     };
@@ -44,7 +44,7 @@ export default function Index({ fallback, product, categoryTree }) {
     return (
         <Layout categoryTree={categoryTree}>
             <SWRConfig value={{ fallback }}>
-                <Product product={product} />
+                <Product productSlug={product} />
             </SWRConfig>
         </Layout>
     );

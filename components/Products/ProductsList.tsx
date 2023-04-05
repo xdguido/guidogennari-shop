@@ -20,7 +20,6 @@ export default function ProductsList({ products }: Props) {
     //         <>
     //             <div className="bg-base-100 mx-auto max-w-2xl py-4 sm:py-6 lg:max-w-7xl lg:py-8 animate-pulse">
     //                 <h2 className="sr-only">Loading</h2>
-
     //                 <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
     //                     {Array.from({ length: 6 }).map((_, index) => (
     //                         <div key={index} className="group">
@@ -40,7 +39,7 @@ export default function ProductsList({ products }: Props) {
     // }
     return (
         <>
-            <div className="bg-base-100 mx-auto max-w-2xl py-4 sm:py-6 lg:max-w-7xl lg:py-8">
+            <div className="bg-base-100 mx-auto py-4 sm:py-6 lg:py-8">
                 <h2 className="sr-only">Products</h2>
 
                 <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
@@ -66,7 +65,9 @@ export default function ProductsList({ products }: Props) {
                             </div>
                             <h3 className="mt-4 text-sm ">{product.name}</h3>
                             <p className="sr-only">{product.description}</p>
-                            <p className="mt-1 text-lg font-medium ">$ {product.price}</p>
+                            <p className="mt-1 text-lg font-medium ">
+                                $ {product.price.toLocaleString('es')}
+                            </p>
                         </Link>
                     ))}
                 </div>

@@ -32,7 +32,7 @@ export default function Header({ categoryTree }: Props) {
                     top ? 'flex' : 'hidden'
                 )}
             >
-                Site under construction. There may be broken links or buttons.
+                Site under construction. There may be broken links or fake content.
             </p>
             <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className={clsx('flex items-center', top ? 'h-20' : 'h-16')}>
