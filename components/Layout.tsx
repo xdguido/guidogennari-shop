@@ -13,7 +13,7 @@ export default function Layout({ children, categoryTree }: Props) {
     return (
         <div className="flex flex-col min-h-screen bg-base-100 text-base-content">
             <Header categoryTree={categoryTree} />
-            <main className="flex flex-auto flex-col pt-32">{children}</main>
+            <main className="flex flex-auto flex-col pt-10">{children}</main>
             <Footer categoryTree={categoryTree} />
         </div>
     );

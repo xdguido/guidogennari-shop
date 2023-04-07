@@ -19,7 +19,7 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
         <>
             <div>
                 <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-end justify-between border-b border-base-300 pt-10 pb-6">
+                    <div className="flex items-end justify-between border-b border-base-300 pb-6">
                         <div>
                             {categoryNode.parent ? (
                                 <Link
