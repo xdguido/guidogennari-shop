@@ -1,5 +1,4 @@
 import { Category, PrismaClient } from '@prisma/client';
-import { faker } from '@faker-js/faker';
 import slugify from 'slugify';
 import { customAlphabet } from 'nanoid';
 const nanoid = customAlphabet('1234567890abcdefghijk', 4);
@@ -20,6 +19,12 @@ const createProductsWithCategories = async () => {
         ...storageCategories
     ];
 
+    function getRandomNumber() {
+        const randomNumber = Math.floor(Math.random() * 999000);
+        const randomPrice = randomNumber + 1000;
+        return randomPrice;
+    }
+
     const productsPromises = Array.from({ length: 500 }).map(() => {
         const randomCategory =
             randomizeCategories[Math.floor(Math.random() * randomizeCategories.length)];
@@ -28,6 +33,7 @@ const createProductsWithCategories = async () => {
             'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg',
             'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg'
         ];
+        const randomPrice = getRandomNumber();
         const productName = `${randomCategory.name} example`;
         const productSlug = slugify(productName, { remove: /[*+~.()'"!?:@]/g, lower: true });
         const id = nanoid();
@@ -35,8 +41,9 @@ const createProductsWithCategories = async () => {
             data: {
                 name: productName,
                 slug: `${productSlug}-${id}`,
-                price: faker.datatype.float({ min: 10, max: 1500, precision: 0.01 }),
-                description: faker.commerce.productDescription(),
+                price: randomPrice,
+                description:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et ligula ullamcorper malesuada proin libero nunc consequat interdum.',
                 imageSrc: randomImage[Math.floor(Math.random() * randomImage.length)],
                 category: {
                     connect: {

@@ -6,25 +6,35 @@ import getCategories from '@lib/getCategories';
 import getProduct from '@lib/getProduct';
 import Layout from '@components/Layout';
 import Product from '@components/Product';
+import getProducts from '@lib/getProducts';
+import { SortOption } from '@types';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     // `getStaticProps` is executed on the server side.
-    const product = params?.product;
+    const productSlug = params?.product;
 
     const categoryTree: CategoryWithChildren[] = await getCategories();
-    const data = await getProduct(product as string);
+    const productData = await getProduct(productSlug as string);
+    const productCategory = productData?.category[0]?.slug;
+    const productsData = await getProducts(1, 'newest' as SortOption, productCategory);
 
-    if (!data) {
+    if (!productData || !productsData) {
         return {
             notFound: true
         };
     }
     return {
         props: {
-            product,
+            productSlug,
+            categorySlug: productCategory,
             categoryTree,
             fallback: {
-                [unstable_serialize(`/api/product/${product}`)]: JSON.parse(JSON.stringify(data))
+                [unstable_serialize(`/api/product/${productSlug}`)]: JSON.parse(
+                    JSON.stringify(productData)
+                ),
+                [unstable_serialize(`/api/products/${productCategory}/newest/1`)]: JSON.parse(
+                    JSON.stringify(productsData)
+                )
             }
         },
         revalidate: 60
@@ -40,11 +50,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, product, categoryTree }) {
+export default function Index({ fallback, productSlug, categorySlug, categoryTree }) {
     return (
         <Layout categoryTree={categoryTree}>
             <SWRConfig value={{ fallback }}>
-                <Product productSlug={product} />
+                <Product productSlug={productSlug} categorySlug={categorySlug} />
             </SWRConfig>
         </Layout>
     );

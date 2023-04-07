@@ -7,51 +7,37 @@ export default function Tabs() {
         FAQ: [
             {
                 id: 1,
-                title: 'Does drinking coffee make you smarter?',
-                date: '5h ago',
-                commentCount: 5,
-                shareCount: 2
+                question: 'What is the maximum weight that the drawer can hold?',
+                answer: 'The drawer can hold up to 10 pounds of weight.'
             },
             {
                 id: 2,
-                title: "So you've bought coffee... now what?",
-                date: '2h ago',
-                commentCount: 3,
-                shareCount: 2
+                question: 'Does this desk have any storage space?',
+                answer: 'Yes, this desk has a built-in drawer for storage.'
+            },
+            {
+                id: 3,
+                question: 'Does this desk come with a chair?',
+                answer: 'No, this desk does not come with a chair. It is sold separately.'
             }
         ],
         Reviews: [
             {
                 id: 1,
-                title: 'Is tech making coffee better or worse?',
-                date: 'Jan 7',
-                commentCount: 29,
-                shareCount: 16
+                question: 'What is the maximum weight that the drawer can hold?',
+                answer: 'The drawer can hold up to 10 pounds of weight.'
             },
             {
                 id: 2,
-                title: 'The most innovative things happening in coffee',
-                date: 'Mar 19',
-                commentCount: 24,
-                shareCount: 12
+                question: 'Does this desk have any storage space?',
+                answer: 'Yes, this desk has a built-in drawer for storage.'
+            },
+            {
+                id: 3,
+                question: 'Does this desk come with a chair?',
+                answer: 'No, this desk does not come with a chair. It is sold separately.'
             }
         ]
-        // Trending: [
-        //     {
-        //         id: 1,
-        //         title: 'Ask Me Anything: 10 answers to your questions about coffee',
-        //         date: '2d ago',
-        //         commentCount: 9,
-        //         shareCount: 5
-        //     },
-        //     {
-        //         id: 2,
-        //         title: "The worst advice we've ever heard about coffee",
-        //         date: '4d ago',
-        //         commentCount: 1,
-        //         shareCount: 2
-        //     }
-        // ]
     });
 
     return (
@@ -64,7 +50,7 @@ export default function Tabs() {
                             className={({ selected }) =>
                                 clsx(
                                     'w-full rounded-lg py-2.5 text-sm font-medium leading-5 ',
-                                    'ring-primary  focus:outline-none focus:ring-2',
+                                    'ring-primary ring-offset-2 ring-offset-base-300 focus:outline-none focus:ring-2',
                                     selected
                                         ? 'bg-base-100 shadow'
                                         : 'text-base-content hover:bg-base-300'
@@ -86,21 +72,13 @@ export default function Tabs() {
                         >
                             <ul>
                                 {posts.map((post) => (
-                                    <li
-                                        key={post.id}
-                                        className="relative rounded-md p-3 hover:bg-base-100"
-                                    >
+                                    <li key={post.id} className="relative rounded-md p-3">
                                         <h3 className="text-sm font-medium leading-5">
-                                            {post.title}
+                                            {post.question}
                                         </h3>
-
-                                        <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
-                                            <li>{post.date}</li>
-                                            <li>&middot;</li>
-                                            <li>{post.commentCount} comments</li>
-                                            <li>&middot;</li>
-                                            <li>{post.shareCount} shares</li>
-                                        </ul>
+                                        <p className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
+                                            {post.answer}
+                                        </p>
                                     </li>
                                 ))}
                             </ul>
