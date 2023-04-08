@@ -17,7 +17,7 @@ export default function PaginationButtons({
     return (
         <div
             className={clsx(
-                'flex items-center justify-center border-base-300 bg-base-100 px-4 py-3 sm:px-6',
+                'flex items-center justify-center border-neutral bg-base-100 px-4 py-3 sm:px-6',
                 isTop ? '' : 'border-t'
             )}
         >
@@ -26,9 +26,9 @@ export default function PaginationButtons({
                     <Link
                         href={`/products/${category}/${sort}/${currentPageIndex - 1}`}
                         className={clsx(
-                            'relative inline-flex items-center rounded-md border border-base-300  px-4 py-2 text-sm font-medium bg-base-100',
+                            'relative inline-flex items-center rounded-md border border-base-content  px-4 py-2 text-sm font-medium bg-base-100',
                             currentPageIndex === 1
-                                ? 'text-base-300 pointer-events-none'
+                                ? 'text-neutral border-neutral pointer-events-none'
                                 : 'hover:bg-base-200'
                         )}
                     >
@@ -48,9 +48,9 @@ export default function PaginationButtons({
                     <Link
                         href={`/products/${category}/${sort}/${currentPageIndex + 1}`}
                         className={clsx(
-                            'relative inline-flex items-center rounded-md border border-base-300  px-4 py-2 text-sm font-medium bg-base-100',
+                            'relative inline-flex items-center rounded-md border border-base-content  px-4 py-2 text-sm font-medium bg-base-100',
                             currentPageIndex === maxPageIndex
-                                ? 'text-base-300 pointer-events-none'
+                                ? 'text-neutral border-neutral pointer-events-none'
                                 : 'hover:bg-base-200'
                         )}
                     >
