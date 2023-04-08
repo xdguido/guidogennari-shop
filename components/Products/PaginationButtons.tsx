@@ -17,7 +17,7 @@ export default function PaginationButtons({
     return (
         <div
             className={clsx(
-                'flex items-center justify-center border-neutral bg-base-100 px-4 py-3 sm:px-6',
+                'flex items-center justify-center bg-base-100 px-4 py-3 sm:px-6',
                 isTop ? '' : 'border-t'
             )}
         >
