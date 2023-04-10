@@ -107,7 +107,7 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                         </div>
 
                         <h3 className=" font-semibold">Details</h3>
-                        <ul className="text-sm ml-5 mb-10">
+                        <ul className="text-sm ml-5">
                             <li className="mb-1 list-disc">
                                 Material: Genuine Leather, Solid Wood Frame
                             </li>
@@ -117,6 +117,39 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                             </li>
                             <li className="mb-1 list-disc">Warranty: 1 year</li>
                         </ul>
+
+                        <h3 className=" font-semibold">Dimensions</h3>
+                        <div className="overflow-x-auto">
+                            <table className="table w-full text-sm">
+                                {/* head */}
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Height</th>
+                                        <th>Width</th>
+                                        <th>Length</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* row 1 */}
+                                    <tr>
+                                        <th>Main desk</th>
+                                        <td>83 cm</td>
+                                        <td>100 cm</td>
+                                        <td>50 cm</td>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    {/* row 1 */}
+                                    <tr>
+                                        <th>Secondary desk</th>
+                                        <td>83 cm</td>
+                                        <td>100 cm</td>
+                                        <td>50 cm</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
