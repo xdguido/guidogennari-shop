@@ -6,7 +6,50 @@ module.exports = {
     // theme: ['dark'],
     // important: true,
     daisyui: {
-        themes: ['light', 'dark']
+        themes: [
+            {
+                light: {
+                    primary: '#047857',
+
+                    secondary: '#fb923c',
+
+                    accent: '#e879f9',
+
+                    neutral: '#9ca3af',
+
+                    'base-100': '#f3f4f6',
+
+                    info: '#3b82f6',
+
+                    success: '#36D399',
+
+                    warning: '#FBBD23',
+
+                    error: '#F87272'
+                }
+            },
+            {
+                dark: {
+                    primary: '#047857',
+
+                    secondary: '#fb923c',
+
+                    accent: '#e879f9',
+
+                    neutral: '#9ca3af',
+
+                    'base-100': '#111827',
+
+                    info: '#3b82f6',
+
+                    success: '#36D399',
+
+                    warning: '#FBBD23',
+
+                    error: '#F87272'
+                }
+            }
+        ]
     },
     corePlugins: {
         aspectRatio: false

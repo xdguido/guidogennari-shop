@@ -1,13 +1,13 @@
 import { DefaultSeoProps } from 'next-seo';
 
-const siteName = 'Guido Gennari | Web developer';
+const siteName = 'Guido Gennari | E-commerce';
 
 const config: DefaultSeoProps = {
     // title: undefined,
     // titleTemplate: '%s | Guido Gennari',
     defaultTitle: siteName,
-    description: 'Guido Gennari personal website. Work and socials.',
-    canonical: 'https://guidogennari.vercel.app/',
+    description: 'Guido Gennari E-commerce website',
+    canonical: 'https://nextjs-prisma-ecommerce.vercel.app/',
     additionalMetaTags: [
         { property: 'author', content: 'guido gennari' },
         {
@@ -18,7 +18,7 @@ const config: DefaultSeoProps = {
     openGraph: {
         type: 'website',
         locale: 'en_US',
-        url: 'https://guidogennari.vercel.app/',
+        url: 'https://nextjs-prisma-ecommerce.vercel.app/',
         siteName: siteName,
         images: [
             {
