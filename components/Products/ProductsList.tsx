@@ -42,7 +42,7 @@ export default function ProductsList({ products }: Props) {
             <div className="bg-base-100 mx-auto py-4 sm:py-6 lg:py-8">
                 <h2 className="sr-only">Products</h2>
 
-                <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
+                <div className="grid grid-cols-1 gap-y-10 gap-x-5 sm:grid-cols-2 xl:grid-cols-3">
                     {products.map((product) => (
                         <Link key={product.id} href={`/product/${product.slug}`} className="group">
                             <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8">
