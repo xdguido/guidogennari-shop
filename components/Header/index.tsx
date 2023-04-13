@@ -53,11 +53,23 @@ export default function Header({ categoryTree }: Props) {
                         <div className="ml-auto flex items-center">
                             <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                                 {session ? (
-                                    <Link href="/api/auth/signout" className="text-sm font-medium ">
+                                    <Link
+                                        href="/api/auth/signout"
+                                        onClick={() => {
+                                            signOut();
+                                        }}
+                                        className="text-sm font-medium "
+                                    >
                                         Sign out
                                     </Link>
                                 ) : (
-                                    <Link href="/api/auth/signin" className="text-sm font-medium ">
+                                    <Link
+                                        href="/api/auth/signin"
+                                        onClick={() => {
+                                            signIn();
+                                        }}
+                                        className="text-sm font-medium "
+                                    >
                                         Sign in
                                     </Link>
                                 )}
