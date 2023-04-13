@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import MobileMenu from './MobileMenu';
@@ -11,6 +13,7 @@ type Props = { categoryTree: CategoryWithChildren[] };
 
 export default function Header({ categoryTree }: Props) {
     const [top, setTop] = useState(true);
+    const { data: session } = useSession();
     // detect whether user has scrolled the page down by 10px
     useEffect(() => {
         const scrollHandler = () => {
@@ -49,12 +52,15 @@ export default function Header({ categoryTree }: Props) {
 
                         <div className="ml-auto flex items-center">
                             <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                <a href="#" className="text-sm font-medium ">
-                                    Sign in
-                                </a>
-                                <a href="#" className="text-sm font-medium ">
-                                    Create account
-                                </a>
+                                {session ? (
+                                    <Link href="/api/auth/signout" className="text-sm font-medium ">
+                                        Sign out
+                                    </Link>
+                                ) : (
+                                    <Link href="/api/auth/signin" className="text-sm font-medium ">
+                                        Sign in
+                                    </Link>
+                                )}
                             </div>
 
                             {/* <div className="hidden lg:ml-8 lg:flex">
