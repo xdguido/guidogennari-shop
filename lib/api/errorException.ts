@@ -127,14 +127,27 @@ const errorConfigMap: Record<ErrorCode, ErrorConfig> = {
 export class Exception extends Error {
     status: number;
     clientString: { [key: string]: string };
+    cause?: string;
 
     constructor(code: ErrorCode, cause?: string) {
         super(code);
         Object.setPrototypeOf(this, new.target.prototype);
         this.name = code;
-        this.cause = process.env.NODE_ENV === 'production' ? null : cause;
+        this.cause = cause;
         const errorConfig = errorConfigMap[code] || errorConfigMap[ErrorCode.UnknownError];
         this.status = errorConfig.status;
         this.clientString = errorConfig.clientString;
+
+        if (process.env.NODE_ENV === 'production') {
+            // Override the `stack` property with an empty string to hide the call stack in a production environment
+            Object.defineProperty(this, 'stack', {
+                value: '',
+                writable: true,
+                configurable: true
+            });
+        } else {
+            // Capture the call stack using `Error.captureStackTrace` to show it in a development environment
+            Error.captureStackTrace(this, this.constructor);
+        }
     }
 }
