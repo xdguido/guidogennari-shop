@@ -18,7 +18,8 @@
             "@ui/*": ["./components/ui/*"],
             "@components/*": ["./components/*"],
             "@types": ["./types/index"],
-            "@lib/*": ["./lib/*"]
+            "@lib/*": ["./lib/*"],
+            "@store/*": ["./store/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
