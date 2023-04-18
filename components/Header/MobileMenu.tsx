@@ -1,5 +1,4 @@
 import { Fragment, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
@@ -39,7 +38,7 @@ export default function MobileMenu({ categoryTree }: Props) {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        <div className="fixed inset-0 bg-base-300 bg-opacity-75 transition-opacity" />
                     </Transition.Child>
 
                     <div className="fixed inset-0 z-50 flex">
@@ -165,19 +164,6 @@ export default function MobileMenu({ categoryTree }: Props) {
                                             </a>
                                         </div>
                                     ))}
-                                </div>
-
-                                <div className="space-y-6 border-t border-base-200 py-6 px-4">
-                                    <div className="flow-root">
-                                        <a href="#" className="-m-2 block p-2 font-medium ">
-                                            Sign in
-                                        </a>
-                                    </div>
-                                    <div className="flow-root">
-                                        <a href="#" className="-m-2 block p-2 font-medium ">
-                                            Create account
-                                        </a>
-                                    </div>
                                 </div>
 
                                 {/* <div className="border-t border-gray-200 py-6 px-4">

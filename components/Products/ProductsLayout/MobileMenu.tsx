@@ -29,7 +29,7 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        <div className="fixed inset-0 bg-base-300 bg-opacity-75 transition-opacity" />
                     </Transition.Child>
 
                     <div className="fixed inset-0 z-40 flex">

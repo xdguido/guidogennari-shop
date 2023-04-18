@@ -1,12 +1,13 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
 import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon, ArrowLeftIcon } from '@heroicons/react/20/solid';
+import { ArrowsUpDownIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 
 import { SortOption } from '@types';
 import type { CategoryNode } from '@lib/getProducts';
 import MobileMenu from './MobileMenu';
+import Button from '@ui/Button';
 
 type Props = {
     children: React.ReactNode;
@@ -19,104 +20,98 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
         <>
             <div>
                 <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-end justify-between border-b border-base-300 pb-6">
-                        <div>
-                            {categoryNode.parent ? (
-                                <Link
-                                    href={`/products/${categoryNode.parent.slug}/${sort}`}
-                                    className="flex items-center gap-2"
-                                >
-                                    <ArrowLeftIcon className="h-5 w-5" aria-hidden="true" />
-                                    <span className="sr-only">go back to</span>{' '}
-                                    {categoryNode.parent.name}
-                                </Link>
-                            ) : null}
-                            <h1 className="text-4xl font-bold tracking-tight ">
-                                {categoryNode.name}
-                            </h1>
+                    <h1 className="text-4xl font-bold tracking-tight mb-4">{categoryNode.name}</h1>
+
+                    <div className="flex justify-end sm:justify-between border-b border-base-300 pb-2">
+                        <div className="hidden sm:block max-w-xs sm:max-w-none text-sm breadcrumbs">
+                            <ul>
+                                {categoryNode.parent && (
+                                    <li>
+                                        <Link href={`/products/${categoryNode.parent.slug}`}>
+                                            {categoryNode.parent.name}
+                                        </Link>
+                                    </li>
+                                )}
+                                <li>{categoryNode.name}</li>
+                            </ul>
                         </div>
 
-                        <div className="flex justify-center items-center">
-                            <Menu as="div" className="relative inline-block text-left">
-                                <div className="inline-flex justify-center text-sm">
-                                    <span
-                                        className="hidden sm:block font-medium"
-                                        aria-hidden="true"
-                                    >
-                                        Sort by:
-                                    </span>
-                                    <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm w-28">
-                                        <span className="sr-only">Sort by</span>
-                                        {(() => {
-                                            switch (sort) {
-                                                case SortOption.CreatedAtDesc:
-                                                    return 'Newest';
-                                                case SortOption.PriceAsc:
-                                                    return 'Lower price';
-                                                case SortOption.PriceDesc:
-                                                    return 'Higher price';
-                                            }
-                                        })()}
-                                        <ChevronDownIcon
-                                            className="ml-1 h-5 w-5 flex-shrink-0 text-base-content"
-                                            aria-hidden="true"
-                                        />
-                                    </Menu.Button>
-                                </div>
-
-                                <Transition
-                                    as={Fragment}
-                                    enter="transition ease-out duration-100"
-                                    enterFrom="transform opacity-0 scale-95"
-                                    enterTo="transform opacity-100 scale-100"
-                                    leave="transition ease-in duration-75"
-                                    leaveFrom="transform opacity-100 scale-100"
-                                    leaveTo="transform opacity-0 scale-95"
+                        <Menu as="div" className="relative text-left">
+                            <div className="inline-flex text-sm">
+                                <Menu.Button
+                                    as={Button}
+                                    className="btn-ghost normal-case btn-sm gap-2"
                                 >
-                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-base-100 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                        <div className="flex flex-col py-1">
-                                            {Object.keys(SortOption).map((sortKey: string) => (
-                                                <Menu.Item key={sortKey}>
-                                                    {({ active }) => (
-                                                        <Link
-                                                            href={`/products/${categoryNode.slug}/${SortOption[sortKey]}`}
-                                                            className={clsx(
-                                                                SortOption[sortKey] === sort
-                                                                    ? 'font-medium'
-                                                                    : 'text-base-content',
-                                                                active ? 'bg-base-300' : '',
-                                                                'block px-4 py-2 text-sm text-left'
-                                                            )}
-                                                        >
-                                                            {(() => {
-                                                                switch (SortOption[sortKey]) {
-                                                                    case SortOption.CreatedAtDesc:
-                                                                        return 'Newest';
-                                                                    case SortOption.PriceAsc:
-                                                                        return 'Lower price';
-                                                                    case SortOption.PriceDesc:
-                                                                        return 'Higher price';
-                                                                    default:
-                                                                        return SortOption[sortKey];
-                                                                }
-                                                            })()}
-                                                        </Link>
-                                                    )}
-                                                </Menu.Item>
-                                            ))}
-                                        </div>
-                                    </Menu.Items>
-                                </Transition>
-                            </Menu>
+                                    <ArrowsUpDownIcon
+                                        className=" h-5 w-5 text-base-content"
+                                        aria-hidden="true"
+                                    />
+                                    <span className="sr-only">Sort by</span>
+                                    {(() => {
+                                        switch (sort) {
+                                            case SortOption.CreatedAtDesc:
+                                                return 'Newest';
+                                            case SortOption.PriceAsc:
+                                                return 'Lower price';
+                                            case SortOption.PriceDesc:
+                                                return 'Higher price';
+                                        }
+                                    })()}
+                                </Menu.Button>
+                            </div>
 
-                            {/* <button type="button" className="-m-2 ml-5 p-2  sm:ml-7">
+                            <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                            >
+                                <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-base-100 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <div className="flex flex-col py-1">
+                                        {Object.keys(SortOption).map((sortKey: string) => (
+                                            <Menu.Item key={sortKey}>
+                                                {({ active }) => (
+                                                    <Link
+                                                        href={`/products/${categoryNode.slug}/${SortOption[sortKey]}`}
+                                                        className={clsx(
+                                                            SortOption[sortKey] === sort
+                                                                ? 'font-medium'
+                                                                : 'text-base-content',
+                                                            active ? 'bg-base-300' : '',
+                                                            'block px-4 py-2 text-sm text-left'
+                                                        )}
+                                                    >
+                                                        {(() => {
+                                                            switch (SortOption[sortKey]) {
+                                                                case SortOption.CreatedAtDesc:
+                                                                    return 'Newest';
+                                                                case SortOption.PriceAsc:
+                                                                    return 'Lower price';
+                                                                case SortOption.PriceDesc:
+                                                                    return 'Higher price';
+                                                                default:
+                                                                    return SortOption[sortKey];
+                                                            }
+                                                        })()}
+                                                    </Link>
+                                                )}
+                                            </Menu.Item>
+                                        ))}
+                                    </div>
+                                </Menu.Items>
+                            </Transition>
+                        </Menu>
+
+                        {/* <button type="button" className="-m-2 ml-5 p-2  sm:ml-7">
                                 <span className="sr-only">View grid</span>
                                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
                             </button> */}
 
-                            {/* Mobile filter dialog */}
-                            <MobileMenu sort={sort} categoryNode={categoryNode} />
-                        </div>
+                        {/* Mobile filter dialog */}
+                        <MobileMenu sort={sort} categoryNode={categoryNode} />
                     </div>
 
                     <section aria-labelledby="products-heading" className="pt-6 pb-24">
