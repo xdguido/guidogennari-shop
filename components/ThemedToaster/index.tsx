@@ -1,16 +1,13 @@
+import dynamic from 'next/dynamic';
 import { useTheme } from 'next-themes';
-import { Toaster } from 'sonner';
+
+const DynamicToaster = dynamic(() => import('sonner').then((mod) => mod.Toaster), {
+    ssr: false
+});
 
 export default function ThemedToaster() {
     const { theme } = useTheme();
-    const getTheme = (theme: string) => {
-        switch (theme) {
-            case 'dark':
-                return 'dark';
-            default:
-                return 'light';
-        }
-    };
-    const toastTheme = getTheme(theme);
-    return <Toaster theme={toastTheme} />;
+    const toastTheme = theme === 'dark' ? 'dark' : 'light';
+
+    return <DynamicToaster theme={toastTheme} />;
 }
