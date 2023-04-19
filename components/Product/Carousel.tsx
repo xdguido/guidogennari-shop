@@ -15,7 +15,7 @@ export default function Carousel() {
         }
     };
     return (
-        <>
+        <div className="sticky top-16 self-start">
             <div className="carousel" ref={carouselRef}>
                 <div className="carousel-item aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-base-200">
                     <Image
@@ -96,6 +96,6 @@ export default function Carousel() {
                     />
                 </button>
             </div>
-        </>
+        </div>
     );
 }

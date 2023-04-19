@@ -41,7 +41,7 @@ export default function Tabs() {
     });
 
     return (
-        <div className="mx-auto w-full  px-2 py-12 sm:px-0">
+        <div className="mx-auto w-full px-2 mt-2 sm:px-0">
             <Tab.Group>
                 <Tab.List className="flex space-x-1 rounded-xl bg-base-200 p-1">
                     {Object.keys(categories).map((category) => (

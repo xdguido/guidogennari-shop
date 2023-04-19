@@ -61,12 +61,12 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                 }}
             />
             <div className="mx-auto max-w-5xl 2xl:max-w-7xl min-h-screen px-4 py-6 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-                    <div className="w-full">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                    <div className=" w-full">
                         <Carousel />
-                        <div className="hidden md:block">
+                        {/* <div className="hidden md:block">
                             <Tabs />
-                        </div>
+                        </div> */}
                     </div>
                     <div>
                         <div className="grid grid-cols-1 gap-4 px-6">
@@ -173,17 +173,16 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                                 </li>
                                 <li className="mb-1 list-disc">Warranty: 1 year</li>
                             </ul>
-
                             <h3 className=" font-semibold">Dimensions</h3>
                             <div className="overflow-x-auto">
                                 <table className="table w-full text-sm">
                                     {/* head */}
                                     <thead>
                                         <tr>
-                                            <th></th>
-                                            <th>Height</th>
-                                            <th>Width</th>
-                                            <th>Length</th>
+                                            <th className="normal-case">Part</th>
+                                            <th className="normal-case">Height</th>
+                                            <th className="normal-case">Width</th>
+                                            <th className="normal-case">Length</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -206,12 +205,11 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                                     </tbody>
                                 </table>
                             </div>
+                            <Tabs />
                         </div>
                     </div>
                 </div>
-                <div className="md:hidden">
-                    <Tabs />
-                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"></div>
                 <div className="divider"></div>
                 <RecomendedProductsList products={products} currentProduct={productSlug} />
             </div>
