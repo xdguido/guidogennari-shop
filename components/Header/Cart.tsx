@@ -231,7 +231,7 @@ export default function Cart() {
                                                         Checkout
                                                     </Button>
                                                 </div>
-                                                <div className="mt-6 flex justify-center text-center text-sm text-neutral">
+                                                <div className="sm:mt-6 flex justify-center text-center text-sm text-neutral">
                                                     <p>
                                                         or
                                                         <Button
