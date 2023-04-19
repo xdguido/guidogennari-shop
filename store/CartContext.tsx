@@ -32,18 +32,12 @@ export default function CartProvider({ children }) {
         const isProductAlreadyInCart = cart.some((item) => item.slug === product.slug);
 
         if (isProductAlreadyInCart) {
-            // return toast.custom((t) => (
-            //     <div className="flex items-center gap-2 px-8 py-4 rounded-lg bg-base-100 border border-primary">
-            //         <InformationCircleIcon className="h-5 w-5" />{' '}
-            //         <span className=" w-">Item already in cart</span>
-            //     </div>
-            // ));
             return toast.custom((t) => (
-                <div className="w-80 flex  items-center bg-base-100 shadow-lg rounded-lg border border-primary px-6 py-4">
-                    <div className=" flex-1">
+                <div className=" flex  items-center bg-base-100 shadow-lg rounded-lg border border-primary px-6 py-4 ">
+                    <div className=" flex-auto">
                         <div className="flex items-start">
                             <div className=" flex-1">
-                                <p className=" text-sm font-medium ">Item already in cart</p>
+                                <p className=" w-56  text-sm font-medium ">Item already in cart</p>
                                 {/* <p className="mt-1 text-sm text-neutral">
                                     some text
                                 </p> */}
@@ -58,11 +52,11 @@ export default function CartProvider({ children }) {
         setCart((prevCart) => [...prevCart, product]);
         localStorage.setItem('cartData', JSON.stringify(updatedCart));
         toast.custom((t) => (
-            <div className="w-80 flex items-center bg-base-100 shadow-lg rounded-lg border border-primary px-6 py-4">
+            <div className=" flex items-center bg-base-100 shadow-lg rounded-lg border border-primary px-6 py-4">
                 <div className="flex-1 ">
                     <div className="flex items-start">
                         <div className="flex-1">
-                            <p className="text-sm font-medium ">Item added successfully</p>
+                            <p className=" w-56 text-sm font-medium ">Item added successfully</p>
                             {/* <p className="mt-1 text-sm text-neutral">
                                     some text
                                 </p> */}
