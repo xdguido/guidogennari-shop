@@ -5,6 +5,7 @@ import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { navigation } from './navigation';
 import { CategoryWithChildren } from '@lib/getProducts';
 import ThemeToggler from '@ui/ThemeToggler';
+import Button from '@ui/Button';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -19,14 +20,10 @@ export default function MobileMenu({ categoryTree }: Props) {
 
     return (
         <>
-            <button
-                type="button"
-                className="rounded-md  p-2  lg:hidden"
-                onClick={() => setOpen(true)}
-            >
+            <Button className="btn-ghost btn-square btn-sm lg:hidden" onClick={() => setOpen(true)}>
                 <span className="sr-only">Open menu</span>
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-            </button>
+            </Button>
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-50 lg:hidden" onClose={setOpen}>
                     <Transition.Child

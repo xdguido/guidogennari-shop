@@ -43,7 +43,7 @@ export default function Header({ categoryTree }: Props) {
                         <MobileMenu categoryTree={categoryTree} />
 
                         {/* Logo */}
-                        <div className="ml-4 flex lg:ml-0">
+                        <div className="ml-2 flex lg:ml-0">
                             <Logo />
                         </div>
 
@@ -86,16 +86,8 @@ export default function Header({ categoryTree }: Props) {
                             </div> */}
 
                             {/* Cart */}
-                            <div className="ml-2">
+                            <div className="ml-3">
                                 <Cart />
-                                {/* <a href="#" className="group -m-2 flex items-center p-2">
-                                    <ShoppingBagIcon
-                                        className="h-6 w-6 flex-shrink-0 "
-                                        aria-hidden="true"
-                                    />
-                                    <span className="ml-2 text-sm font-medium ">0</span>
-                                    <span className="sr-only">items in cart, view bag</span>
-                                </a> */}
                             </div>
                         </div>
                     </div>
