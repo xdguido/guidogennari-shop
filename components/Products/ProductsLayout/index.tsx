@@ -36,18 +36,19 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                 <li>{categoryNode.name}</li>
                             </ul>
                         </div>
-                        <div className="flex gap-3">
+                        <div className="flex gap-2 sm:gap-3">
                             <Menu as="div" className="relative text-left">
                                 <div className=" text-sm">
                                     <Menu.Button
                                         as={Button}
-                                        className="btn-ghost normal-case btn-sm gap-2"
+                                        className="btn-ghost normal-case btn-sm gap-2 px-1 sm:px-2"
                                     >
                                         <ArrowsUpDownIcon
                                             className=" h-4 w-4 text-base-content"
                                             aria-hidden="true"
                                         />
                                         <span className="sr-only">Sort by</span>
+
                                         {(() => {
                                             switch (sort) {
                                                 case SortOption.CreatedAtDesc:
@@ -119,29 +120,33 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                             {/* Filters */}
 
                             <div className="hidden lg:block sticky top-[6rem] self-start">
-                                <h3 className="sr-only">Categories</h3>
-                                <ul role="list" className="pb-6 text-sm font-medium ">
-                                    {categoryNode.children.map((category) => (
-                                        <li key={category.name}>
-                                            <Button
-                                                href={`/products/${category.slug}/${sort}`}
-                                                className="btn-ghost btn-sm no-animation normal-case btn-block justify-start"
-                                            >
-                                                {category.name}
-                                            </Button>
-                                        </li>
-                                    ))}
-                                </ul>
+                                {categoryNode.children.length === 0 ? null : (
+                                    <>
+                                        <h3 className="text-neutral font-semibold mb-2">
+                                            Categories
+                                        </h3>
+                                        <ul role="list" className="pb-6 text-sm font-medium ">
+                                            {categoryNode.children.map((category) => (
+                                                <li key={category.name}>
+                                                    <Button
+                                                        href={`/products/${category.slug}/${sort}`}
+                                                        className="btn-ghost btn-sm no-animation normal-case btn-block justify-start"
+                                                    >
+                                                        {category.name}
+                                                    </Button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+
+                                <h3 className="text-neutral font-semibold mb-2">Filters</h3>
                                 {filters.map((section) => (
-                                    <Disclosure
-                                        as="div"
-                                        key={section.id}
-                                        className="border-b border-base-300 py-6"
-                                    >
+                                    <Disclosure as="div" key={section.id} className="py-4">
                                         {({ open }) => (
                                             <>
                                                 <h3 className="-my-3 flow-root">
-                                                    <Disclosure.Button className="btn btn-ghost btn-block no-animation normal-case items-center justify-between  text-sm ">
+                                                    <Disclosure.Button className="btn btn-sm btn-ghost btn-block no-animation normal-case items-center justify-between text-sm">
                                                         <span className="font-medium ">
                                                             {section.name}
                                                         </span>

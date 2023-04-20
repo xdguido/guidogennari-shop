@@ -61,7 +61,7 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                 }}
             />
             <div className="mx-auto max-w-5xl 2xl:max-w-7xl min-h-screen px-4 py-6 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 xl:gap-12">
                     <div className=" w-full">
                         <Carousel />
                         {/* <div className="hidden md:block">
@@ -112,11 +112,11 @@ export default function Index({ productSlug, categorySlug }: Prop) {
 
                             <div className="form-control">
                                 <div className="input-group">
-                                    <span className="bg-base-200">
+                                    <span className="bg-base-300">
                                         <label htmlFor="qty-select">Quantity:</label>
                                     </span>
                                     <select
-                                        className="select select-bordered"
+                                        className="select select-bordered border-base-300"
                                         id="qty-select"
                                         value={qty}
                                         onChange={handleQtyChange}

@@ -51,7 +51,7 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                         >
                             <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-base-100 py-4 pb-12 shadow-xl">
                                 <div className="flex items-center justify-between px-4">
-                                    <h2 className="text-lg font-medium ">Filters</h2>
+                                    <h2 className="text-lg font-medium ">{categoryNode.name}</h2>
                                     <Button
                                         className="-mr-2 btn-ghost btn-square btn-sm text-base-content"
                                         onClick={() => setMobileFiltersOpen(false)}
@@ -66,46 +66,30 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                                     <h3 className="sr-only">Categories</h3>
                                     <ul
                                         role="list"
-                                        className="space-y-4 mb-3 font-medium "
+                                        className="space-y-3 mb-3 font-medium "
                                         onClick={() => setMobileFiltersOpen(false)}
                                     >
-                                        <li className="font-bold text-lg">
-                                            <span className="sr-only">current category</span>
-                                            {categoryNode.name}
-                                        </li>
-                                        {categoryNode.parent ? (
-                                            <li>
-                                                <Button
-                                                    href={`/products/${categoryNode.parent.slug}/${sort}`}
-                                                    className="btn-ghost btn-sm no-animation normal-case btn-block justify-start gap-2"
-                                                >
-                                                    <ArrowLeftIcon
-                                                        className="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
-                                                    <span className="sr-only">go back to</span>{' '}
-                                                    {categoryNode.parent.name}
-                                                </Button>
-                                            </li>
-                                        ) : null}
-
-                                        {categoryNode.children.map((category) => (
-                                            <li key={category.name}>
-                                                <Button
-                                                    href={`/products/${category.slug}/${sort}`}
-                                                    className="btn-ghost btn-sm no-animation normal-case btn-block justify-start"
-                                                >
-                                                    {category.name}
-                                                </Button>
-                                            </li>
-                                        ))}
+                                        {categoryNode.children.length === 0 ? null : (
+                                            <>
+                                                <h3 className="text-neutral font-semibold mb-2">
+                                                    Categories
+                                                </h3>
+                                                {categoryNode.children.map((category) => (
+                                                    <li key={category.name}>
+                                                        <Button
+                                                            href={`/products/${category.slug}/${sort}`}
+                                                            className="btn-ghost btn-sm no-animation normal-case btn-block justify-start"
+                                                        >
+                                                            {category.name}
+                                                        </Button>
+                                                    </li>
+                                                ))}
+                                            </>
+                                        )}
                                     </ul>
+                                    <h3 className="text-neutral font-semibold mb-2">Filters</h3>
                                     {filters.map((section) => (
-                                        <Disclosure
-                                            as="div"
-                                            key={section.id}
-                                            className="border-b border-base-300 py-6"
-                                        >
+                                        <Disclosure as="div" key={section.id} className=" py-3">
                                             {({ open }) => (
                                                 <>
                                                     <h3 className="-my-3 flow-root">
