@@ -122,7 +122,7 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                             <div className="hidden lg:block sticky top-[6rem] self-start">
                                 {categoryNode.children.length === 0 ? null : (
                                     <>
-                                        <h3 className="text-neutral font-semibold mb-2">
+                                        <h3 className="text-base-content font-semibold mb-2 px-3">
                                             Categories
                                         </h3>
                                         <ul role="list" className="pb-6 text-sm font-medium ">
@@ -130,7 +130,7 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                                 <li key={category.name}>
                                                     <Button
                                                         href={`/products/${category.slug}/${sort}`}
-                                                        className="btn-ghost btn-sm no-animation normal-case btn-block justify-start"
+                                                        className="btn-ghost btn-sm no-animation normal-case btn-block justify-start text-neutral hover:text-base-content"
                                                     >
                                                         {category.name}
                                                     </Button>
@@ -140,13 +140,15 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                     </>
                                 )}
 
-                                <h3 className="text-neutral font-semibold mb-2">Filters</h3>
+                                <h3 className="text-base-content font-semibold mb-2 px-3">
+                                    Filters
+                                </h3>
                                 {filters.map((section) => (
                                     <Disclosure as="div" key={section.id} className="py-4">
                                         {({ open }) => (
                                             <>
                                                 <h3 className="-my-3 flow-root">
-                                                    <Disclosure.Button className="btn btn-sm btn-ghost btn-block no-animation normal-case items-center justify-between text-sm">
+                                                    <Disclosure.Button className="btn btn-sm btn-ghost btn-block no-animation normal-case items-center justify-between text-sm text-neutral hover:text-base-content">
                                                         <span className="font-medium ">
                                                             {section.name}
                                                         </span>
@@ -181,7 +183,7 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                                                         defaultChecked={
                                                                             option.checked
                                                                         }
-                                                                        className="h-4 w-4 rounded border-neutral text-primary focus:ring-primary cursor-pointer"
+                                                                        className="h-4 w-4 rounded border-neutral text-primary focus:ring-primary cursor-pointer ml-3"
                                                                     />
                                                                     <label
                                                                         htmlFor={`filter-${section.id}-${optionIdx}`}
