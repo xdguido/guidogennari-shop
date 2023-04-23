@@ -71,7 +71,7 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                                     >
                                         {categoryNode.children.length === 0 ? null : (
                                             <>
-                                                <h3 className="text-neutral font-semibold mb-2">
+                                                <h3 className="text-neutral font-semibold mb-2 px-3">
                                                     Categories
                                                 </h3>
                                                 {categoryNode.children.map((category) => (
@@ -87,7 +87,9 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                                             </>
                                         )}
                                     </ul>
-                                    <h3 className="text-neutral font-semibold mb-2">Filters</h3>
+                                    <h3 className="text-neutral font-semibold mb-2 px-3">
+                                        Filters
+                                    </h3>
                                     {filters.map((section) => (
                                         <Disclosure as="div" key={section.id} className=" py-3">
                                             {({ open }) => (
@@ -130,7 +132,7 @@ export default function MobileMenu({ sort, categoryNode }: Props) {
                                                                             defaultChecked={
                                                                                 option.checked
                                                                             }
-                                                                            className="h-4 w-4 rounded border-neutral text-primary focus:ring-primary cursor-pointer"
+                                                                            className="h-4 w-4 rounded border-neutral text-primary focus:ring-primary cursor-pointer ml-3"
                                                                         />
                                                                         <label
                                                                             htmlFor={`filter-${section.id}-${optionIdx}`}
