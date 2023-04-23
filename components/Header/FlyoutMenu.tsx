@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 import { Popover, Transition } from '@headlessui/react';
 import { navigation } from './navigation';

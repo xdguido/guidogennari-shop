@@ -1,12 +1,14 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
-import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon, ArrowLeftIcon } from '@heroicons/react/20/solid';
+import { Menu, Transition, Disclosure } from '@headlessui/react';
+import { ArrowsUpDownIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 
 import { SortOption } from '@types';
 import type { CategoryNode } from '@lib/getProducts';
 import MobileMenu from './MobileMenu';
+import Button from '@ui/Button';
+import { filters } from './filters';
 
 type Props = {
     children: React.ReactNode;
@@ -19,34 +21,34 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
         <>
             <div>
                 <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-end justify-between border-b border-base-300 pb-6">
-                        <div>
-                            {categoryNode.parent ? (
-                                <Link
-                                    href={`/products/${categoryNode.parent.slug}/${sort}`}
-                                    className="flex items-center gap-2"
-                                >
-                                    <ArrowLeftIcon className="h-5 w-5" aria-hidden="true" />
-                                    <span className="sr-only">go back to</span>{' '}
-                                    {categoryNode.parent.name}
-                                </Link>
-                            ) : null}
-                            <h1 className="text-4xl font-bold tracking-tight ">
-                                {categoryNode.name}
-                            </h1>
-                        </div>
+                    <h1 className="text-4xl font-bold tracking-tight mb-4">{categoryNode.name}</h1>
 
-                        <div className="flex justify-center items-center">
-                            <Menu as="div" className="relative inline-block text-left">
-                                <div className="inline-flex justify-center text-sm">
-                                    <span
-                                        className="hidden sm:block font-medium"
-                                        aria-hidden="true"
+                    <div className="flex items-center justify-between border-b border-base-300 pb-2">
+                        <div className="block max-w-[10rem] sm:max-w-none text-sm breadcrumbs">
+                            <ul>
+                                {categoryNode.parent && (
+                                    <li>
+                                        <Link href={`/products/${categoryNode.parent.slug}`}>
+                                            {categoryNode.parent.name}
+                                        </Link>
+                                    </li>
+                                )}
+                                <li>{categoryNode.name}</li>
+                            </ul>
+                        </div>
+                        <div className="flex gap-2 sm:gap-3">
+                            <Menu as="div" className="relative text-left">
+                                <div className=" text-sm">
+                                    <Menu.Button
+                                        as={Button}
+                                        className="btn-ghost normal-case btn-sm gap-2 px-1 sm:px-2"
                                     >
-                                        Sort by:
-                                    </span>
-                                    <Menu.Button className="ml-2 group inline-flex justify-center items-center text-sm w-28">
+                                        <ArrowsUpDownIcon
+                                            className=" h-4 w-4 text-base-content"
+                                            aria-hidden="true"
+                                        />
                                         <span className="sr-only">Sort by</span>
+
                                         {(() => {
                                             switch (sort) {
                                                 case SortOption.CreatedAtDesc:
@@ -57,10 +59,6 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                                     return 'Higher price';
                                             }
                                         })()}
-                                        <ChevronDownIcon
-                                            className="ml-1 h-5 w-5 flex-shrink-0 text-base-content"
-                                            aria-hidden="true"
-                                        />
                                     </Menu.Button>
                                 </div>
 
@@ -109,12 +107,6 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                 </Transition>
                             </Menu>
 
-                            {/* <button type="button" className="-m-2 ml-5 p-2  sm:ml-7">
-                                <span className="sr-only">View grid</span>
-                                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-                            </button> */}
-
-                            {/* Mobile filter dialog */}
                             <MobileMenu sort={sort} categoryNode={categoryNode} />
                         </div>
                     </div>
@@ -124,20 +116,91 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                             Products
                         </h2>
 
-                        <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+                        <div className="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-4">
                             {/* Filters */}
-                            <form className="hidden lg:block">
-                                <h3 className="sr-only">Categories</h3>
-                                <ul role="list" className="space-y-4 pb-6 text-sm font-medium ">
-                                    {categoryNode.children.map((category) => (
-                                        <li key={category.name}>
-                                            <Link href={`/products/${category.slug}/${sort}`}>
-                                                {category.name}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </form>
+
+                            <div className="hidden lg:block sticky top-[6rem] self-start">
+                                {categoryNode.children.length === 0 ? null : (
+                                    <>
+                                        <h3 className="text-base-content font-semibold mb-2 px-3">
+                                            Categories
+                                        </h3>
+                                        <ul role="list" className="pb-6 text-sm font-medium ">
+                                            {categoryNode.children.map((category) => (
+                                                <li key={category.name}>
+                                                    <Button
+                                                        href={`/products/${category.slug}/${sort}`}
+                                                        className="btn-ghost btn-sm no-animation normal-case btn-block justify-start text-neutral hover:text-base-content"
+                                                    >
+                                                        {category.name}
+                                                    </Button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+
+                                <h3 className="text-base-content font-semibold mb-2 px-3">
+                                    Filters
+                                </h3>
+                                {filters.map((section) => (
+                                    <Disclosure as="div" key={section.id} className="py-4">
+                                        {({ open }) => (
+                                            <>
+                                                <h3 className="-my-3 flow-root">
+                                                    <Disclosure.Button className="btn btn-sm btn-ghost btn-block no-animation normal-case items-center justify-between text-sm text-neutral hover:text-base-content">
+                                                        <span className="font-medium ">
+                                                            {section.name}
+                                                        </span>
+                                                        <span className="ml-6 flex items-center">
+                                                            {open ? (
+                                                                <MinusIcon
+                                                                    className="h-5 w-5"
+                                                                    aria-hidden="true"
+                                                                />
+                                                            ) : (
+                                                                <PlusIcon
+                                                                    className="h-5 w-5"
+                                                                    aria-hidden="true"
+                                                                />
+                                                            )}
+                                                        </span>
+                                                    </Disclosure.Button>
+                                                </h3>
+                                                <Disclosure.Panel className="pt-6">
+                                                    <div className="space-y-4">
+                                                        {section.options.map(
+                                                            (option, optionIdx) => (
+                                                                <div
+                                                                    key={option.value}
+                                                                    className="flex items-center"
+                                                                >
+                                                                    <input
+                                                                        id={`filter-${section.id}-${optionIdx}`}
+                                                                        name={`${section.id}[]`}
+                                                                        defaultValue={option.value}
+                                                                        type="checkbox"
+                                                                        defaultChecked={
+                                                                            option.checked
+                                                                        }
+                                                                        className="h-4 w-4 rounded border-neutral text-primary focus:ring-primary cursor-pointer ml-3"
+                                                                    />
+                                                                    <label
+                                                                        htmlFor={`filter-${section.id}-${optionIdx}`}
+                                                                        className="ml-3 text-sm "
+                                                                    >
+                                                                        {option.label}
+                                                                    </label>
+                                                                </div>
+                                                            )
+                                                        )}
+                                                    </div>
+                                                </Disclosure.Panel>
+                                            </>
+                                        )}
+                                    </Disclosure>
+                                ))}
+                            </div>
                             {/* Product grid */}
                             <div className="lg:col-span-3">{children}</div>
                         </div>

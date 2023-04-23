@@ -15,13 +15,13 @@ module.exports = {
 
                     accent: '#e879f9',
 
-                    neutral: '#9ca3af',
+                    neutral: '#a3a3a3',
 
                     'base-100': '#f3f4f6',
 
                     info: '#3b82f6',
 
-                    success: '#36D399',
+                    success: '#22c55e',
 
                     warning: '#FBBD23',
 
@@ -36,9 +36,9 @@ module.exports = {
 
                     accent: '#e879f9',
 
-                    neutral: '#9ca3af',
+                    neutral: '#8f8f8f',
 
-                    'base-100': '#111827',
+                    'base-100': '#0f0f0f',
 
                     info: '#3b82f6',
 

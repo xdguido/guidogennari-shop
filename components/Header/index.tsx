@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
-import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import clsx from 'clsx';
 import MobileMenu from './MobileMenu';
 import FlyoutMenu from './FlyoutMenu';
+import Cart from './Cart';
 import Logo from '@ui/Logo';
 import ThemeToggler from '@ui/ThemeToggler';
+import Button from '@ui/Button';
 import { CategoryWithChildren } from '@lib/getProducts';
 
 type Props = { categoryTree: CategoryWithChildren[] };
 
 export default function Header({ categoryTree }: Props) {
     const [top, setTop] = useState(true);
+    const { data: session } = useSession();
     // detect whether user has scrolled the page down by 10px
     useEffect(() => {
         const scrollHandler = () => {
@@ -40,7 +43,7 @@ export default function Header({ categoryTree }: Props) {
                         <MobileMenu categoryTree={categoryTree} />
 
                         {/* Logo */}
-                        <div className="ml-4 flex lg:ml-0">
+                        <div className="ml-2 flex lg:ml-0">
                             <Logo />
                         </div>
 
@@ -48,50 +51,43 @@ export default function Header({ categoryTree }: Props) {
                         <FlyoutMenu categoryTree={categoryTree} />
 
                         <div className="ml-auto flex items-center">
-                            <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                <a href="#" className="text-sm font-medium ">
-                                    Sign in
-                                </a>
-                                <a href="#" className="text-sm font-medium ">
-                                    Create account
-                                </a>
+                            <div className="flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                                {session ? (
+                                    <Button
+                                        onClick={() => {
+                                            signOut();
+                                        }}
+                                        className="btn-primary btn-sm normal-case "
+                                    >
+                                        Sign out
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        onClick={() => {
+                                            signIn();
+                                        }}
+                                        className="btn-primary btn-sm normal-case "
+                                    >
+                                        Sign in
+                                    </Button>
+                                )}
                             </div>
 
-                            {/* <div className="hidden lg:ml-8 lg:flex">
-                                <a href="#" className="flex items-center ">
-                                    <Image
-                                        src="https://tailwindui.com/img/flags/flag-canada.svg"
-                                        alt=""
-                                        width={100}
-                                        height={100}
-                                        className="block h-auto w-5 flex-shrink-0"
-                                    />
-                                    <span className="ml-3 block text-sm font-medium">CAD</span>
-                                    <span className="sr-only">, change currency</span>
-                                </a>
-                            </div> */}
-                            <div className="hidden lg:ml-8 lg:flex">
+                            <div className="hidden ml-4 lg:flex">
                                 <ThemeToggler />
                             </div>
 
                             {/* Search */}
-                            <div className="flex lg:ml-6">
+                            {/* <div className="flex lg:ml-6">
                                 <a href="#" className="p-2 ">
                                     <span className="sr-only">Search</span>
                                     <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
                                 </a>
-                            </div>
+                            </div> */}
 
                             {/* Cart */}
-                            <div className="ml-4 flow-root lg:ml-6">
-                                <a href="#" className="group -m-2 flex items-center p-2">
-                                    <ShoppingBagIcon
-                                        className="h-6 w-6 flex-shrink-0 "
-                                        aria-hidden="true"
-                                    />
-                                    <span className="ml-2 text-sm font-medium ">0</span>
-                                    <span className="sr-only">items in cart, view bag</span>
-                                </a>
+                            <div className="ml-3">
+                                <Cart />
                             </div>
                         </div>
                     </div>

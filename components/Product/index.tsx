@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+
+import { useState } from 'react';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 import Button from '@ui/Button';
@@ -11,16 +13,32 @@ import {
     TruckIcon
 } from '@heroicons/react/24/outline';
 import { NextSeo } from 'next-seo';
+import { useCart } from '@store/CartContext';
+import { CartProduct } from '@types';
 import Tabs from './Tabs';
 import RecomendedProductsList from './RecomendedProductsList';
 import Carousel from './Carousel';
 
 type Prop = { productSlug: string; categorySlug: string };
 export default function Index({ productSlug, categorySlug }: Prop) {
+    const { addProduct } = useCart();
     const { data: product } = useSwr(`/api/product/${productSlug}`, fetcher);
     const {
         data: { products, categoryNode }
     } = useSwr(() => `/api/products/${categorySlug}/newest/1`, fetcher);
+    const [qty, setQty] = useState(1); // Initialize qty state with default value of 1
+    function handleQtyChange(event) {
+        setQty(parseInt(event.target.value)); // Update qty state with the selected value
+    }
+
+    const cartData: CartProduct = {
+        slug: productSlug,
+        name: product.name,
+        price: product.price,
+        quantity: qty,
+        imageSrc: product.imageSrc,
+        imageAlt: product.name
+    };
 
     return (
         <>
@@ -43,12 +61,12 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                 }}
             />
             <div className="mx-auto max-w-5xl 2xl:max-w-7xl min-h-screen px-4 py-6 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-                    <div className="w-full">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 xl:gap-12">
+                    <div className=" w-full">
                         <Carousel />
-                        <div className="hidden md:block">
+                        {/* <div className="hidden md:block">
                             <Tabs />
-                        </div>
+                        </div> */}
                     </div>
                     <div>
                         <div className="grid grid-cols-1 gap-4 px-6">
@@ -82,7 +100,7 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                                         $ {product.price.toLocaleString('es')}
                                     </span>
                                     <div
-                                        className="tooltip tooltip-info"
+                                        className="tooltip tooltip-info before:w-[12rem] before:content-[attr(data-tip)]"
                                         data-tip="Special price paying with cash or bank deposit"
                                     >
                                         <InformationCircleIcon className="text-info h-5 w-5" />
@@ -94,14 +112,21 @@ export default function Index({ productSlug, categorySlug }: Prop) {
 
                             <div className="form-control">
                                 <div className="input-group">
-                                    <select className="select select-bordered ">
-                                        <option selected>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <span className="bg-base-300">
+                                        <label htmlFor="qty-select">Quantity:</label>
+                                    </span>
+                                    <select
+                                        className="select select-bordered border-base-300"
+                                        id="qty-select"
+                                        value={qty}
+                                        onChange={handleQtyChange}
+                                    >
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
                                     </select>
-                                    <span>5 left</span>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
@@ -115,10 +140,17 @@ export default function Index({ productSlug, categorySlug }: Prop) {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Button className="btn-primary btn-block">Buy now</Button>
-                                <Button className="btn-outline btn-block">Add to cart</Button>
+                                <Button
+                                    className="btn-outline btn-block"
+                                    onClick={() => {
+                                        addProduct(cartData);
+                                    }}
+                                >
+                                    Add to cart
+                                </Button>
                             </div>
 
-                            <div className="">
+                            {/* <div className="">
                                 <Button className="btn-ghost gap-2 mr-2">
                                     <HeartIcon className="h-6 w-6" aria-hidden="true" /> Add to
                                     favourites
@@ -126,7 +158,9 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                                 <Button className="btn-ghost gap-2">
                                     <ShareIcon className="h-6 w-6" aria-hidden="true" /> Share
                                 </Button>
-                            </div>
+                            </div> */}
+
+                            <div className="divider"></div>
 
                             <h3 className=" font-semibold">Details</h3>
                             <ul className="text-sm ml-5">
@@ -139,17 +173,16 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                                 </li>
                                 <li className="mb-1 list-disc">Warranty: 1 year</li>
                             </ul>
-
                             <h3 className=" font-semibold">Dimensions</h3>
                             <div className="overflow-x-auto">
                                 <table className="table w-full text-sm">
                                     {/* head */}
                                     <thead>
                                         <tr>
-                                            <th></th>
-                                            <th>Height</th>
-                                            <th>Width</th>
-                                            <th>Length</th>
+                                            <th className="normal-case">Part</th>
+                                            <th className="normal-case">Height</th>
+                                            <th className="normal-case">Width</th>
+                                            <th className="normal-case">Length</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -172,12 +205,11 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                                     </tbody>
                                 </table>
                             </div>
+                            <Tabs />
                         </div>
                     </div>
                 </div>
-                <div className="md:hidden">
-                    <Tabs />
-                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"></div>
                 <div className="divider"></div>
                 <RecomendedProductsList products={products} currentProduct={productSlug} />
             </div>
