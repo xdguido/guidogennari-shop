@@ -40,33 +40,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
                 )
             }
         },
-        revalidate: 60
+        revalidate: 60 * 60 * 24
     };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
         // Other pages will be prerendered at runtime.
-        paths: [
-            {
-                params: {
-                    category: 'all-products',
-                    sort: SortOption.CreatedAtDesc
-                }
-            },
-            {
-                params: {
-                    category: 'all-products',
-                    sort: SortOption.PriceAsc
-                }
-            },
-            {
-                params: {
-                    category: 'all-products',
-                    sort: SortOption.PriceDesc
-                }
-            }
-        ],
+        paths: [],
         // Block the request for non-generated pages and cache them in the background
         fallback: 'blocking'
     };
