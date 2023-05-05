@@ -16,7 +16,7 @@ import { useCart } from '@store/CartContext';
 
 export default function Cart() {
     const [open, setOpen] = useState(false);
-    const { cart: products, removeProduct, updateProductQuantity, clearCart } = useCart();
+    const { cart: products, removeProduct, updateProductQuantity } = useCart();
     const subtotal = products.reduce((acc, product) => {
         return acc + Number(product.price) * product.quantity;
     }, 0);

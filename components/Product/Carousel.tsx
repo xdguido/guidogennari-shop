@@ -15,7 +15,7 @@ export default function Carousel() {
     return (
         <div className="sticky top-[6rem] self-start">
             <div className="">
-                <div className=" aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-base-200">
+                <div className=" aspect-w-1 aspect-h-1 w-full 2xl:w-[36rem] overflow-hidden rounded-md bg-base-200">
                     <Image
                         src={currentImage}
                         alt="alt"

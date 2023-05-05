@@ -63,10 +63,11 @@ model Product {
   name        String     @db.VarChar(50)
   slug        String     @unique
   description String?
-  imageSrc    String?
+  thumbnail   String?
+  media       String[]
   price       Float
   visibility  Boolean    @default(true)
-  stock       Boolean    @default(true)
+  stock       Int        @default(0)
   category    Category[]
 }
 

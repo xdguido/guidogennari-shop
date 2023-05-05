@@ -27,6 +27,7 @@ export default function Products({ page, sort, category }) {
             <ProductsLayout sort={sort} categoryNode={categoryNode}>
                 <ProductsList products={products} />
                 <PaginationButtons
+                    basePath="/products"
                     sort={sort}
                     category={category}
                     currentPageIndex={page}

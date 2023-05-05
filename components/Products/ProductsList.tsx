@@ -46,9 +46,9 @@ export default function ProductsList({ products }: Props) {
                     {products.map((product) => (
                         <Link key={product.id} href={`/product/${product.slug}`} className="group">
                             <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8">
-                                {product.imageSrc ? (
+                                {product.thumbnail ? (
                                     <Image
-                                        src={product.imageSrc}
+                                        src={product.thumbnail}
                                         alt={`${product.name} image`}
                                         className="object-cover object-center group-hover:opacity-75"
                                         fill

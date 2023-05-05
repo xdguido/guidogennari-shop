@@ -16,6 +16,12 @@ const nextConfig = {
                 hostname: 'tailwindui.com',
                 port: '',
                 pathname: '/img/**'
+            },
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+                port: '',
+                pathname: '/**'
             }
         ]
     },
@@ -29,6 +35,11 @@ const nextConfig = {
             {
                 source: '/products/:category',
                 destination: '/products/:category/newest',
+                permanent: true
+            },
+            {
+                source: '/admin/products',
+                destination: '/admin/products/all-products/newest/1',
                 permanent: true
             }
         ];

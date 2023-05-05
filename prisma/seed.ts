@@ -44,7 +44,7 @@ const createProductsWithCategories = async () => {
                 price: randomPrice,
                 description:
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et ligula ullamcorper malesuada proin libero nunc consequat interdum.',
-                imageSrc: randomImage[Math.floor(Math.random() * randomImage.length)],
+                thumbnail: randomImage[Math.floor(Math.random() * randomImage.length)],
                 category: {
                     connect: {
                         id: randomCategory.id

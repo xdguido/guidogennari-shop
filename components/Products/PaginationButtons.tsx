@@ -2,22 +2,24 @@ import clsx from 'clsx';
 import Link from 'next/link';
 type Props = {
     currentPageIndex: number;
-    sort: string;
+    sort?: string;
     category: string;
     maxPageIndex: number;
+    basePath: string;
 };
 export default function PaginationButtons({
     currentPageIndex,
     maxPageIndex,
-    sort,
-    category
+    sort = 'newest',
+    category,
+    basePath
 }: Props) {
     return (
         <div className={clsx('flex items-center justify-center bg-base-100 px-4 py-3 sm:px-6')}>
             <div>
                 <nav className="isolate inline-flex -space-x-px" aria-label="Pagination">
                     <Link
-                        href={`/products/${category}/${sort}/${currentPageIndex - 1}`}
+                        href={`${basePath}/${category}/${sort}/${currentPageIndex - 1}`}
                         className={clsx(
                             'relative inline-flex items-center rounded-md border border-base-content  px-4 py-2 text-sm font-medium bg-base-100',
                             currentPageIndex === 1
@@ -39,7 +41,7 @@ export default function PaginationButtons({
                         </span>
                     </div>
                     <Link
-                        href={`/products/${category}/${sort}/${currentPageIndex + 1}`}
+                        href={`${basePath}/${category}/${sort}/${currentPageIndex + 1}`}
                         className={clsx(
                             'relative inline-flex items-center rounded-md border border-base-content  px-4 py-2 text-sm font-medium bg-base-100',
                             currentPageIndex === maxPageIndex

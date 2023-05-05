@@ -1,10 +1,8 @@
 import { Fragment, useState } from 'react';
-import Link from 'next/link';
 import { Dialog, Transition, Disclosure } from '@headlessui/react';
 import {
     XMarkIcon,
     AdjustmentsHorizontalIcon,
-    ArrowLeftIcon,
     MinusIcon,
     PlusIcon
 } from '@heroicons/react/24/outline';
