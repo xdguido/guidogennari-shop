@@ -16,11 +16,12 @@ export default function Input({ name, label, register, error, className, ...prop
             </label>
             <input
                 className={clsx([
-                    'form-control block w-full border border-solid bg-base-100 bg-clip-padding px-4 py-2 font-normal focus:ring-2',
+                    'block w-full border border-solid bg-base-100 bg-clip-padding px-4 py-2 font-normal focus:ring-2',
                     error ? 'border-error' : 'border-neutral',
                     'm-0 rounded-md transition ease-in-out focus:border-accent  focus:outline-none focus:ring-accent',
                     className
                 ])}
+                autoComplete="off"
                 name={name}
                 {...register}
                 {...props}

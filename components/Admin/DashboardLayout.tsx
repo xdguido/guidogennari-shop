@@ -10,10 +10,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {
             href: '/admin/products',
             label: 'Products list'
-        },
-        {
-            href: '/admin/product/new',
-            label: 'Add product'
         }
     ];
     return (
