@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import clsx from 'clsx';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { TrashIcon } from '@heroicons/react/24/outline';
 import Button from '@ui/Button';
-import fetcher from '@lib/fetcher';
+import Input from '@ui/Input';
 import { FieldValues, Path, SetValueConfig } from 'react-hook-form';
 
 export type CloudinarySignatureResponse = {
@@ -21,92 +21,85 @@ type Props = {
 };
 
 export default function ThumbnailUpload({ defaultValue, setValue }: Props) {
-    const [imageSrc, setImageSrc] = useState(defaultValue);
-    const [loading, setLoading] = useState(false);
-    const [uploadData, setUploadData] = useState();
-    // const handleOnChange = (changeEvent: React.ChangeEvent<HTMLInputElement>): void => {
-    //     const reader = new FileReader();
-    //     reader.onload = function (onLoadEvent: ProgressEvent<FileReader>) {
-    //         const target = onLoadEvent.target as FileReader;
-    //         setImageSrc(target.result as string);
-    //         setUploadData(undefined);
-    //     };
-    //     reader.readAsDataURL(changeEvent.target.files[0]);
-    // };
-    const handleOnChange = (changeEvent: React.ChangeEvent<HTMLInputElement>): void => {
-        const selectedFiles: FileList = changeEvent.target.files;
-        const firstSelectedFile = selectedFiles[0];
+    const [imageSrc, setImageSrc] = useState<string>(defaultValue);
+    const [imageFile, setImageFile] = useState<File>(null);
 
-        if (firstSelectedFile) {
-            const imageSrc = URL.createObjectURL(firstSelectedFile);
-            setImageSrc(imageSrc);
-            setUploadData(undefined);
-        }
+    useEffect(() => {
+        setValue('media', imageSrc);
+    }, [imageSrc, setValue]);
+    useEffect(() => {
+        setValue('thumbnailFile', imageFile);
+    }, [imageFile, setValue]);
+
+    type FileListArray = Array<File & { readonly preview?: string }>;
+    const handleOnChange = (
+        changeEvent: React.ChangeEvent<HTMLInputElement & { readonly files: FileListArray }>
+    ): void => {
+        const targetFiles: FileListArray = changeEvent.target.files;
+        const targetFilesObject = [...targetFiles];
+        setImageSrc(null);
+        setImageFile(targetFilesObject[0]);
     };
 
-    const handleUpload = async (uploadEvent: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        uploadEvent.preventDefault();
-        setLoading(true);
-        const form = uploadEvent.currentTarget;
-        const fileInput = Array.from(form.elements) as HTMLInputElement[];
-        const fileInputElement = fileInput.find((input) => input.name === 'file');
-        try {
-            const formData = new FormData();
-            formData.append('ml_preset', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
-
-            const files = fileInputElement.files;
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                formData.append('file', file);
-            }
-            const { timestamp, signature } = await fetcher('/api/cloudinary-sign', {
-                method: 'POST'
-            });
-
-            const data = await fetcher(
-                `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload?api_key=${process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY}&timestamp=${timestamp}&signature=${signature}`,
-                {
-                    method: 'POST',
-                    body: formData
-                }
-            );
-            setImageSrc(data.secure_url);
-            setValue('thumbnail', data.secure_url);
-            setUploadData(data);
-        } catch (error) {
-            console.error(`throw toaster error: ${error}`);
-        }
-        setLoading(false);
+    const handleOnRemoveLocal = (): void => {
+        setImageFile(null);
+    };
+    const handleOnRemoveCloud = (): void => {
+        setImageSrc(null);
     };
 
     return (
-        <form onSubmit={handleUpload}>
-            <input
+        <>
+            <Input
                 name="file"
+                label="Upload thumbnail"
                 type="file"
                 accept="image/png, image/jpeg, image/webp"
                 onChange={handleOnChange}
-                className="mb-3 w-full rounded-md border p-3 focus:border-primary focus:ring-primary"
             />
             <div>
-                {imageSrc && (
-                    <Image
-                        className="mx-auto mb-2 border border-accent rounded"
-                        src={imageSrc}
-                        alt="upload image"
-                        height={200}
-                        width={200}
-                    />
-                )}
-                {imageSrc && !uploadData && (
-                    <Button
-                        type="submit"
-                        className={clsx('btn-primary btn-block', loading ? 'loading' : '')}
-                    >
-                        Upload
-                    </Button>
-                )}
+                <div className="mb-2 grid max-w-full grid-cols-2 gap-4 overflow-hidden">
+                    {imageSrc ? (
+                        <div className="relative">
+                            <div className="aspect-w-1 aspect-h-1 rounded overflow-hidden">
+                                <Image
+                                    className="object-cover object-center"
+                                    src={imageSrc}
+                                    alt="image preview"
+                                    fill
+                                />
+                            </div>
+                            <Button
+                                type="button"
+                                onClick={() => handleOnRemoveCloud()}
+                                className="absolute bottom-0 right-0 btn-accent btn-circle btn-sm"
+                            >
+                                <TrashIcon aria-hidden={true} className="h-5 w-5" />
+                            </Button>
+                        </div>
+                    ) : null}
+
+                    {imageFile ? (
+                        <div className="relative">
+                            <div className="aspect-w-1 aspect-h-1 rounded overflow-hidden">
+                                <Image
+                                    className="object-cover object-center"
+                                    src={URL.createObjectURL(imageFile)}
+                                    alt="image preview"
+                                    fill
+                                />
+                            </div>
+                            <Button
+                                type="button"
+                                onClick={() => handleOnRemoveLocal()}
+                                className="absolute bottom-0 right-0 btn-accent btn-circle btn-sm"
+                            >
+                                <TrashIcon aria-hidden={true} className="h-5 w-5" />
+                            </Button>
+                        </div>
+                    ) : null}
+                </div>
             </div>
-        </form>
+        </>
     );
 }

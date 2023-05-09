@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import type { Product } from '@prisma/client';
+import clsx from 'clsx';
 import Button from '@ui/Button';
 import Input from '@ui/Input';
-import FormSection from './Section';
 import MediaUpload from './MediaUpload';
-import ThumbnailUpload from './ThumbnailUpload';
 import CategoryCombobox from './CategoryMenu';
+import fetcher from '@lib/fetcher';
+import ThumbnailUpload from './ThumbnailUpload';
 
 type Props = {
     type?: 'add' | 'update';
@@ -21,6 +22,9 @@ export default function ProductForm({
     onFormSubmit,
     ...props
 }: Props) {
+    const [isLoading, setIsLoading] = useState(false);
+    // const [thumbnailFile, setThumbnailFile] = useState('');
+    // const [mediaFiles, setMediaFiles] = useState([]);
     const {
         register,
         handleSubmit,
@@ -41,79 +45,134 @@ export default function ProductForm({
         }
     }, [defaultValues, setValue]);
 
+    const uploadMedia = async (mediaFiles: File[]): Promise<string[]> => {
+        if (!mediaFiles.length) {
+            return [];
+        }
+        const urls = await Promise.all(
+            mediaFiles.map(async (file) => {
+                const formData = new FormData();
+                formData.append('ml_preset', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+                formData.append('file', file);
+
+                const { timestamp, signature } = await fetcher('/api/cloudinary-sign', {
+                    method: 'POST'
+                });
+                const data = await fetcher(
+                    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload?api_key=${process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY}&timestamp=${timestamp}&signature=${signature}`,
+                    {
+                        method: 'POST',
+                        body: formData
+                    }
+                );
+                return data.secure_url;
+            })
+        );
+        return urls;
+    };
+
+    const uploadThumbnail = async (thumbnailFile: File): Promise<string> => {
+        if (!thumbnailFile) {
+            return;
+        }
+        const formData = new FormData();
+        formData.append('ml_preset', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+        formData.append('file', thumbnailFile);
+
+        const { timestamp, signature } = await fetcher('/api/cloudinary-sign', {
+            method: 'POST'
+        });
+        const data = await fetcher(
+            `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload?api_key=${process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY}&timestamp=${timestamp}&signature=${signature}`,
+            {
+                method: 'POST',
+                body: formData
+            }
+        );
+        return data.secure_url;
+    };
+
     const onSubmit = handleSubmit(async (data) => {
-        await onFormSubmit(data);
-        reset();
+        try {
+            setIsLoading(true);
+            data.media = [
+                ...(data.media ? data.media : []),
+                ...(await uploadMedia(data.mediaFiles))
+            ];
+            data.thumbnail = await uploadThumbnail(data.thumbnailFile);
+            await onFormSubmit(data);
+            debugger;
+            setIsLoading(false);
+            reset();
+        } catch (e) {
+            setIsLoading(false);
+            console.error(e);
+            // throw toast
+        }
     });
 
     return (
         <div {...props} className="flex flex-col space-y-6">
             <form>
-                <FormSection defaultOpen={true} title={'Product Information'}>
+                <Input
+                    name="name"
+                    label="Name of the Product"
+                    placeholder="My beautiful product..."
+                    type="text"
+                    error={errors.name ? (errors.name.message as string) : null}
+                    register={register('name', {
+                        required: {
+                            value: true,
+                            message: 'You must add the name of your product.'
+                        }
+                    })}
+                />
+                <Input
+                    name="description"
+                    label="Description (optional)"
+                    placeholder="Warm and cozy. Beautiful and elegant..."
+                    type="textarea"
+                    register={register('description')}
+                />
+                <CategoryCombobox defaultValue={defaultValues?.categoryId} setValue={setValue} />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <Input
-                        name="name"
-                        label="Name of the Product"
-                        placeholder="My beautiful product..."
-                        type="text"
-                        error={errors.name ? (errors.name.message as string) : null}
-                        register={register('name', {
+                        name="price"
+                        label="Price"
+                        placeholder="36.5"
+                        type="number"
+                        error={errors.price ? (errors.price.message as string) : null}
+                        register={register('price', {
                             required: {
                                 value: true,
-                                message: 'You must add the name of your product.'
-                            }
+                                message: 'You must add the price of your product.'
+                            },
+                            setValueAs: (v) => parseFloat(v)
                         })}
                     />
                     <Input
-                        name="description"
-                        label="Description (optional)"
-                        placeholder="Warm and cozy. Beautiful and elegant..."
-                        type="textarea"
-                        register={register('description')}
+                        name="stock"
+                        label="Stock"
+                        placeholder="1000"
+                        type="number"
+                        error={errors.stock ? (errors.stock.message as string) : null}
+                        register={register('stock', {
+                            required: {
+                                value: true,
+                                message: 'You must add the stock of your product.'
+                            },
+                            setValueAs: (v) => parseInt(v)
+                        })}
                     />
-                    <CategoryCombobox
-                        defaultValue={defaultValues?.categoryId}
-                        setValue={setValue}
-                    />
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <Input
-                            name="price"
-                            label="Price"
-                            placeholder="36.5"
-                            type="number"
-                            error={errors.price ? (errors.price.message as string) : null}
-                            register={register('price', {
-                                required: {
-                                    value: true,
-                                    message: 'You must add the price of your product.'
-                                },
-                                setValueAs: (v) => parseFloat(v)
-                            })}
-                        />
-                        <Input
-                            name="stock"
-                            label="Stock"
-                            placeholder="1000"
-                            type="number"
-                            error={errors.stock ? (errors.stock.message as string) : null}
-                            register={register('stock', {
-                                required: {
-                                    value: true,
-                                    message: 'You must add the stock of your product.'
-                                },
-                                setValueAs: (v) => parseInt(v)
-                            })}
-                        />
-                    </div>
-                </FormSection>
-            </form>
-            <FormSection title={'Thumbnail Upload'}>
+                </div>
                 <ThumbnailUpload defaultValue={defaultValues?.thumbnail} setValue={setValue} />
-            </FormSection>
-            <FormSection title={'Media Upload'}>
                 <MediaUpload defaultValues={defaultValues?.media} setValue={setValue} />
-            </FormSection>
+            </form>
 
-            <Button onClick={onSubmit} className="btn-primary btn-block">
+            <Button
+                onClick={onSubmit}
+                className={clsx('btn-primary btn-block', isLoading ? 'loading' : '')}
+            >
                 {`${type} Product`}
             </Button>
         </div>
