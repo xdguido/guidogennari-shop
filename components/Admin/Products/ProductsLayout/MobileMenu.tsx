@@ -84,7 +84,7 @@ export default function MobileMenu({ categoryTree }: Props) {
                                                             className={clsx(
                                                                 'btn-ghost btn-sm no-animation normal-case btn-block justify-start hover:text-base-content',
                                                                 category === section.slug
-                                                                    ? 'pointer-events-none text-base-content bg-primary-focus'
+                                                                    ? 'pointer-events-none text-primary-content bg-primary-focus'
                                                                     : 'text-neutral'
                                                             )}
                                                         >
@@ -98,7 +98,7 @@ export default function MobileMenu({ categoryTree }: Props) {
                                                                 className={clsx(
                                                                     'btn-ghost btn-sm no-animation normal-case btn-block justify-start hover:text-base-content',
                                                                     category === item.slug
-                                                                        ? 'pointer-events-none text-base-content  bg-primary-focus'
+                                                                        ? 'pointer-events-none text-primary-content  bg-primary-focus'
                                                                         : 'text-neutral'
                                                                 )}
                                                             >

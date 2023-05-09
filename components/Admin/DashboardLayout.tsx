@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                         className={clsx(
                                             'btn-ghost btn-sm no-animation normal-case btn-block justify-start hover:text-base-content',
                                             router.asPath.includes(link.href)
-                                                ? 'pointer-events-none text-base-content  bg-primary-focus'
+                                                ? 'pointer-events-none text-primary-content  bg-primary-focus'
                                                 : 'text-neutral'
                                         )}
                                     >

@@ -33,7 +33,7 @@ export default function ProductsList() {
                 <h1 className="col-span-2 sm:col-span-1">Price</h1>
                 <h1>Stock</h1>
             </div>
-            <div className="grid grid-cols-1 gap-2 auto-rows-min max-h-screen overflow-auto p-1 rounded-lg border border-neutral">
+            <div className="grid grid-cols-1 gap-2 auto-rows-min max-h-screen overflow-auto p-1 rounded-lg">
                 {data.products.map((product) => (
                     <div
                         key={product.id}
@@ -45,10 +45,10 @@ export default function ProductsList() {
                         >
                             {product.name}
                         </Link>
-                        <p className="col-span-2 sm:col-span-1">
-                            $ {product.price.toLocaleString('es')}
+                        <p className="col-span-2 sm:col-span-1 overflow-hidden truncate">
+                            {product.price.toLocaleString('es')}
                         </p>
-                        <span>Stock</span>
+                        <span>{product.stock}</span>
                     </div>
                 ))}
                 <PaginationButtons
