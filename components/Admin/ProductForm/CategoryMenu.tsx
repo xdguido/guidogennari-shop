@@ -3,7 +3,6 @@ import { useState, useEffect, Fragment } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { FieldValues, Path, SetValueConfig } from 'react-hook-form';
-import clsx from 'clsx';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 import { Category } from '@prisma/client';
@@ -17,9 +16,11 @@ type Props = {
         value: FieldValues[Path<FieldValues>],
         options?: SetValueConfig
     ) => void;
+    error?: string | null;
+    register: object;
 };
 
-export default function CategoryCombobox({ defaultValue, setValue }: Props) {
+export default function CategoryCombobox({ defaultValue, setValue, error, register }: Props) {
     const [query, setQuery] = useState<string>('');
     const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(undefined);
     const { data: categories } = useSwr<CategoryWithChildren[]>('/api/categories', fetcher);
@@ -43,7 +44,7 @@ export default function CategoryCombobox({ defaultValue, setValue }: Props) {
 
     useEffect(() => {
         if (selectedCategory) {
-            setValue('categoryId', selectedCategory.id);
+            setValue('categoryId', selectedCategory.id, { shouldValidate: true });
         }
     }, [selectedCategory, setValue]);
 
@@ -82,22 +83,30 @@ export default function CategoryCombobox({ defaultValue, setValue }: Props) {
                 </label>
                 <Combobox.Button className="relative w-full text-left sm:text-sm">
                     {({ open }) => (
-                        <Combobox.Input
-                            as={Input}
-                            label="Select a category"
-                            name="category"
-                            value={query || selectedCategory?.name}
-                            onChange={(event) => setQuery(event.target.value)}
-                            onClick={(e) => {
-                                if (open) e.stopPropagation();
-                            }}
-                            placeholder="Select a Category"
-                        />
+                        <>
+                            <Combobox.Input
+                                as={Input}
+                                label="Select a category"
+                                name="categoryId"
+                                value={query || selectedCategory?.name}
+                                onChange={(event) => setQuery(event.target.value)}
+                                onClick={(e) => {
+                                    if (open) e.stopPropagation();
+                                }}
+                                error={error}
+                                register={register}
+                                placeholder="Select a category"
+                                className="cursor-pointer"
+                            />
+                            {/* <div className="absolute bottom-[9px] right-0 flex items-center p-2">
+                                <ChevronUpDownIcon
+                                    className="h-6 w-6 text-neutral"
+                                    aria-hidden="true"
+                                />
+                            </div> */}
+                        </>
                     )}
                 </Combobox.Button>
-                {/* <div className="absolute bottom-2 right-0 flex items-center p-2">
-                    <ChevronUpDownIcon className="h-6 w-6 text-neutral" aria-hidden="true" />
-                </div> */}
 
                 <Transition
                     as={Fragment}

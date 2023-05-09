@@ -134,7 +134,17 @@ export default function ProductForm({
                     type="textarea"
                     register={register('description')}
                 />
-                <CategoryCombobox defaultValue={defaultValues?.categoryId} setValue={setValue} />
+                <CategoryCombobox
+                    defaultValue={defaultValues?.categoryId}
+                    setValue={setValue}
+                    error={errors.categoryId ? (errors.categoryId.message as string) : null}
+                    register={register('categoryId', {
+                        required: {
+                            value: true,
+                            message: 'You must add a category.'
+                        }
+                    })}
+                />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <Input
                         name="price"
