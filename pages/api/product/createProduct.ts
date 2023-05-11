@@ -19,11 +19,7 @@ router.post(async (req, res) => {
             thumbnail: body.thumbnail,
             media: body.media,
             slug: productSlug,
-            category: {
-                connect: {
-                    id: body.categoryId
-                }
-            }
+            categoryId: body.categoryId
         }
     });
     return res.status(201).json(product);
