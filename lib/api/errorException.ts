@@ -127,13 +127,13 @@ const errorConfigMap: Record<ErrorCode, ErrorConfig> = {
 export class Exception extends Error {
     status: number;
     clientString: { [key: string]: string };
-    cause?: string;
+    metaData?: string;
 
-    constructor(code: ErrorCode, cause?: string) {
+    constructor(code: ErrorCode, metaData?: string) {
         super(code);
         Object.setPrototypeOf(this, new.target.prototype);
         this.name = code;
-        this.cause = cause;
+        this.metaData = metaData;
         const errorConfig = errorConfigMap[code] || errorConfigMap[ErrorCode.UnknownError];
         this.status = errorConfig.status;
         this.clientString = errorConfig.clientString;
