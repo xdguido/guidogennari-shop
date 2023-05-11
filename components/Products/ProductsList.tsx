@@ -42,15 +42,19 @@ export default function ProductsList({ products }: Props) {
             <div className="bg-base-100 mx-auto py-4 sm:py-6 lg:py-8">
                 <h2 className="sr-only">Products</h2>
 
-                <div className="grid grid-cols-1 gap-y-10 gap-x-4 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid grid-cols-2 gap-y-10 gap-x-2 sm:gap-x-4 sm:grid-cols-2 xl:grid-cols-3">
                     {products.map((product) => (
-                        <Link key={product.id} href={`/product/${product.slug}`} className="group">
-                            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8">
+                        <Link
+                            key={product.id}
+                            href={`/product/${product.slug}`}
+                            className="group rounded hover:shadow-xl transition-shadow duration-500"
+                        >
+                            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8 group-hover:rounded-b-none">
                                 {product.thumbnail ? (
                                     <Image
                                         src={product.thumbnail}
                                         alt={`${product.name} image`}
-                                        className="object-cover object-center group-hover:opacity-75"
+                                        className="object-cover object-center group-hover:object-fill"
                                         fill
                                     />
                                 ) : (
@@ -63,11 +67,14 @@ export default function ProductsList({ products }: Props) {
                                     </div>
                                 )}
                             </div>
-                            <h3 className="mt-4 text-sm ">{product.name}</h3>
-                            <p className="sr-only">{product.description}</p>
-                            <p className="mt-1 text-lg font-medium ">
-                                $ {product.price.toLocaleString('es')}
-                            </p>
+                            <div className="p-2 sm:p-4">
+                                <h3 className="font-medium text-sm sm:text-base">{product.name}</h3>
+                                <p className="text-sm text-neutral">Short description</p>
+                                <p className="sr-only">{product.description}</p>
+                                <p className="mt-1 text-base sm:text-lg font-medium ">
+                                    $ {product.price.toLocaleString('es')}
+                                </p>
+                            </div>
                         </Link>
                     ))}
                 </div>

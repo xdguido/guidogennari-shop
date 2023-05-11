@@ -13,9 +13,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     // `getStaticProps` is executed on the server side.
     const productSlug = params?.product;
 
-    const categoryTree: CategoryWithChildren[] = await getCategories();
+    const categoryList: CategoryWithChildren[] = await getCategories();
     const productData = await getProduct(productSlug as string);
-    const productCategory = productData?.category[0]?.slug;
+    const productCategory = productData?.category?.slug;
     const productsData = await getProducts(1, 'newest' as SortOption, productCategory);
 
     if (!productData || !productsData) {
@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         props: {
             productSlug,
             categorySlug: productCategory,
-            categoryTree,
+            categoryList,
             fallback: {
                 [unstable_serialize(`/api/product/${productSlug}`)]: JSON.parse(
                     JSON.stringify(productData)
@@ -50,9 +50,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, productSlug, categorySlug, categoryTree }) {
+export default function Index({ fallback, productSlug, categorySlug, categoryList }) {
     return (
-        <Layout categoryTree={categoryTree}>
+        <Layout categoryTree={categoryList}>
             <SWRConfig value={{ fallback }}>
                 <Product productSlug={productSlug} categorySlug={categorySlug} />
             </SWRConfig>
