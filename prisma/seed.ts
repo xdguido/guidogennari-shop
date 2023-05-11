@@ -25,7 +25,7 @@ const createProductsWithCategories = async () => {
         return randomPrice;
     }
 
-    const productsPromises = Array.from({ length: 500 }).map(() => {
+    const productsPromises = Array.from({ length: 250 }).map(() => {
         const randomCategory =
             randomizeCategories[Math.floor(Math.random() * randomizeCategories.length)];
         const randomImage = [
