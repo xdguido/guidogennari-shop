@@ -54,7 +54,7 @@ export default function ProductsList({ products }: Props) {
                                     <Image
                                         src={product.thumbnail}
                                         alt={`${product.name} image`}
-                                        className="object-cover object-center group-hover:object-fill"
+                                        className="object-cover object-center"
                                         fill
                                     />
                                 ) : (
@@ -71,7 +71,7 @@ export default function ProductsList({ products }: Props) {
                                 <h3 className="font-medium text-sm sm:text-base">{product.name}</h3>
                                 <p className="text-sm text-neutral">Short description</p>
                                 <p className="sr-only">{product.description}</p>
-                                <p className="mt-1 text-base sm:text-lg font-medium ">
+                                <p className="mt-1 font-medium ">
                                     $ {product.price.toLocaleString('es')}
                                 </p>
                             </div>
