@@ -31,11 +31,11 @@ export default function ProductsList() {
     return (
         <>
             <div className="grid grid-cols-12 gap-2 group p-3 font-bold text-accent text-sm">
-                <p className="col-span-5 sm:col-span-6">Name</p>
+                <p className="col-span-5 sm:col-span-8">Name</p>
+                <p className="col-span-2 sm:col-span-1">Stock</p>
                 <p className="col-span-3 sm:col-span-2 ">Price</p>
-                <p>Stock</p>
             </div>
-            <div className="grid grid-cols-1 gap-2 auto-rows-min max-h-screen overflow-auto rounded-lg text-sm">
+            <div className="grid grid-cols-1 gap-2 auto-rows-min max-h-screen overflow-auto rounded-lg font-semibold text-sm">
                 {data.products.map((product) => (
                     <div
                         key={product.id}
@@ -47,12 +47,12 @@ export default function ProductsList() {
                         >
                             {product.name}
                         </Button> */}
-                        <p className="col-span-5 sm:col-span-6 leading-none">{product.name}</p>
-                        <p className="col-span-3 sm:col-span-2 font-semibold overflow-hidden truncate">
+                        <p className="col-span-5 sm:col-span-8 leading-none">{product.name}</p>
+                        <span className=" col-span-2 sm:col-span-1">{product.stock}</span>
+                        <p className="col-span-3 sm:col-span-2  overflow-hidden truncate">
                             $ {product.price.toLocaleString('es')}
                         </p>
-                        <span className="font-semibold col-span-2">{product.stock}</span>
-                        <div className="flex justify-end gap-1 sm:gap-2 col-span-2">
+                        <div className="flex justify-end gap-1 sm:gap-2 col-span-2 sm:col-span-1">
                             {/* <Button className="btn-ghost btn-square btn-sm">
                                 <EyeIcon className="h-4 w-4" />
                             </Button> */}
