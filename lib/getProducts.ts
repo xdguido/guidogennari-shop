@@ -9,26 +9,28 @@ export type CategoryWithChildren = Prisma.CategoryGetPayload<{
     include: { children: true };
 }>;
 
-async function getAllChildCategories(categorySlug: string): Promise<CategoryWithChildren[]> {
-    const categoryNode = await prisma.category.findUnique({
+async function getAllChildCategories(
+    categorySlug: string
+): Promise<{ categoryTree: CategoryNode[]; categoryNode: CategoryNode } | null> {
+    const categoryNode: CategoryNode = await prisma.category.findUnique({
         where: { slug: categorySlug },
-        include: { children: true }
+        include: { children: true, parent: true }
     });
 
     if (!categoryNode) {
         return null;
     }
 
-    const childCategories: CategoryWithChildren[] = [categoryNode];
+    const categoryTree: CategoryNode[] = [categoryNode];
 
-    async function getChildCategories(node: CategoryWithChildren): Promise<void> {
+    async function getChildCategories(node: CategoryNode): Promise<void> {
         if (node.children.length > 0) {
             for (const child of node.children) {
                 const childNode = await prisma.category.findUnique({
                     where: { slug: child.slug },
-                    include: { children: true }
+                    include: { children: true, parent: true }
                 });
-                childCategories.push(childNode);
+                categoryTree.push(childNode);
                 await getChildCategories(childNode);
             }
         }
@@ -36,14 +38,14 @@ async function getAllChildCategories(categorySlug: string): Promise<CategoryWith
 
     await getChildCategories(categoryNode);
 
-    return childCategories;
+    return { categoryTree, categoryNode };
 }
 export default async function getProducts(page: number, sort: SortOption, category: string) {
     try {
         const takeNumber = 12;
         const skipNumber = (Number(page) - 1) * takeNumber;
 
-        const categoryTree: CategoryWithChildren[] = await getAllChildCategories(category);
+        const { categoryTree, categoryNode } = await getAllChildCategories(category);
 
         if (!categoryTree) {
             return null;
@@ -53,11 +55,7 @@ export default async function getProducts(page: number, sort: SortOption, catego
             skip: skipNumber,
             take: takeNumber,
             where: {
-                category: {
-                    some: {
-                        slug: { in: categoryTree.map((category) => category.slug) }
-                    }
-                }
+                categoryId: { in: categoryTree.map((category) => category.id) }
             },
             orderBy: (() => {
                 switch (sort) {
@@ -79,16 +77,8 @@ export default async function getProducts(page: number, sort: SortOption, catego
 
         const total = await prisma.product.count({
             where: {
-                category: {
-                    some: {
-                        slug: { in: categoryTree.map((category) => category.slug) }
-                    }
-                }
+                categoryId: { in: categoryTree.map((category) => category.id) }
             }
-        });
-        const categoryNode: CategoryNode = await prisma.category.findUnique({
-            where: { slug: category },
-            include: { children: true, parent: true }
         });
 
         return { products, categoryNode, total };

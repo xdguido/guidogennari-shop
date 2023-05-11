@@ -10,7 +10,7 @@ import type { CategoryWithChildren } from '@lib/getProducts';
 import Input from '@ui/Input';
 
 type Props = {
-    defaultValue: string;
+    defaultValue?: string;
     setValue: (
         name: Path<FieldValues>,
         value: FieldValues[Path<FieldValues>],
@@ -78,9 +78,6 @@ export default function CategoryCombobox({ defaultValue, setValue, error, regist
     return (
         <Combobox value={selectedCategory} onChange={setSelectedCategory}>
             <div className="relative z-20 mb-3 cursor-pointer">
-                <label className="sr-only" htmlFor="category">
-                    Select category
-                </label>
                 <Combobox.Button className="relative w-full text-left sm:text-sm">
                     {({ open }) => (
                         <>

@@ -13,10 +13,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         }
     ];
     return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
             <h1 className="text-4xl font-bold tracking-tight mb-4">Dashboard</h1>
             <section className="pt-6 pb-24">
-                <div className="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-5">
+                <div className="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-6">
                     <div className="hidden lg:block">
                         <h3 className="text-base-content font-semibold mb-2 px-3">Options</h3>
                         <ul role="list" className="pb-6  space-y-2 text-sm font-medium ">
@@ -37,9 +37,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             ))}
                         </ul>
                     </div>
-                    <div className="lg:col-span-4">{children}</div>
+                    <div className="lg:col-span-5">{children}</div>
                 </div>
             </section>
-        </main>
+        </div>
     );
 }

@@ -37,7 +37,7 @@ export default function ProductsList({ children }: Props) {
                 </div>
                 <h2 className="sr-only">Products</h2>
 
-                <div className="grid grid-cols-1 gap-y-10 gap-x-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-y-10 gap-x-4 sm:grid-cols-2 lg:grid-cols-4">
                     <div className="hidden lg:grid grid-cols-1 max-h-screen overflow-auto">
                         {categoryTree.map((section) => (
                             <div key={section.name}>
@@ -67,7 +67,7 @@ export default function ProductsList({ children }: Props) {
                                             <Button
                                                 href={`/admin/products/${item.slug}/newest/1`}
                                                 className={clsx(
-                                                    'btn-ghost btn-sm no-animation normal-case btn-block justify-start hover:text-base-content',
+                                                    'btn-ghost btn-sm no-animation normal-case btn-block text-left justify-start hover:text-base-content',
                                                     category === item.slug
                                                         ? 'pointer-events-none text-primary-content  bg-primary-focus'
                                                         : 'text-neutral'
@@ -81,7 +81,7 @@ export default function ProductsList({ children }: Props) {
                             </div>
                         ))}
                     </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                         {/* Products list */}
                         {children}
                     </div>

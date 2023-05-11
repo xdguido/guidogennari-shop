@@ -2,42 +2,51 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 
 import Button from '@ui/Button';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 import fetcher from '@lib/fetcher';
 
 import type { Product } from '@prisma/client';
 import ProductForm from '../ProductForm';
 
-export default function AddProduct() {
+type Props = { product: Product };
+
+export default function EditProduct({ product }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [isWarn, setIsWarn] = useState(false);
     const handleClose = () => setIsOpen(false);
     const handleOpen = () => setIsOpen(true);
     const handleOpenWarn = () => setIsWarn(true);
     const handleCloseWarn = () => setIsWarn(false);
-    const onFormSubmit = async (data: any) => {
-        try {
-            await fetcher(`/api/product/createProduct`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }).then(() => {
-                handleClose();
-                // window.location.reload();
-                // use other refetch
-            });
-        } catch (error) {
-            console.log(error);
-        }
+    const onFormSubmit = async (data: Product) => {
+        const stockDiff = data.stock - product.stock;
+        const updatedData = Object.fromEntries(
+            Object.entries(data).filter(([key, value]) => {
+                if (key === 'id') {
+                    return true; // keep the id property
+                }
+                return value !== product[key];
+            })
+        );
+        updatedData.stock = stockDiff;
+
+        await fetcher(`/api/product/updateProduct`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        }).then(() => {
+            handleClose();
+            // window.location.reload();
+            // use other refetch
+        });
     };
 
     return (
         <>
-            <Button onClick={handleOpen} className="btn-primary btn-sm">
-                Add Product
+            <Button onClick={handleOpen} className="btn-ghost btn-square btn-sm">
+                <PencilIcon className="h-4 w-4" />
             </Button>
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={handleOpenWarn}>
@@ -69,7 +78,7 @@ export default function AddProduct() {
                                         as="div"
                                         className="mb-5 flex items-center justify-between text-lg font-semibold leading-6 "
                                     >
-                                        <h3>Add Product</h3>
+                                        <h3>Edit Product</h3>
                                         <Button
                                             onClick={handleOpenWarn}
                                             className="btn-ghost btn-square"
@@ -78,7 +87,11 @@ export default function AddProduct() {
                                         </Button>
                                     </Dialog.Title>
 
-                                    <ProductForm onFormSubmit={onFormSubmit} />
+                                    <ProductForm
+                                        type="update"
+                                        defaultValues={product}
+                                        onFormSubmit={onFormSubmit}
+                                    />
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

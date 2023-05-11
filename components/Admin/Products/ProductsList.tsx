@@ -1,9 +1,11 @@
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import PaginationButtons from '@components/Products/PaginationButtons';
+import Button from '@ui/Button';
+import { EyeIcon } from '@heroicons/react/24/outline';
+import EditProduct from '../ProductForm/EditProduct';
 
 export default function ProductsList() {
     const router = useRouter();
@@ -28,36 +30,43 @@ export default function ProductsList() {
     }
     return (
         <>
-            <div className="grid grid-cols-6 gap-2 group p-3 font-bold text-accent">
-                <h1 className="col-span-3 sm:col-span-4">Name</h1>
-                <h1 className="col-span-2 sm:col-span-1">Price</h1>
-                <h1>Stock</h1>
+            <div className="grid grid-cols-12 gap-2 group p-3 font-bold text-accent text-sm">
+                <p className="col-span-5 sm:col-span-6">Name</p>
+                <p className="col-span-3 sm:col-span-2 ">Price</p>
+                <p>Stock</p>
             </div>
-            <div className="grid grid-cols-1 gap-2 auto-rows-min max-h-screen overflow-auto p-1 rounded-lg">
+            <div className="grid grid-cols-1 gap-2 auto-rows-min max-h-screen overflow-auto rounded-lg text-sm">
                 {data.products.map((product) => (
                     <div
                         key={product.id}
-                        className="grid grid-cols-6 gap-2 group p-3 rounded-lg border border-neutral"
+                        className="grid grid-cols-12 gap-1 sm:gap-2 items-center group p-3 bg-slate-200 rounded-lg border border-neutral"
                     >
-                        <Link
+                        {/* <Button
                             href={`/admin/product/${product.slug}`}
-                            className=" cursor-pointer col-span-3 sm:col-span-4"
+                            className="btn-ghost btn-sm normal-case justify-start col-span-3 sm:col-span-4"
                         >
                             {product.name}
-                        </Link>
-                        <p className="col-span-2 sm:col-span-1 overflow-hidden truncate">
-                            {product.price.toLocaleString('es')}
+                        </Button> */}
+                        <p className="col-span-5 sm:col-span-6 leading-none">{product.name}</p>
+                        <p className="col-span-3 sm:col-span-2 font-semibold overflow-hidden truncate">
+                            $ {product.price.toLocaleString('es')}
                         </p>
-                        <span>{product.stock}</span>
+                        <span className="font-semibold col-span-2">{product.stock}</span>
+                        <div className="flex justify-end gap-1 sm:gap-2 col-span-2">
+                            {/* <Button className="btn-ghost btn-square btn-sm">
+                                <EyeIcon className="h-4 w-4" />
+                            </Button> */}
+                            <EditProduct product={product} />
+                        </div>
                     </div>
                 ))}
-                <PaginationButtons
-                    basePath="/admin/products"
-                    category={category as string}
-                    currentPageIndex={currentPageIndex}
-                    maxPageIndex={maxPageIndex}
-                />
             </div>
+            <PaginationButtons
+                basePath="/admin/products"
+                category={category as string}
+                currentPageIndex={currentPageIndex}
+                maxPageIndex={maxPageIndex}
+            />
         </>
     );
 }

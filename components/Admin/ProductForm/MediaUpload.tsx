@@ -19,8 +19,10 @@ export default function MediaUpload({ defaultValues = [], setValue }: Props) {
     const [imageFiles, setImageFiles] = useState<File[]>([]);
 
     useEffect(() => {
-        setValue('media', imageSrc);
-    }, [imageSrc, setValue]);
+        if (defaultValues) {
+            setValue('media', defaultValues);
+        }
+    }, [defaultValues, setValue]);
     useEffect(() => {
         setValue('mediaFiles', imageFiles);
     }, [imageFiles, setValue]);

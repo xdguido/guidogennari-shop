@@ -12,7 +12,7 @@ import ThumbnailUpload from './ThumbnailUpload';
 
 type Props = {
     type?: 'add' | 'update';
-    defaultValues?: Product & { categoryId: string };
+    defaultValues?: Product;
     onFormSubmit: (data: FieldValues) => Promise<void>;
 } & React.HTMLProps<HTMLDivElement>;
 
@@ -35,6 +35,7 @@ export default function ProductForm({
 
     useEffect(() => {
         if (defaultValues) {
+            setValue('id', defaultValues.id);
             setValue('name', defaultValues.name);
             setValue('description', defaultValues.description);
             setValue('price', defaultValues.price);
@@ -46,9 +47,6 @@ export default function ProductForm({
     }, [defaultValues, setValue]);
 
     const uploadMedia = async (mediaFiles: File[]): Promise<string[]> => {
-        if (!mediaFiles.length) {
-            return [];
-        }
         const urls = await Promise.all(
             mediaFiles.map(async (file) => {
                 const formData = new FormData();
@@ -72,9 +70,6 @@ export default function ProductForm({
     };
 
     const uploadThumbnail = async (thumbnailFile: File): Promise<string> => {
-        if (!thumbnailFile) {
-            return;
-        }
         const formData = new FormData();
         formData.append('ml_preset', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
         formData.append('file', thumbnailFile);
@@ -95,13 +90,16 @@ export default function ProductForm({
     const onSubmit = handleSubmit(async (data) => {
         try {
             setIsLoading(true);
-            data.media = [
-                ...(data.media ? data.media : []),
-                ...(await uploadMedia(data.mediaFiles))
-            ];
-            data.thumbnail = await uploadThumbnail(data.thumbnailFile);
+
+            const mediaFiles = data.mediaFiles ? await uploadMedia(data.mediaFiles) : [];
+            data.media = [...(data.media ? data.media : []), ...mediaFiles];
+
+            if (data.thumbnailFile) {
+                data.thumbnail = await uploadThumbnail(data.thumbnailFile);
+            }
+
             await onFormSubmit(data);
-            debugger;
+
             setIsLoading(false);
             reset();
         } catch (e) {

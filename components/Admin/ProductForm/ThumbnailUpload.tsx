@@ -25,8 +25,10 @@ export default function ThumbnailUpload({ defaultValue, setValue }: Props) {
     const [imageFile, setImageFile] = useState<File>(null);
 
     useEffect(() => {
-        setValue('media', imageSrc);
-    }, [imageSrc, setValue]);
+        if (defaultValue) {
+            setValue('thumbnail', defaultValue);
+        }
+    }, [defaultValue, setValue]);
     useEffect(() => {
         setValue('thumbnailFile', imageFile);
     }, [imageFile, setValue]);
