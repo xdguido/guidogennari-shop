@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "concurrently --kill-others \"cross-env NODE_OPTIONS='--inspect' next dev\" \"prisma generate --watch prisma/schema.prisma\" \"prisma studio\"",
         "build": "next build",
+        "vercel-build": "prisma generate && prisma migrate deploy && next build",
         "start": "next start",
         "lint": "next lint",
         "docker-compose": "docker-compose up --build --force-recreate",
