@@ -1,5 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createRouter } from 'next-connect';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../auth/[...nextauth]';
+
 import { errorHandler, noMatchHandler } from '@lib/api/errorHandler';
 import { Product } from '@prisma/client';
 import { prisma } from '@lib/db';
@@ -8,6 +11,15 @@ import slugify from '@lib/slugify';
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
 router.post(async (req, res) => {
+    const session = await getServerSession(req, res, authOptions);
+
+    if (!session) {
+        return res.status(401).json('Unauthenticated');
+    }
+    if (session.user.role !== 'admin') {
+        return res.status(403).json('Unauthorized');
+    }
+
     const { body } = req;
     const productSlug = slugify(body.name);
     const product: Product = await prisma.product.create({
