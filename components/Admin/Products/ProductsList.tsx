@@ -3,9 +3,8 @@ import fetcher from '@lib/fetcher';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import PaginationButtons from '@components/Products/PaginationButtons';
-import Button from '@ui/Button';
-import { EyeIcon } from '@heroicons/react/24/outline';
 import EditProduct from '../ProductForm/EditProduct';
+import { Product } from '@prisma/client';
 
 export default function ProductsList() {
     const router = useRouter();
@@ -36,7 +35,7 @@ export default function ProductsList() {
                 <p className="col-span-3 sm:col-span-2 ">Price</p>
             </div>
             <div className="grid grid-cols-1 gap-2 auto-rows-min max-h-screen overflow-auto rounded-lg font-semibold text-sm">
-                {data.products.map((product) => (
+                {data.products.map((product: Product) => (
                     <div
                         key={product.id}
                         className="grid grid-cols-12 gap-1 sm:gap-2 items-center group p-3 bg-slate-200 rounded-lg border border-neutral"

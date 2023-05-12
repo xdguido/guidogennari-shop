@@ -19,7 +19,8 @@ export default function EditProduct({ product }: Props) {
     const handleOpenWarn = () => setIsWarn(true);
     const handleCloseWarn = () => setIsWarn(false);
     const onFormSubmit = async (data: Product) => {
-        const stockDiff = data.stock - product.stock;
+        const stockDiff: number = Number(data.stock) - product.stock;
+
         const updatedData = Object.fromEntries(
             Object.entries(data).filter(([key, value]) => {
                 if (key === 'id') {
