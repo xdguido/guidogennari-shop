@@ -14,17 +14,22 @@ type Props = {
     children: React.ReactNode;
     sort: SortOption;
     categoryNode: CategoryNode;
+    totalProducts: number;
 };
 
-export default function ProductsLayout({ children, sort, categoryNode }: Props) {
+export default function ProductsLayout({ children, sort, categoryNode, totalProducts }: Props) {
     return (
         <>
             <div>
                 <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <h1 className="text-4xl font-bold tracking-tight mb-4">{categoryNode.name}</h1>
-
-                    <div className="flex items-center justify-between border-b border-base-300 pb-2">
-                        <div className="block max-w-[10rem] sm:max-w-none text-sm breadcrumbs">
+                    <h1 className="lg:hidden text-4xl font-bold tracking-tight mb-2">
+                        {categoryNode.name}
+                    </h1>
+                    <div className="flex justify-between items-end pb-2">
+                        <h1 className="hidden lg:block text-4xl font-bold tracking-tight pl-3">
+                            {categoryNode.name}
+                        </h1>
+                        <div className="lg:hidden max-w-[10rem] sm:max-w-none text-sm breadcrumbs">
                             <ul>
                                 {categoryNode.parent && (
                                     <li>
@@ -41,10 +46,10 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                 <div className=" text-sm">
                                     <Menu.Button
                                         as={Button}
-                                        className="btn-ghost no-animation normal-case btn-sm gap-2 px-1 sm:px-2"
+                                        className="btn-ghost no-animation normal-case btn-sm gap-2 px-1 sm:px-2 font-normal"
                                     >
                                         <ArrowsUpDownIcon
-                                            className=" h-4 w-4 text-base-content"
+                                            className=" h-3 w-3 text-base-content"
                                             aria-hidden="true"
                                         />
                                         <span className="sr-only">Sort by</span>
@@ -119,7 +124,24 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                         <div className="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-4">
                             {/* Filters */}
 
-                            <div className="hidden lg:block sticky top-[6rem] self-start py-3">
+                            <div className="hidden lg:block sticky top-[4rem] self-start py-3">
+                                <div className="block text-sm breadcrumbs pl-3">
+                                    <ul>
+                                        {categoryNode.parent && (
+                                            <li>
+                                                <Link
+                                                    href={`/products/${categoryNode.parent.slug}`}
+                                                >
+                                                    {categoryNode.parent.name}
+                                                </Link>
+                                            </li>
+                                        )}
+                                        <li>{categoryNode.name}</li>
+                                    </ul>
+                                </div>
+                                <p className="badge badge-outline ml-3 mb-3">
+                                    {totalProducts + ' products'}
+                                </p>
                                 {categoryNode.children.length === 0 ? null : (
                                     <>
                                         <h3 className="text-base-content font-semibold mb-2 px-3">
