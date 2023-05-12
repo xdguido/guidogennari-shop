@@ -41,7 +41,7 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                 <div className=" text-sm">
                                     <Menu.Button
                                         as={Button}
-                                        className="btn-ghost normal-case btn-sm gap-2 px-1 sm:px-2"
+                                        className="btn-ghost no-animation normal-case btn-sm gap-2 px-1 sm:px-2"
                                     >
                                         <ArrowsUpDownIcon
                                             className=" h-4 w-4 text-base-content"
