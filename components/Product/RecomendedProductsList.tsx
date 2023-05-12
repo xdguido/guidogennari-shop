@@ -17,9 +17,9 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
                 {filteredProducts.slice(0, 5).map((product) => (
                     <Link key={product.id} href={`/product/${product.slug}`} className="group">
                         <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8">
-                            {product.imageSrc ? (
+                            {product.thumbnail ? (
                                 <Image
-                                    src={product.imageSrc}
+                                    src={product.thumbnail}
                                     alt={`${product.name} image`}
                                     className="object-cover object-center group-hover:opacity-75"
                                     fill
@@ -44,9 +44,9 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
                 {lastProduct && (
                     <Link href={`/product/${lastProduct.slug}`} className="block md:hidden group">
                         <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8">
-                            {lastProduct.imageSrc ? (
+                            {lastProduct.thumbnail ? (
                                 <Image
-                                    src={lastProduct.imageSrc}
+                                    src={lastProduct.thumbnail}
                                     alt={`${lastProduct.name} image`}
                                     className="object-cover object-center group-hover:opacity-75"
                                     fill

@@ -48,7 +48,7 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
                 )
             }
         },
-        revalidate: 60
+        revalidate: 60 * 60 * 24
     };
 };
 

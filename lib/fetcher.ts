@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Exception } from '@lib/api/errorException';
 
 class FetchError extends Error {
@@ -24,11 +25,29 @@ async function parseResponse(res: Response): Promise<any> {
     }
 }
 
-export default async function fetcher(url: string) {
-    const res = await fetch(url);
+interface FetchOptions {
+    headers?: { [key: string]: string };
+    method?: string;
+    body?: any;
+}
+
+export default async function fetcher(url: string, options: FetchOptions = {}) {
+    const res = await fetch(url, {
+        method: options.method || 'GET',
+        headers: options.headers || {},
+        body: options.body
+    });
 
     if (!res.ok) {
-        const error: Exception = await res.json();
+        let error;
+        try {
+            error = await res.json();
+            if (!(error instanceof Exception)) {
+                throw new Error(res.statusText);
+            }
+        } catch (e) {
+            error = new Error(res.statusText);
+        }
         console.error(error);
         const message = error.name;
         const clientString = error.clientString;

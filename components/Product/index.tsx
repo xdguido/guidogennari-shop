@@ -6,8 +6,8 @@ import fetcher from '@lib/fetcher';
 import Button from '@ui/Button';
 import Link from 'next/link';
 import {
-    ShareIcon,
-    HeartIcon,
+    // ShareIcon,
+    // HeartIcon,
     InformationCircleIcon,
     CheckIcon,
     TruckIcon
@@ -15,6 +15,8 @@ import {
 import { NextSeo } from 'next-seo';
 import { useCart } from '@store/CartContext';
 import { CartProduct } from '@types';
+import type { Category, Product } from '@prisma/client';
+
 import Tabs from './Tabs';
 import RecomendedProductsList from './RecomendedProductsList';
 import Carousel from './Carousel';
@@ -22,7 +24,10 @@ import Carousel from './Carousel';
 type Prop = { productSlug: string; categorySlug: string };
 export default function Index({ productSlug, categorySlug }: Prop) {
     const { addProduct } = useCart();
-    const { data: product } = useSwr(`/api/product/${productSlug}`, fetcher);
+    const { data: product } = useSwr<Product & { category: Category }>(
+        `/api/product/${productSlug}`,
+        fetcher
+    );
     const {
         data: { products, categoryNode }
     } = useSwr(() => `/api/products/${categorySlug}/newest/1`, fetcher);
@@ -36,7 +41,7 @@ export default function Index({ productSlug, categorySlug }: Prop) {
         name: product.name,
         price: product.price,
         quantity: qty,
-        imageSrc: product.imageSrc,
+        imageSrc: product.thumbnail,
         imageAlt: product.name
     };
 
@@ -52,7 +57,7 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                     description: product.description,
                     images: [
                         {
-                            url: product.imageSrc,
+                            url: product.thumbnail,
                             width: 800,
                             height: 600,
                             alt: 'Og Image Alt'

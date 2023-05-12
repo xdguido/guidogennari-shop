@@ -57,17 +57,20 @@ model VerificationToken {
 }
 
 model Product {
-  id          String     @id @default(cuid())
-  createdAt   DateTime   @default(now())
-  internalId  String?
-  name        String     @db.VarChar(50)
-  slug        String     @unique
-  description String?
-  imageSrc    String?
-  price       Float
-  visibility  Boolean    @default(true)
-  stock       Boolean    @default(true)
-  category    Category[]
+  id               String   @id @default(cuid())
+  createdAt        DateTime @default(now())
+  internalId       String?
+  name             String   @db.VarChar(50)
+  slug             String   @unique
+  shortDescription String?
+  description      String?
+  thumbnail        String?
+  media            String[]
+  price            Float
+  visibility       Boolean  @default(true)
+  stock            Int      @default(0)
+  category         Category @relation(fields: [categoryId], references: [id])
+  categoryId       String
 }
 
 model Category {

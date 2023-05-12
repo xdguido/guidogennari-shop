@@ -25,7 +25,7 @@ const createProductsWithCategories = async () => {
         return randomPrice;
     }
 
-    const productsPromises = Array.from({ length: 500 }).map(() => {
+    const productsPromises = Array.from({ length: 250 }).map(() => {
         const randomCategory =
             randomizeCategories[Math.floor(Math.random() * randomizeCategories.length)];
         const randomImage = [
@@ -44,12 +44,8 @@ const createProductsWithCategories = async () => {
                 price: randomPrice,
                 description:
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et ligula ullamcorper malesuada proin libero nunc consequat interdum.',
-                imageSrc: randomImage[Math.floor(Math.random() * randomImage.length)],
-                category: {
-                    connect: {
-                        id: randomCategory.id
-                    }
-                }
+                thumbnail: randomImage[Math.floor(Math.random() * randomImage.length)],
+                categoryId: randomCategory.id
             }
         });
     });

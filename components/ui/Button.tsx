@@ -1,23 +1,10 @@
 import Link from 'next/link';
-// import { cva, VariantProps } from 'class-variance-authority';
-
-// const buttonStyles = cva(
-//     [
-//         'btn'
-//         // 'flex items-center justify-center gap-2 px-6 py-2.5 font-medium leading-tight rounded-md lg:text-lg',
-//         // 'focus:outline-none focus-visible:ring-offset-2 focus-visible:ring-2',
-//         // 'transition duration-150 ease-in-out'
-//     ],
-//     {
-//         variants: {},
-//         defaultVariants: {},
-//         compoundVariants: []
-//     }
-// );
 
 interface ButtonProps {
     className?: string;
     href?: string;
+    as?: string;
+    type?: 'button' | 'reset' | 'submit';
     children: React.ReactNode;
     onClick?: () => void;
     title?: string;
@@ -25,21 +12,13 @@ interface ButtonProps {
     rel?: string;
 }
 
-// export interface Props extends ButtonProps, VariantProps<typeof buttonStyles> {}
-
-export default function Button({ className, children, onClick, href }: ButtonProps) {
+export default function Button({ className, children, onClick, href, as, type }: ButtonProps) {
     return href ? (
-        <Link
-            href={href}
-            className={`btn ${className}`} /* className={`${buttonStyles({})} ${className}` }*/
-        >
+        <Link href={href} as={as} className={`btn ${className}`}>
             {children}
         </Link>
     ) : (
-        <button
-            onClick={onClick}
-            className={`btn ${className}`} /* className={`${buttonStyles({})} ${className}` }*/
-        >
+        <button onClick={onClick} type={type} className={`btn ${className}`}>
             {children}
         </button>
     );
