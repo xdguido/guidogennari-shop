@@ -71,7 +71,7 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                     leaveFrom="transform opacity-100 scale-100"
                                     leaveTo="transform opacity-0 scale-95"
                                 >
-                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-base-100 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <Menu.Items className="absolute right-0 z-20 mt-2 w-40 origin-top-right rounded-md bg-base-100 shadow-2xl">
                                         <div className="flex flex-col py-1">
                                             {Object.keys(SortOption).map((sortKey: string) => (
                                                 <Menu.Item key={sortKey}>
@@ -119,18 +119,18 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                         <div className="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-4">
                             {/* Filters */}
 
-                            <div className="hidden lg:block sticky top-[6rem] self-start">
+                            <div className="hidden lg:block sticky top-[6rem] self-start py-3">
                                 {categoryNode.children.length === 0 ? null : (
                                     <>
                                         <h3 className="text-base-content font-semibold mb-2 px-3">
                                             Categories
                                         </h3>
-                                        <ul role="list" className="pb-6 text-sm font-medium ">
+                                        <ul role="list" className="pb-6 text-sm">
                                             {categoryNode.children.map((category) => (
                                                 <li key={category.name}>
                                                     <Button
                                                         href={`/products/${category.slug}/${sort}`}
-                                                        className="btn-ghost btn-sm no-animation normal-case btn-block justify-start text-neutral hover:text-base-content"
+                                                        className="btn-ghost btn-sm no-animation normal-case btn-block justify-start text-neutral hover:text-base-content font-normal"
                                                     >
                                                         {category.name}
                                                     </Button>
@@ -148,10 +148,8 @@ export default function ProductsLayout({ children, sort, categoryNode }: Props) 
                                         {({ open }) => (
                                             <>
                                                 <h3 className="-my-3 flow-root">
-                                                    <Disclosure.Button className="btn btn-sm btn-ghost btn-block no-animation normal-case items-center justify-between text-sm text-neutral hover:text-base-content">
-                                                        <span className="font-medium ">
-                                                            {section.name}
-                                                        </span>
+                                                    <Disclosure.Button className="btn btn-sm btn-ghost btn-block no-animation normal-case items-center justify-between text-sm text-neutral hover:text-base-content font-normal">
+                                                        <span>{section.name}</span>
                                                         <span className="ml-6 flex items-center">
                                                             {open ? (
                                                                 <MinusIcon

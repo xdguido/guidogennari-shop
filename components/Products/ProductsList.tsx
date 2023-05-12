@@ -39,15 +39,15 @@ export default function ProductsList({ products }: Props) {
     // }
     return (
         <>
-            <div className="bg-base-100 mx-auto py-4 sm:py-6 lg:py-8">
+            <div className="mx-auto pb-4 sm:pb-6 lg:pb-8">
                 <h2 className="sr-only">Products</h2>
 
-                <div className="grid grid-cols-2 gap-y-10 gap-x-2 sm:gap-x-4 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid grid-cols-2 gap-y-1 gap-x-1 sm:grid-cols-2 xl:grid-cols-3">
                     {products.map((product) => (
                         <Link
                             key={product.id}
                             href={`/product/${product.slug}`}
-                            className="group rounded hover:shadow-xl transition-shadow duration-500"
+                            className="group bg-base-100 rounded hover:shadow-xl hover:z-10 transition-shadow duration-500"
                         >
                             <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8 group-hover:rounded-b-none">
                                 {product.thumbnail ? (

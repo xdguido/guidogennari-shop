@@ -15,7 +15,7 @@ export default function PaginationButtons({
     basePath
 }: Props) {
     return (
-        <div className={clsx('bg-base-100 px-4 py-3 sm:px-6')}>
+        <div className={'px-4 py-3 sm:px-6'}>
             <nav className="flex items-center justify-center " aria-label="Pagination">
                 <Button
                     href={`${basePath}/${category}/${sort}/${currentPageIndex - 1}`}
