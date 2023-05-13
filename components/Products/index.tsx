@@ -24,7 +24,7 @@ export default function Products({ page, sort, category }) {
                 title={`${categoryNode.name} | E-commerce`}
                 description={`Browse ${categoryNode.name} products`}
             />
-            <ProductsLayout sort={sort} categoryNode={categoryNode}>
+            <ProductsLayout sort={sort} categoryNode={categoryNode} totalProducts={total}>
                 <ProductsList products={products} />
                 <PaginationButtons
                     basePath="/products"
