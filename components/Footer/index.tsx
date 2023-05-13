@@ -51,7 +51,7 @@ export default function Footer({ categoryTree }: Props) {
                         </li>
                     ))}
                 </ul>
-                <ul className="flex flex-col gap-1  lg:col-start-4 items-start">
+                <ul className="flex flex-col gap-1 sm:row-start-2 sm:col-start-2 lg:col-auto lg:row-auto lg:col-start-4 items-start">
                     <h6 className="ml-3 flex justify-center font-semibold md:justify-start">
                         Useful links
                     </h6>
@@ -77,7 +77,7 @@ export default function Footer({ categoryTree }: Props) {
                         </Button>
                     </li>
                 </ul>
-                <ul className="flex flex-col gap-1  lg:col-start-5 items-start">
+                <ul className="flex flex-col gap-1 sm:row-start-3 sm:col-start-2 lg:col-auto lg:row-auto lg:col-start-5 items-start">
                     <h6 className="ml-3 font-semibold md:justify-start">Contact</h6>
 
                     <li className="  flex items-center justify-center md:justify-start">
