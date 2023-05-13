@@ -25,7 +25,7 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                     <h1 className="lg:hidden text-4xl font-bold tracking-tight mb-2">
                         {categoryNode.name}
                     </h1>
-                    <div className="flex justify-between items-end pb-2">
+                    <div className="flex justify-between items-end">
                         <h1 className="hidden lg:block text-4xl font-bold tracking-tight pl-3">
                             {categoryNode.name}
                         </h1>
@@ -124,8 +124,8 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                         <div className="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-4">
                             {/* Filters */}
 
-                            <div className="hidden lg:block sticky top-[4rem] self-start py-3">
-                                <div className="block text-sm breadcrumbs pl-3">
+                            <div className="hidden lg:block sticky top-[5rem] self-start">
+                                <div className="block text-sm breadcrumbs ml-3">
                                     <ul>
                                         {categoryNode.parent && (
                                             <li>
@@ -136,10 +136,13 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                                                 </Link>
                                             </li>
                                         )}
-                                        <li>{categoryNode.name}</li>
+                                        <li>
+                                            {categoryNode.name !== 'All products' &&
+                                                categoryNode.name}
+                                        </li>
                                     </ul>
                                 </div>
-                                <p className="badge badge-outline ml-3 mb-3">
+                                <p className="badge badge-outline ml-3 mb-4">
                                     {totalProducts + ' products'}
                                 </p>
                                 {categoryNode.children.length === 0 ? null : (
