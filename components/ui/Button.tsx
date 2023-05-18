@@ -1,24 +1,24 @@
-import Link from 'next/link';
+import Link, { LinkProps } from 'next/link';
 
-interface ButtonProps {
-    className?: string;
-    href?: string;
-    as?: string;
-    type?: 'button' | 'reset' | 'submit';
-    children: React.ReactNode;
-    onClick?: () => void;
-    title?: string;
-    target?: string;
-    rel?: string;
-}
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function Button({ className, children, onClick, href, as, type }: ButtonProps) {
-    return href ? (
-        <Link href={href} as={as} className={`btn ${className}`}>
-            {children}
-        </Link>
-    ) : (
-        <button onClick={onClick} type={type} className={`btn ${className}`}>
+type LinkButtonProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
+type ButtonAndLinkProps = ButtonProps | LinkButtonProps;
+
+export default function Button(props: ButtonAndLinkProps) {
+    if ('href' in props) {
+        const { className, href, children, ...otherProps } = props as LinkButtonProps;
+        return (
+            <Link className={`btn ${className}`} href={href} {...(otherProps as LinkProps)}>
+                {children}
+            </Link>
+        );
+    }
+
+    const { className, children, ...otherProps } = props as ButtonProps;
+    return (
+        <button className={`btn ${className}`} {...otherProps}>
             {children}
         </button>
     );
