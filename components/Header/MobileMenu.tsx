@@ -3,16 +3,13 @@ import Link from 'next/link';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { navigation } from './navigation';
-import { CategoryWithChildren } from '@lib/getProducts';
 import ThemeToggler from '@ui/ThemeToggler';
 import Button from '@ui/Button';
+import { useCategory } from '@store/CategoryContext';
 
-type Props = {
-    categoryTree: CategoryWithChildren[];
-};
-
-export default function MobileMenu({ categoryTree }: Props) {
+export default function MobileMenu() {
     const [open, setOpen] = useState(false);
+    const { categories } = useCategory();
 
     return (
         <>
@@ -82,7 +79,7 @@ export default function MobileMenu({ categoryTree }: Props) {
                                     </div>
                                     <div>
                                         <div className="space-y-10 px-4 pt-10 pb-8">
-                                            {categoryTree.map((section) => (
+                                            {categories.map((section) => (
                                                 <div key={section.name}>
                                                     <p
                                                         id={`${section.id}-heading-mobile`}

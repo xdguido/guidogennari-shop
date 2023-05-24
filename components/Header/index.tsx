@@ -7,11 +7,8 @@ import Cart from './Cart';
 import Logo from '@ui/Logo';
 import ThemeToggler from '@ui/ThemeToggler';
 import Button from '@ui/Button';
-import { CategoryWithChildren } from '@lib/getProducts';
 
-type Props = { categoryTree: CategoryWithChildren[] };
-
-export default function Header({ categoryTree }: Props) {
+export default function Header() {
     const [top, setTop] = useState(true);
     const { data: session } = useSession();
     // detect whether user has scrolled the page down by 10px
@@ -40,7 +37,7 @@ export default function Header({ categoryTree }: Props) {
                 <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className={clsx('flex items-center', 'h-16')}>
                         {/* Mobile menu */}
-                        <MobileMenu categoryTree={categoryTree} />
+                        <MobileMenu />
 
                         {/* Logo */}
                         <div className="ml-2 flex lg:ml-0">
@@ -48,7 +45,7 @@ export default function Header({ categoryTree }: Props) {
                         </div>
 
                         {/* Flyout menus */}
-                        <FlyoutMenu categoryTree={categoryTree} />
+                        <FlyoutMenu />
 
                         <div className="ml-auto flex items-center">
                             <div className="flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">

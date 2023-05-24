@@ -6,6 +6,7 @@ import type { CategoryWithChildren } from '@lib/getProducts';
 import getCategories from '@lib/getCategories';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
+import CategoryProvider from '@store/CategoryContext';
 import { SortOption } from '@types';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -31,13 +32,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return {
         props: {
             category,
-            categoryTree,
             sort,
             page,
             fallback: {
                 [unstable_serialize(`/api/products/${category}/${sort}/${page}`)]: JSON.parse(
                     JSON.stringify(data)
-                )
+                ),
+                [unstable_serialize(`/api/categories`)]: JSON.parse(JSON.stringify(categoryTree))
             }
         },
         revalidate: 60 * 60 * 24
@@ -53,12 +54,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, sort, page, category, categoryTree }) {
+export default function Index({ fallback, sort, page, category }) {
     return (
-        <Layout categoryTree={categoryTree}>
-            <SWRConfig value={{ fallback }}>
-                <Products page={page} sort={sort} category={category} />
-            </SWRConfig>
-        </Layout>
+        <SWRConfig value={{ fallback }}>
+            <CategoryProvider>
+                <Layout>
+                    <Products page={page} sort={sort} category={category} />
+                </Layout>
+            </CategoryProvider>
+        </SWRConfig>
     );
 }

@@ -3,17 +3,14 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 import { Popover, Transition } from '@headlessui/react';
 import { navigation } from './navigation';
-import { CategoryWithChildren } from '@lib/getProducts';
+import { useCategory } from '@store/CategoryContext';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
-type Props = {
-    categoryTree: CategoryWithChildren[];
-};
-
-export default function FlyoutMenu({ categoryTree }: Props) {
+export default function FlyoutMenu() {
+    const { categories } = useCategory();
     return (
         <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
             <div className="flex h-full space-x-8">
@@ -52,7 +49,7 @@ export default function FlyoutMenu({ categoryTree }: Props) {
                                     <div className="relative bg-base-100">
                                         <div className="mx-auto max-w-7xl px-8">
                                             <div className="grid grid-cols-4 gap-8 p-8 text-sm">
-                                                {categoryTree.map((section) => (
+                                                {categories.map((section) => (
                                                     <div key={section.name}>
                                                         <p
                                                             id={`${section.name}-heading`}

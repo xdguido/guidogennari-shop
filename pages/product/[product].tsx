@@ -7,13 +7,14 @@ import getProduct from '@lib/getProduct';
 import Layout from '@components/Layout';
 import Product from '@components/Product';
 import getProducts from '@lib/getProducts';
+import CategoryProvider from '@store/CategoryContext';
 import { SortOption } from '@types';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     // `getStaticProps` is executed on the server side.
     const productSlug = params?.product;
 
-    const categoryList: CategoryWithChildren[] = await getCategories();
+    const categoryTree: CategoryWithChildren[] = await getCategories();
     const productData = await getProduct(productSlug as string);
     const productCategory = productData?.category?.slug;
     const productsData = await getProducts(1, 'newest' as SortOption, productCategory);
@@ -27,14 +28,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         props: {
             productSlug,
             categorySlug: productCategory,
-            categoryList,
             fallback: {
                 [unstable_serialize(`/api/product/${productSlug}`)]: JSON.parse(
                     JSON.stringify(productData)
                 ),
                 [unstable_serialize(`/api/products/${productCategory}/newest/1`)]: JSON.parse(
                     JSON.stringify(productsData)
-                )
+                ),
+                [unstable_serialize(`/api/categories`)]: JSON.parse(JSON.stringify(categoryTree))
             }
         },
         revalidate: 60 * 60 * 24
@@ -50,12 +51,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, productSlug, categorySlug, categoryList }) {
+export default function Index({ fallback, productSlug, categorySlug }) {
     return (
-        <Layout categoryTree={categoryList}>
-            <SWRConfig value={{ fallback }}>
-                <Product productSlug={productSlug} categorySlug={categorySlug} />
-            </SWRConfig>
-        </Layout>
+        <SWRConfig value={{ fallback }}>
+            <CategoryProvider>
+                <Layout>
+                    <Product productSlug={productSlug} categorySlug={categorySlug} />
+                </Layout>
+            </CategoryProvider>
+        </SWRConfig>
     );
 }

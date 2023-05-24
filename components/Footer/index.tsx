@@ -2,11 +2,10 @@ import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline
 import { FaFacebook, FaTwitter, FaInstagram, FaCopyright } from 'react-icons/fa';
 import Logo from '@ui/Logo';
 import Button from '@ui/Button';
-import type { CategoryWithChildren } from '@lib/getProducts';
+import { useCategory } from '@store/CategoryContext';
 
-type Props = { categoryTree: CategoryWithChildren[] };
-
-export default function Footer({ categoryTree }: Props) {
+export default function Footer() {
+    const { categories } = useCategory();
     return (
         <footer className="bg-base-100 text-center text-base-content  lg:text-left border-t-2 border-base-200">
             <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-5 mx-6 lg:mx-20 py-10 text-center md:text-left">
@@ -40,7 +39,7 @@ export default function Footer({ categoryTree }: Props) {
                             View all
                         </Button>
                     </li>
-                    {categoryTree.map((product) => (
+                    {categories.map((product) => (
                         <li key={product.name} className="flex items-center ">
                             <Button
                                 href={`/products/${product.slug}`}
