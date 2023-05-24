@@ -1,3 +1,5 @@
+import { CategoryWithChildren } from '@lib/getProducts';
+
 export enum SortOption {
     CreatedAtDesc = 'newest',
     PriceAsc = 'lower-price',
@@ -19,4 +21,8 @@ export interface CartContextType {
     removeProduct: (productSlug: string) => void;
     updateProductQuantity: (productSlug: string, quantity: number) => void;
     clearCart: () => void;
+}
+
+export interface CategoryContextType {
+    categories: CategoryWithChildren[];
 }
