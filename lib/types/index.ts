@@ -1,4 +1,4 @@
-import { CategoryWithChildren } from '@lib/getProducts';
+import { Prisma } from '@prisma/client';
 
 export enum SortOption {
     CreatedAtDesc = 'newest',
@@ -22,6 +22,13 @@ export interface CartContextType {
     updateProductQuantity: (productSlug: string, quantity: number) => void;
     clearCart: () => void;
 }
+
+export type CategoryNode = Prisma.CategoryGetPayload<{
+    include: { children: true; parent: true };
+}>;
+export type CategoryWithChildren = Prisma.CategoryGetPayload<{
+    include: { children: true };
+}>;
 
 export interface CategoryContextType {
     categories: CategoryWithChildren[];

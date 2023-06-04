@@ -5,7 +5,7 @@ import Button from '@ui/Button';
 import { SWRConfig, unstable_serialize } from 'swr';
 import { GetStaticProps } from 'next';
 import type { CategoryWithChildren } from '@lib/getProducts';
-import getCategories from '@lib/getCategories';
+import getCategories from '@lib/api/getCategories';
 import CategoryProvider from '@store/CategoryContext';
 
 export const getStaticProps: GetStaticProps = async () => {

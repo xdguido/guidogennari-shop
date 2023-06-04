@@ -17,7 +17,6 @@
         "paths": {
             "@ui/*": ["./components/ui/*"],
             "@components/*": ["./components/*"],
-            "@types": ["./types/index"],
             "@lib/*": ["./lib/*"],
             "@store/*": ["./store/*"]
         }

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createRouter } from 'next-connect';
 import { errorHandler, noMatchHandler } from '@lib/api/errorHandler';
-import getCategories from '@lib/getCategories';
+import getCategories from '@lib/api/getCategories';
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable react/prop-types */
 import { createContext, useContext } from 'react';
-import { CategoryContextType } from '@types';
+import { CategoryContextType } from '@lib/types';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
-import { CategoryWithChildren } from '@lib/getProducts';
+import type { CategoryWithChildren } from '@lib/types';
 
 const defaultCategory: CategoryContextType = {
     categories: []

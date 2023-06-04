@@ -1,5 +1,5 @@
 import { Category, Product } from '@prisma/client';
-import { prisma } from './db';
+import { prisma } from '@lib/db';
 
 export default async function getProduct(productSlug: string) {
     try {

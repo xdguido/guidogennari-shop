@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { SWRConfig, unstable_serialize } from 'swr';
-import type { CategoryWithChildren } from '@lib/getProducts';
-import getCategories from '@lib/getCategories';
-import getProduct from '@lib/getProduct';
 import Layout from '@components/Layout';
 import Product from '@components/Product';
-import getProducts from '@lib/getProducts';
+import type { CategoryWithChildren } from '@lib/types';
+import { SortOption } from '@lib/types';
+import getCategories from '@lib/api/getCategories';
+import getProduct from '@lib/api/getProduct';
+import getProducts from '@lib/api/getProducts';
 import CategoryProvider from '@store/CategoryContext';
-import { SortOption } from '@types';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     // `getStaticProps` is executed on the server side.
