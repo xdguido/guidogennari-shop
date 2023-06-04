@@ -2,8 +2,8 @@ import { CategoryWithChildren } from '@lib/getProducts';
 
 export enum SortOption {
     CreatedAtDesc = 'newest',
-    PriceAsc = 'lower-price',
-    PriceDesc = 'higher-price'
+    PriceAsc = 'lowest-price',
+    PriceDesc = 'highest-price'
 }
 
 export interface CartProduct {

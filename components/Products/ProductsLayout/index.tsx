@@ -1,14 +1,24 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
 import { Menu, Transition, Disclosure } from '@headlessui/react';
-import { ArrowsUpDownIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
+import {
+    ArrowLongLeftIcon,
+    ArrowsUpDownIcon,
+    MinusIcon,
+    PlusIcon
+} from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 
 import { SortOption } from '@types';
 import type { CategoryNode } from '@lib/getProducts';
-import MobileMenu from './MobileMenu';
 import Button from '@ui/Button';
 import { filters } from './filters';
+
+const sortLabels = {
+    [SortOption.CreatedAtDesc]: 'Newest',
+    [SortOption.PriceAsc]: 'Lowest price',
+    [SortOption.PriceDesc]: 'Highest price'
+};
 
 type Props = {
     children: React.ReactNode;
@@ -20,15 +30,10 @@ type Props = {
 export default function ProductsLayout({ children, sort, categoryNode, totalProducts }: Props) {
     return (
         <>
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <h1 className="lg:hidden text-4xl font-bold tracking-tight mb-2">
-                    {categoryNode.name}
-                </h1>
-                <div className="flex justify-between items-end">
-                    <h1 className="hidden lg:block text-4xl font-bold tracking-tight pl-3">
-                        {categoryNode.name}
-                    </h1>
-                    <div className="lg:hidden max-w-[10rem] sm:max-w-none text-sm breadcrumbs">
+            <div className=" max-w-7xl px-4 sm:px-6 lg:px-8">
+                <h1 className=" text-4xl font-bold tracking-tight mb-2">{categoryNode.name}</h1>
+                <div className="flex justify-between">
+                    <div className="hidden lg:block max-w-[10rem] sm:max-w-none text-sm breadcrumbs">
                         <ul>
                             {categoryNode.parent && (
                                 <li>
@@ -40,31 +45,28 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                             <li>{categoryNode.name}</li>
                         </ul>
                     </div>
+                    <div className="lg:hidden">
+                        {categoryNode.parent && (
+                            <Button
+                                className="btn-link btn-sm normal-case no-underline no-animation text-base-content gap-1 justify-start px-0"
+                                href={`/products/${categoryNode.parent.slug}`}
+                            >
+                                <ArrowLongLeftIcon aria-hidden="true" className="h-4 w-4" />
+                                Back to
+                                <span className="font-bold">{categoryNode.parent.name}</span>
+                            </Button>
+                        )}
+                    </div>
                     <div className="flex gap-2 sm:gap-3">
                         <Menu as="div" className="relative text-left">
-                            <div className=" text-sm">
-                                <Menu.Button
-                                    as={Button}
-                                    className="btn-ghost no-animation normal-case btn-sm gap-2 px-1 sm:px-2 font-normal"
-                                >
-                                    <ArrowsUpDownIcon
-                                        className=" h-3 w-3 text-base-content"
-                                        aria-hidden="true"
-                                    />
-                                    <span className="sr-only">Sort by</span>
-
-                                    {(() => {
-                                        switch (sort) {
-                                            case SortOption.CreatedAtDesc:
-                                                return 'Newest';
-                                            case SortOption.PriceAsc:
-                                                return 'Lower price';
-                                            case SortOption.PriceDesc:
-                                                return 'Higher price';
-                                        }
-                                    })()}
-                                </Menu.Button>
-                            </div>
+                            <Menu.Button
+                                as={Button}
+                                className="btn-outline no-animation normal-case btn-sm gap-2 font-normal flex-nowrap whitespace-nowrap"
+                            >
+                                <ArrowsUpDownIcon className=" h-4 w-4" aria-hidden="true" />
+                                <span className="sr-only">Sort by</span>
+                                {sortLabels[sort]}
+                            </Menu.Button>
 
                             <Transition
                                 as={Fragment}
@@ -84,24 +86,13 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                                                         href={`/products/${categoryNode.slug}/${SortOption[sortKey]}`}
                                                         className={clsx(
                                                             SortOption[sortKey] === sort
-                                                                ? 'font-medium'
+                                                                ? 'font-bold'
                                                                 : 'text-base-content',
                                                             active ? 'bg-base-300' : '',
                                                             'block px-4 py-2 text-sm text-left'
                                                         )}
                                                     >
-                                                        {(() => {
-                                                            switch (SortOption[sortKey]) {
-                                                                case SortOption.CreatedAtDesc:
-                                                                    return 'Newest';
-                                                                case SortOption.PriceAsc:
-                                                                    return 'Lower price';
-                                                                case SortOption.PriceDesc:
-                                                                    return 'Higher price';
-                                                                default:
-                                                                    return SortOption[sortKey];
-                                                            }
-                                                        })()}
+                                                        {sortLabels[SortOption[sortKey]]}
                                                     </Link>
                                                 )}
                                             </Menu.Item>
@@ -110,8 +101,7 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                                 </Menu.Items>
                             </Transition>
                         </Menu>
-
-                        <MobileMenu sort={sort} categoryNode={categoryNode} />
+                        {/* <MobileMenu sort={sort} categoryNode={categoryNode} /> */}
                     </div>
                 </div>
 
@@ -124,7 +114,7 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                         {/* Filters */}
 
                         <div className="hidden lg:block sticky top-[5rem] self-start">
-                            <div className="block text-sm breadcrumbs ml-3">
+                            {/* <div className="block text-sm breadcrumbs ml-3">
                                 <ul>
                                     {categoryNode.parent && (
                                         <li>
@@ -137,7 +127,7 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                                         {categoryNode.name !== 'All products' && categoryNode.name}
                                     </li>
                                 </ul>
-                            </div>
+                            </div> */}
                             <p className="badge badge-outline ml-3 mb-4">
                                 {totalProducts + ' products'}
                             </p>
