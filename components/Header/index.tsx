@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import clsx from 'clsx';
 import MobileMenu from './MobileMenu';
+import MobileNav from './MobileNav';
 import FlyoutMenu from './FlyoutMenu';
 import Cart from './Cart';
 import Logo from '@ui/Logo';
@@ -23,7 +24,7 @@ export default function Header() {
         <>
             <p
                 className={clsx(
-                    'flex h-10 text-center items-center justify-center bg-primary px-4 text-sm text-primary-content font-medium sm:px-6 lg:px-8'
+                    'flex h-10 text-center items-center justify-center bg-primary text-sm text-primary-content font-medium px-2 lg:px-8'
                 )}
             >
                 Site under construction. There may be broken links or fake content.
@@ -31,14 +32,11 @@ export default function Header() {
             <header
                 className={clsx(
                     'sticky top-0  w-full z-30 bg-base-100 transition duration-150 ease-in-out motion-reduce:transition-none',
-                    top ? '' : 'shadow-md'
+                    top ? '' : 'lg:shadow-md'
                 )}
             >
-                <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className={clsx('flex items-center', 'h-16')}>
-                        {/* Mobile menu */}
-                        <MobileMenu />
-
+                <nav aria-label="Top" className="mx-auto max-w-7xl">
+                    <div className="flex items-center h-16 px-2 lg:px-8">
                         {/* Logo */}
                         <div className="ml-2 flex lg:ml-0">
                             <Logo />
@@ -86,8 +84,14 @@ export default function Header() {
                             <div className="ml-3">
                                 <Cart />
                             </div>
+                            {/* Mobile nav */}
+                            <div className="ml-3">
+                                <MobileNav />
+                            </div>
                         </div>
                     </div>
+                    {/* Mobile menu */}
+                    <MobileMenu />
                 </nav>
             </header>
         </>
