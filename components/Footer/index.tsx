@@ -2,7 +2,7 @@ import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline
 import { FaFacebook, FaTwitter, FaInstagram, FaCopyright } from 'react-icons/fa';
 import Logo from '@ui/Logo';
 import Button from '@ui/Button';
-import { useCategory } from '@store/CategoryContext';
+import { useCategory } from '@lib/store/CategoryContext';
 
 export default function Footer() {
     const { categories } = useCategory();

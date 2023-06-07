@@ -6,7 +6,7 @@ import { SWRConfig, unstable_serialize } from 'swr';
 import { GetStaticProps } from 'next';
 import type { CategoryWithChildren } from '@lib/getProducts';
 import getCategories from '@lib/api/getCategories';
-import CategoryProvider from '@store/CategoryContext';
+import CategoryProvider from '@lib/store/CategoryContext';
 
 export const getStaticProps: GetStaticProps = async () => {
     // `getStaticProps` is executed on the server side.

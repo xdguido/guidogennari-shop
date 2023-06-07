@@ -9,8 +9,8 @@ import {
 } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 
-import { SortOption } from '@types';
-import type { CategoryNode } from '@lib/getProducts';
+import { SortOption } from '@lib/types';
+import type { CategoryNode } from '@lib/types';
 import Button from '@ui/Button';
 import { filters } from './filters';
 

@@ -13,8 +13,8 @@ import {
     TruckIcon
 } from '@heroicons/react/24/outline';
 import { NextSeo } from 'next-seo';
-import { useCart } from '@store/CartContext';
-import { CartProduct } from '@types';
+import { useCart } from '@lib/store/CartContext';
+import { CartProduct } from '@lib/types';
 import type { Category, Product } from '@prisma/client';
 
 import Tabs from './Tabs';
@@ -65,9 +65,26 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                     ]
                 }}
             />
-            <div className="mx-auto max-w-5xl 2xl:max-w-7xl min-h-screen px-4 py-6 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-5xl 2xl:max-w-7xl min-h-screen px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 xl:gap-12">
-                    <div className=" w-full">
+                    <div className="lg:hidden text-sm breadcrumbs">
+                        <ul>
+                            {categoryNode.parent && (
+                                <li>
+                                    <Link href={`/products/${categoryNode.parent.slug}`}>
+                                        {categoryNode.parent.name}
+                                    </Link>
+                                </li>
+                            )}
+                            <li>
+                                <Link href={`/products/${categoryNode.slug}`}>
+                                    {categoryNode.name}
+                                </Link>
+                            </li>
+                            <li>{product.name}</li>
+                        </ul>
+                    </div>
+                    <div className="w-full">
                         <Carousel />
                         {/* <div className="hidden md:block">
                             <Tabs />
@@ -79,7 +96,7 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                                 <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight leading-9">
                                     {product.name}
                                 </h1>
-                                <div className="max-w-xs sm:max-w-none text-sm breadcrumbs">
+                                <div className="hidden lg:block text-sm breadcrumbs">
                                     <ul>
                                         {categoryNode.parent && (
                                             <li>

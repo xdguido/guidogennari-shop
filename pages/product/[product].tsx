@@ -8,7 +8,7 @@ import { SortOption } from '@lib/types';
 import getCategories from '@lib/api/getCategories';
 import getProduct from '@lib/api/getProduct';
 import getProducts from '@lib/api/getProducts';
-import CategoryProvider from '@store/CategoryContext';
+import CategoryProvider from '@lib/store/CategoryContext';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     // `getStaticProps` is executed on the server side.

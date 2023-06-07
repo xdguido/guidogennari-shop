@@ -5,7 +5,7 @@ import getProducts from '@lib/api/getProducts';
 import getCategories from '@lib/api/getCategories';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
-import CategoryProvider from '@store/CategoryContext';
+import CategoryProvider from '@lib/store/CategoryContext';
 import type { CategoryWithChildren } from '@lib/types';
 import { SortOption } from '@lib/types';
 

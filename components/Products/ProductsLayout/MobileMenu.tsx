@@ -7,7 +7,7 @@ import {
     PlusIcon
 } from '@heroicons/react/24/outline';
 import type { CategoryNode } from '@lib/getProducts';
-import { SortOption } from '@types';
+import { SortOption } from '@lib/types';
 import Button from '@ui/Button';
 import { filters } from './filters';
 

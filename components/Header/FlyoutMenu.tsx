@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 import { Popover, Transition } from '@headlessui/react';
 import { navigation } from './navigation';
-import { useCategory } from '@store/CategoryContext';
+import { useCategory } from '@lib/store/CategoryContext';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
