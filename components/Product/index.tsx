@@ -38,11 +38,11 @@ export default function Index({ productSlug, categorySlug }: Prop) {
 
     const cartData: CartProduct = {
         slug: productSlug,
-        name: product.name,
-        price: product.price,
-        quantity: qty,
-        imageSrc: product.thumbnail,
-        imageAlt: product.name
+        quantity: qty
+        // name: product.name,
+        // price: product.price,
+        // imageSrc: product.thumbnail,
+        // imageAlt: product.name
     };
 
     return (

@@ -8,11 +8,11 @@ export enum SortOption {
 
 export interface CartProduct {
     slug: string;
-    name: string;
-    price: number;
     quantity: number;
-    imageSrc: string;
-    imageAlt: string;
+    // name: string;
+    // price: number;
+    // imageSrc: string;
+    // imageAlt: string;
 }
 
 export interface CartContextType {
