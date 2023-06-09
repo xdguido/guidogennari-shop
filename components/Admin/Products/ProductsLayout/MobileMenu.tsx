@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Dialog, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import { XMarkIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
-import type { CategoryWithChildren } from '@lib/getProducts';
+import type { CategoryWithChildren } from '@lib/types';
 import Button from '@ui/Button';
 
 type Props = { categoryTree: CategoryWithChildren[] };

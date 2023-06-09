@@ -4,7 +4,7 @@ import Button from '@ui/Button';
 
 import { SWRConfig, unstable_serialize } from 'swr';
 import { GetStaticProps } from 'next';
-import type { CategoryWithChildren } from '@lib/getProducts';
+import type { CategoryWithChildren } from '@lib/types';
 import getCategories from '@lib/api/getCategories';
 import CategoryProvider from '@lib/store/CategoryContext';
 

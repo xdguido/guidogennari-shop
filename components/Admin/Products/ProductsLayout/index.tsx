@@ -3,7 +3,7 @@ import fetcher from '@lib/fetcher';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { CategoryWithChildren } from '@lib/getProducts';
+import { CategoryWithChildren } from '@lib/types';
 import Button from '@ui/Button';
 import MobileMenu from './MobileMenu';
 import AddProduct from '@components/Admin/ProductForm/AddProduct';
