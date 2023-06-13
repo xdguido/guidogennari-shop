@@ -2,7 +2,7 @@ import { DefaultSeo } from 'next-seo';
 import { ThemeProvider } from 'next-themes';
 import { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
-import CartProvider from '../store/CartContext';
+import CartProvider from '../lib/store/CartContext';
 import ThemedToaster from '@components/ThemedToaster';
 import '../styles/globals.css';
 

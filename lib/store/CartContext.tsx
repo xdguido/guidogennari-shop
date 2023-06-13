@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState, useEffect } from 'react';
-import { CartContextType, CartProduct } from '@types';
+import { CartContextType, CartProduct } from '@lib/types';
 import { toast } from 'sonner';
 import { CheckCircleIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 
@@ -19,14 +19,18 @@ export const useCart = () => useContext(CartContext);
 
 export default function CartProvider({ children }) {
     const [cart, setCart] = useState<CartProduct[]>([]);
+
+    const version = 'v0.1';
+    const cartDataKey = `cartData_${version}`;
+
     // Get the cart data from local storage
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const cartDataString = localStorage.getItem('cartData');
+            const cartDataString = localStorage.getItem(cartDataKey);
             const cartData = JSON.parse(cartDataString) || [];
             setCart(cartData);
         }
-    }, []);
+    }, [cartDataKey]);
 
     const addProduct = (product: CartProduct) => {
         const isProductAlreadyInCart = cart.some((item) => item.slug === product.slug);
@@ -50,7 +54,7 @@ export default function CartProvider({ children }) {
         }
         const updatedCart = [...cart, product];
         setCart((prevCart) => [...prevCart, product]);
-        localStorage.setItem('cartData', JSON.stringify(updatedCart));
+        localStorage.setItem(cartDataKey, JSON.stringify(updatedCart));
         toast.custom((t) => (
             <div className=" flex items-center bg-base-100 shadow-lg rounded-lg border border-primary px-6 py-4">
                 <div className="flex-1 ">
@@ -71,7 +75,7 @@ export default function CartProvider({ children }) {
     const removeProduct = (productSlug: string) => {
         const updatedCart = cart.filter((item) => item.slug !== productSlug);
         setCart((prevCart) => prevCart.filter((item) => item.slug !== productSlug));
-        localStorage.setItem('cartData', JSON.stringify(updatedCart));
+        localStorage.setItem(cartDataKey, JSON.stringify(updatedCart));
     };
 
     const updateProductQuantity = (productSlug: string, quantity: number) => {
@@ -83,12 +87,12 @@ export default function CartProvider({ children }) {
                 product.slug === productSlug ? { ...product, quantity } : product
             )
         );
-        localStorage.setItem('cartData', JSON.stringify(updatedCart));
+        localStorage.setItem(cartDataKey, JSON.stringify(updatedCart));
     };
 
     const clearCart = () => {
         setCart([]);
-        localStorage.removeItem('cartData');
+        localStorage.removeItem(cartDataKey);
     };
 
     return (

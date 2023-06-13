@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, Fragment } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import { CheckIcon } from '@heroicons/react/20/solid';
 import { FieldValues, Path, SetValueConfig } from 'react-hook-form';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 import { Category } from '@prisma/client';
-import type { CategoryWithChildren } from '@lib/getProducts';
+import type { CategoryWithChildren } from '@lib/types';
 import Input from '@ui/Input';
 
 type Props = {

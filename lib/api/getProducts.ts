@@ -1,13 +1,6 @@
-import { prisma } from './db';
-import { Prisma } from '@prisma/client';
-import { SortOption } from '@types';
-
-export type CategoryNode = Prisma.CategoryGetPayload<{
-    include: { children: true; parent: true };
-}>;
-export type CategoryWithChildren = Prisma.CategoryGetPayload<{
-    include: { children: true };
-}>;
+import { prisma } from '@lib/db';
+import { SortOption } from '@lib/types';
+import { CategoryNode } from '@lib/types';
 
 async function getAllChildCategories(
     categorySlug: string

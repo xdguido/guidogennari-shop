@@ -1,5 +1,5 @@
-import { prisma } from './db';
-import type { CategoryWithChildren } from './getProducts';
+import { prisma } from '@lib/db';
+import type { CategoryWithChildren } from '@lib/types';
 
 async function getCategoryTree(categorySlugs: string[]): Promise<CategoryWithChildren[]> {
     const childCategories: CategoryWithChildren[] = [];

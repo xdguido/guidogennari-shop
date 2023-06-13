@@ -13,8 +13,8 @@ import {
     TruckIcon
 } from '@heroicons/react/24/outline';
 import { NextSeo } from 'next-seo';
-import { useCart } from '@store/CartContext';
-import { CartProduct } from '@types';
+import { useCart } from '@lib/store/CartContext';
+import { CartProduct } from '@lib/types';
 import type { Category, Product } from '@prisma/client';
 
 import Tabs from './Tabs';
@@ -38,11 +38,11 @@ export default function Index({ productSlug, categorySlug }: Prop) {
 
     const cartData: CartProduct = {
         slug: productSlug,
-        name: product.name,
-        price: product.price,
-        quantity: qty,
-        imageSrc: product.thumbnail,
-        imageAlt: product.name
+        quantity: qty
+        // name: product.name,
+        // price: product.price,
+        // imageSrc: product.thumbnail,
+        // imageAlt: product.name
     };
 
     return (
@@ -65,97 +65,111 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                     ]
                 }}
             />
-            <div className="mx-auto max-w-5xl 2xl:max-w-7xl min-h-screen px-4 py-6 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl min-h-screen px-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 xl:gap-12">
-                    <div className=" w-full">
+                    <div className="lg:hidden text-sm breadcrumbs">
+                        <ul>
+                            {categoryNode.parent && (
+                                <li>
+                                    <Link href={`/products/${categoryNode.parent.slug}`}>
+                                        {categoryNode.parent.name}
+                                    </Link>
+                                </li>
+                            )}
+                            <li>
+                                <Link href={`/products/${categoryNode.slug}`}>
+                                    {categoryNode.name}
+                                </Link>
+                            </li>
+                            <li>{product.name}</li>
+                        </ul>
+                    </div>
+                    <div className="w-full">
                         <Carousel />
                         {/* <div className="hidden md:block">
                             <Tabs />
                         </div> */}
                     </div>
-                    <div>
-                        <div className="grid grid-cols-1 gap-4 px-6">
-                            <div>
-                                <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight leading-9">
-                                    {product.name}
-                                </h1>
-                                <div className="max-w-xs sm:max-w-none text-sm breadcrumbs">
-                                    <ul>
-                                        {categoryNode.parent && (
-                                            <li>
-                                                <Link
-                                                    href={`/products/${categoryNode.parent.slug}`}
-                                                >
-                                                    {categoryNode.parent.name}
-                                                </Link>
-                                            </li>
-                                        )}
+                    <div className="grid grid-cols-1 gap-4 px-6">
+                        <div>
+                            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight leading-9">
+                                {product.name}
+                            </h1>
+                            <div className="hidden lg:block text-sm breadcrumbs">
+                                <ul>
+                                    {categoryNode.parent && (
                                         <li>
-                                            <Link href={`/products/${categoryNode.slug}`}>
-                                                {categoryNode.name}
+                                            <Link href={`/products/${categoryNode.parent.slug}`}>
+                                                {categoryNode.parent.name}
                                             </Link>
                                         </li>
-                                        <li>{product.name}</li>
-                                    </ul>
-                                </div>
+                                    )}
+                                    <li>
+                                        <Link href={`/products/${categoryNode.slug}`}>
+                                            {categoryNode.name}
+                                        </Link>
+                                    </li>
+                                    <li>{product.name}</li>
+                                </ul>
                             </div>
-                            <div>
-                                <div className="flex items-center gap-2">
-                                    <span className="text-2xl">
-                                        $ {product.price.toLocaleString('es')}
-                                    </span>
-                                    <div
-                                        className="tooltip tooltip-info before:w-[12rem] before:content-[attr(data-tip)]"
-                                        data-tip="Special price paying with cash or bank deposit"
-                                    >
-                                        <InformationCircleIcon className="text-info h-5 w-5" />
-                                    </div>
-                                </div>
-                                <span className="text-sm text-info">See all payment methods</span>
-                            </div>
-                            <p className="">{product.description}</p>
-
-                            <div className="form-control">
-                                <div className="input-group">
-                                    <span className="bg-base-300">
-                                        <label htmlFor="qty-select">Quantity:</label>
-                                    </span>
-                                    <select
-                                        className="select select-bordered border-base-300"
-                                        id="qty-select"
-                                        value={qty}
-                                        onChange={handleQtyChange}
-                                    >
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-4">
-                                <span className="flex gap-2 text-sm text-success">
-                                    <CheckIcon className=" h-5 w-5" /> Stock available
+                        </div>
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <span className="text-2xl">
+                                    $ {product.price.toLocaleString('es')}
                                 </span>
-                                <span className="flex gap-2 text-sm text-success">
-                                    <TruckIcon className=" h-5 w-5" /> Shipping to Argentina
-                                </span>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                                <Button className="btn-primary btn-block">Buy now</Button>
-                                <Button
-                                    className="btn-outline btn-block"
-                                    onClick={() => {
-                                        addProduct(cartData);
-                                    }}
+                                <div
+                                    className="tooltip tooltip-info before:w-[12rem] before:content-[attr(data-tip)]"
+                                    data-tip="Special price paying with cash or bank deposit"
                                 >
-                                    Add to cart
-                                </Button>
+                                    <InformationCircleIcon className="text-info h-5 w-5" />
+                                </div>
                             </div>
+                            <span className="text-sm text-info">See all payment methods</span>
+                        </div>
+                        <p className="">{product.description}</p>
 
-                            {/* <div className="">
+                        <div className="form-control">
+                            <div className="input-group">
+                                <span className="bg-base-300">
+                                    <label htmlFor="qty-select">Quantity:</label>
+                                </span>
+                                <select
+                                    className="select select-bordered border-base-300"
+                                    id="qty-select"
+                                    value={qty}
+                                    onChange={handleQtyChange}
+                                >
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <span className="flex gap-2 text-sm text-success">
+                                <CheckIcon className=" h-5 w-5" /> Stock available
+                            </span>
+                            <span className="flex gap-2 text-sm text-success">
+                                <TruckIcon className=" h-5 w-5" /> Shipping to Argentina
+                            </span>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <Button className="btn-primary btn-block">Buy now</Button>
+                            <Button
+                                className="btn-outline btn-block"
+                                onClick={() => {
+                                    addProduct(cartData);
+                                }}
+                            >
+                                Add to cart
+                            </Button>
+                        </div>
+
+                        {/* <div className="">
                                 <Button className="btn-ghost gap-2 mr-2">
                                     <HeartIcon className="h-6 w-6" aria-hidden="true" /> Add to
                                     favourites
@@ -165,53 +179,52 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                                 </Button>
                             </div> */}
 
-                            <div className="divider"></div>
+                        <div className="divider"></div>
 
-                            <h3 className=" font-semibold">Details</h3>
-                            <ul className="text-sm ml-5">
-                                <li className="mb-1 list-disc">
-                                    Material: Genuine Leather, Solid Wood Frame
-                                </li>
-                                <li className="mb-1 list-disc">Assembly Required: Yes</li>
-                                <li className="mb-1 list-disc">
-                                    Assembly Time: Approximately 30 minutes
-                                </li>
-                                <li className="mb-1 list-disc">Warranty: 1 year</li>
-                            </ul>
-                            <h3 className=" font-semibold">Dimensions</h3>
-                            <div className="overflow-x-auto">
-                                <table className="table w-full text-sm">
-                                    {/* head */}
-                                    <thead>
-                                        <tr>
-                                            <th className="normal-case">Part</th>
-                                            <th className="normal-case">Height</th>
-                                            <th className="normal-case">Width</th>
-                                            <th className="normal-case">Length</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {/* row 1 */}
-                                        <tr>
-                                            <th>Main desk</th>
-                                            <td>83 cm</td>
-                                            <td>100 cm</td>
-                                            <td>50 cm</td>
-                                        </tr>
-                                    </tbody>
-                                    <tbody>
-                                        {/* row 1 */}
-                                        <tr>
-                                            <th>Secondary desk</th>
-                                            <td>83 cm</td>
-                                            <td>100 cm</td>
-                                            <td>50 cm</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <Tabs />
+                        <h3 className=" font-semibold">Details</h3>
+                        <ul className="text-sm ml-5">
+                            <li className="mb-1 list-disc">
+                                Material: Genuine Leather, Solid Wood Frame
+                            </li>
+                            <li className="mb-1 list-disc">Assembly Required: Yes</li>
+                            <li className="mb-1 list-disc">
+                                Assembly Time: Approximately 30 minutes
+                            </li>
+                            <li className="mb-1 list-disc">Warranty: 1 year</li>
+                        </ul>
+                        <h3 className=" font-semibold">Dimensions</h3>
+                        <div className="overflow-x-auto">
+                            <table className="table w-full text-sm">
+                                {/* head */}
+                                <thead>
+                                    <tr>
+                                        <th className="normal-case">Part</th>
+                                        <th className="normal-case">Height</th>
+                                        <th className="normal-case">Width</th>
+                                        <th className="normal-case">Length</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* row 1 */}
+                                    <tr>
+                                        <th>Main desk</th>
+                                        <td>83 cm</td>
+                                        <td>100 cm</td>
+                                        <td>50 cm</td>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    {/* row 1 */}
+                                    <tr>
+                                        <th>Secondary desk</th>
+                                        <td>83 cm</td>
+                                        <td>100 cm</td>
+                                        <td>50 cm</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+                        <Tabs />
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"></div>

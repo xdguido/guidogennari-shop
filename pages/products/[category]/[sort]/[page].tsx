@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import { SWRConfig, unstable_serialize } from 'swr';
-import getProducts from '@lib/getProducts';
-import type { CategoryWithChildren } from '@lib/getProducts';
-import getCategories from '@lib/getCategories';
+import getProducts from '@lib/api/getProducts';
+import getCategories from '@lib/api/getCategories';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
-import { SortOption } from '@types';
+import CategoryProvider from '@lib/store/CategoryContext';
+import type { CategoryWithChildren } from '@lib/types';
+import { SortOption } from '@lib/types';
 
 export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsContext) => {
     // `getStaticProps` is executed on the server side.
@@ -39,13 +40,13 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
     return {
         props: {
             category,
-            categoryTree,
             sort,
             page,
             fallback: {
                 [unstable_serialize(`/api/products/${category}/${sort}/${page}`)]: JSON.parse(
                     JSON.stringify(data)
-                )
+                ),
+                [unstable_serialize(`/api/categories`)]: JSON.parse(JSON.stringify(categoryTree))
             }
         },
         revalidate: 60 * 60 * 24
@@ -67,12 +68,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, sort, page, category, categoryTree }) {
+export default function Index({ fallback, sort, page, category }) {
     return (
-        <Layout categoryTree={categoryTree}>
-            <SWRConfig value={{ fallback }}>
-                <Products page={page} sort={sort} category={category} />
-            </SWRConfig>
-        </Layout>
+        <SWRConfig value={{ fallback }}>
+            <CategoryProvider>
+                <Layout>
+                    <Products page={page} sort={sort} category={category} />
+                </Layout>
+            </CategoryProvider>
+        </SWRConfig>
     );
 }
