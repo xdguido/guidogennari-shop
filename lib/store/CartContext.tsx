@@ -75,7 +75,7 @@ export default function CartProvider({ children }) {
     const removeProduct = (productSlug: string) => {
         const updatedCart = cart.filter((item) => item.slug !== productSlug);
         setCart((prevCart) => prevCart.filter((item) => item.slug !== productSlug));
-        localStorage.setItem('cartData', JSON.stringify(updatedCart));
+        localStorage.setItem(cartDataKey, JSON.stringify(updatedCart));
     };
 
     const updateProductQuantity = (productSlug: string, quantity: number) => {
@@ -87,12 +87,12 @@ export default function CartProvider({ children }) {
                 product.slug === productSlug ? { ...product, quantity } : product
             )
         );
-        localStorage.setItem('cartData', JSON.stringify(updatedCart));
+        localStorage.setItem(cartDataKey, JSON.stringify(updatedCart));
     };
 
     const clearCart = () => {
         setCart([]);
-        localStorage.removeItem('cartData');
+        localStorage.removeItem(cartDataKey);
     };
 
     return (
