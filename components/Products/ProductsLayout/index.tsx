@@ -29,9 +29,9 @@ type Props = {
 
 export default function ProductsLayout({ children, sort, categoryNode, totalProducts }: Props) {
     return (
-        <>
-            <div className=" max-w-7xl px-4 sm:px-6 lg:px-8">
-                <h1 className=" text-4xl font-bold tracking-tight mb-2">{categoryNode.name}</h1>
+        <div>
+            <div className="mx-auto max-w-7xl px-2">
+                <h1 className=" text-4xl font-bold tracking-tight mb-3">{categoryNode.name}</h1>
                 <div className="flex justify-between">
                     <div className="hidden lg:block max-w-[10rem] sm:max-w-none text-sm breadcrumbs">
                         <ul>
@@ -209,6 +209,6 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                     </div>
                 </section>
             </div>
-        </>
+        </div>
     );
 }

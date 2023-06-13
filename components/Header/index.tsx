@@ -36,7 +36,7 @@ export default function Header() {
                 )}
             >
                 <nav aria-label="Top" className="mx-auto max-w-7xl">
-                    <div className="flex items-center h-16 px-2 lg:px-8">
+                    <div className="flex items-center h-16 px-2">
                         {/* Logo */}
                         <div className="ml-2 flex lg:ml-0">
                             <Logo />
