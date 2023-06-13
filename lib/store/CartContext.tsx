@@ -19,14 +19,18 @@ export const useCart = () => useContext(CartContext);
 
 export default function CartProvider({ children }) {
     const [cart, setCart] = useState<CartProduct[]>([]);
+
+    const version = 'v0.1';
+    const cartDataKey = `cartData_${version}`;
+
     // Get the cart data from local storage
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const cartDataString = localStorage.getItem('cartData');
+            const cartDataString = localStorage.getItem(cartDataKey);
             const cartData = JSON.parse(cartDataString) || [];
             setCart(cartData);
         }
-    }, []);
+    }, [cartDataKey]);
 
     const addProduct = (product: CartProduct) => {
         const isProductAlreadyInCart = cart.some((item) => item.slug === product.slug);
@@ -50,7 +54,7 @@ export default function CartProvider({ children }) {
         }
         const updatedCart = [...cart, product];
         setCart((prevCart) => [...prevCart, product]);
-        localStorage.setItem('cartData', JSON.stringify(updatedCart));
+        localStorage.setItem(cartDataKey, JSON.stringify(updatedCart));
         toast.custom((t) => (
             <div className=" flex items-center bg-base-100 shadow-lg rounded-lg border border-primary px-6 py-4">
                 <div className="flex-1 ">
