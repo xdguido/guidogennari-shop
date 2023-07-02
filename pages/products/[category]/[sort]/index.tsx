@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { SWRConfig, unstable_serialize } from 'swr';
-import getProducts from '@lib/api/getProducts';
-import getCategories from '@lib/api/getCategories';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
 import CategoryProvider from '@lib/store/CategoryContext';
-import type { CategoryWithChildren } from '@lib/types';
 import { SortOption } from '@lib/types';
+import { productServices } from '@lib/api/services';
+import categoryServices from '@lib/api/services/category.services';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     // `getStaticProps` is executed on the server side.
@@ -15,14 +14,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const sort = params?.sort || SortOption.CreatedAtDesc;
     const category = params?.category || 'all-products';
 
+    const takeNumber = 12;
+    const skipNumber = page * takeNumber;
+
     if (!Object.values(SortOption).includes(sort as SortOption)) {
         return {
             notFound: true
         };
     }
 
-    const categoryTree: CategoryWithChildren[] = await getCategories();
-    const data = await getProducts(page, sort as SortOption, category as string);
+    const categoryTree = await categoryServices.getTree();
+    const data = await productServices.getFiltered(
+        skipNumber,
+        takeNumber,
+        sort as SortOption,
+        category as string
+    );
 
     if (!data?.products?.length) {
         return {
@@ -38,7 +45,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
                 [unstable_serialize(`/api/products/${category}/${sort}/${page}`)]: JSON.parse(
                     JSON.stringify(data)
                 ),
-                [unstable_serialize(`/api/categories`)]: JSON.parse(JSON.stringify(categoryTree))
+                [unstable_serialize(`/api/category`)]: JSON.parse(JSON.stringify(categoryTree))
             }
         },
         revalidate: 60 * 60 * 24

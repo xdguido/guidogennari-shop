@@ -31,5 +31,5 @@ export type CategoryWithChildren = Prisma.CategoryGetPayload<{
 }>;
 
 export interface CategoryContextType {
-    categories: CategoryWithChildren[];
+    categories: CategoryNode[];
 }

@@ -1,29 +1,23 @@
 /* eslint-disable react/prop-types */
-
 import { useState } from 'react';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 import Button from '@ui/Button';
 import Link from 'next/link';
-import {
-    // ShareIcon,
-    // HeartIcon,
-    InformationCircleIcon,
-    CheckIcon,
-    TruckIcon
-} from '@heroicons/react/24/outline';
+import { InformationCircleIcon, CheckIcon, TruckIcon } from '@heroicons/react/24/outline';
 import { NextSeo } from 'next-seo';
 import { useCart } from '@lib/store/CartContext';
-import { CartProduct } from '@lib/types';
+import type { CartProduct } from '@lib/types';
 import type { Category, Product } from '@prisma/client';
-
 import Tabs from './Tabs';
 import RecomendedProductsList from './RecomendedProductsList';
 import Carousel from './Carousel';
 
 type Prop = { productSlug: string; categorySlug: string };
 export default function Index({ productSlug, categorySlug }: Prop) {
+    const [qty, setQty] = useState(1); // Initialize qty state with default value of 1
     const { addProduct } = useCart();
+
     const { data: product } = useSwr<Product & { category: Category }>(
         `/api/product/${productSlug}`,
         fetcher
@@ -31,7 +25,7 @@ export default function Index({ productSlug, categorySlug }: Prop) {
     const {
         data: { products, categoryNode }
     } = useSwr(() => `/api/products/${categorySlug}/newest/1`, fetcher);
-    const [qty, setQty] = useState(1); // Initialize qty state with default value of 1
+
     function handleQtyChange(event) {
         setQty(parseInt(event.target.value)); // Update qty state with the selected value
     }
@@ -39,10 +33,6 @@ export default function Index({ productSlug, categorySlug }: Prop) {
     const cartData: CartProduct = {
         slug: productSlug,
         quantity: qty
-        // name: product.name,
-        // price: product.price,
-        // imageSrc: product.thumbnail,
-        // imageAlt: product.name
     };
 
     return (

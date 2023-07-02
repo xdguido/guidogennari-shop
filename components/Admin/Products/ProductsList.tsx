@@ -11,22 +11,26 @@ export default function ProductsList() {
     const { category, page } = router.query;
 
     const size = 12;
-    const { data, isLoading } = useSwr(`/api/products/${category}/newest/${page}`, fetcher);
+    const {
+        data: { products, count },
+        isLoading
+    } = useSwr(`/api/product/${category}/newest/${page}`, fetcher);
 
     if (isLoading) {
         return <span className="flex justify-center font-semibold">Loading...</span>;
     }
 
     const currentPageIndex = Number(page);
-    const maxPageIndex = data.total ? Math.ceil(data.total / size) : currentPageIndex;
+    const maxPageIndex = count ? Math.ceil(count / size) : currentPageIndex;
 
-    if (data.products?.length == 0) {
+    if (products?.length == 0) {
         return (
             <div className="bg-base-100 mx-auto max-w-2xl p-4 sm:p-6 lg:max-w-7xl lg:p-8">
                 No products to display
             </div>
         );
     }
+
     return (
         <>
             <div className="grid grid-cols-12 gap-2 group p-3 font-bold text-accent text-sm">
@@ -35,7 +39,7 @@ export default function ProductsList() {
                 <p className="col-span-3 sm:col-span-2 ">Price</p>
             </div>
             <div className="grid grid-cols-1 gap-2 auto-rows-min max-h-screen overflow-auto rounded-lg font-semibold text-sm">
-                {data.products.map((product: Product) => (
+                {products.map((product: Product) => (
                     <div
                         key={product.id}
                         className="grid grid-cols-12 gap-1 sm:gap-2 items-center group p-3 bg-slate-200 rounded-lg border border-neutral"

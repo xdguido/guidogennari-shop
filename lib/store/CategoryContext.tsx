@@ -4,7 +4,7 @@ import { createContext, useContext } from 'react';
 import { CategoryContextType } from '@lib/types';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
-import type { CategoryWithChildren } from '@lib/types';
+import type { CategoryNode } from '@lib/types';
 
 const defaultCategory: CategoryContextType = {
     categories: []
@@ -19,7 +19,7 @@ type Props = {
 };
 
 export default function CategoryProvider({ children }: Props) {
-    const { data: categories } = useSwr<CategoryWithChildren[]>('/api/categories', fetcher);
+    const { data: categories } = useSwr<CategoryNode[]>('/api/category', fetcher);
 
     return (
         <CategoryContext.Provider
