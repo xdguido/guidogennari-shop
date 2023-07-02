@@ -5,8 +5,7 @@ import Layout from '@components/Layout';
 import Products from '@components/Products';
 import CategoryProvider from '@lib/store/CategoryContext';
 import { SortOption } from '@lib/types';
-import categoryServices from '@lib/api/services/category.services';
-import { productServices } from '@lib/api/services';
+import { productServices, categoryServices } from '@lib/api/services';
 
 export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsContext) => {
     // `getStaticProps` is executed on the server side.
@@ -33,11 +32,12 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
         category as string
     );
 
-    if (!data?.products?.length) {
+    if (data?.count === 0) {
         return {
             notFound: true
         };
     }
+
     if (page === 1) {
         return {
             redirect: {
