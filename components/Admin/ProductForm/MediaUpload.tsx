@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import Button from '@ui/Button';
 import Input from '@ui/Input';
-import { FieldValues, Path, SetValueConfig } from 'react-hook-form';
+import type { FieldValues, Path, SetValueConfig } from 'react-hook-form';
 
 type Props = {
     defaultValues: string[];
