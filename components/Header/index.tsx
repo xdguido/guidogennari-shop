@@ -31,12 +31,12 @@ export default function Header() {
             </p>
             <header
                 className={clsx(
-                    'sticky top-0  w-full z-30 bg-base-100 transition duration-150 ease-in-out motion-reduce:transition-none',
+                    'sticky top-0  w-full z-30 bg-base-100 transition duration-150 ease-in-out motion-reduce:transition-none px-2 lg:px-4',
                     top ? '' : 'lg:shadow-md'
                 )}
             >
                 <nav aria-label="Top" className="mx-auto max-w-7xl">
-                    <div className="flex items-center h-16 px-2">
+                    <div className="flex items-center h-16">
                         {/* Logo */}
                         <div className="ml-2 flex lg:ml-0">
                             <Logo />

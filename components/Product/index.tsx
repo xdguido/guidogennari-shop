@@ -12,6 +12,7 @@ import type { Category, Product } from '@prisma/client';
 import Tabs from './Tabs';
 import RecomendedProductsList from './RecomendedProductsList';
 import Carousel from './Carousel';
+import MobileCarousel from './MobileCarousel';
 
 type Prop = { productSlug: string; categorySlug: string };
 export default function Index({ productSlug, categorySlug }: Prop) {
@@ -55,9 +56,9 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                     ]
                 }}
             />
-            <div className="mx-auto max-w-7xl min-h-screen px-2">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 xl:gap-12">
-                    <div className="lg:hidden text-sm breadcrumbs">
+            <div className="mx-auto max-w-7xl min-h-screen px-2 lg:px-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 xl:gap-12">
+                    <div className="md:hidden text-sm breadcrumbs">
                         <ul>
                             {categoryNode.parent && (
                                 <li>
@@ -74,11 +75,11 @@ export default function Index({ productSlug, categorySlug }: Prop) {
                             <li>{product.name}</li>
                         </ul>
                     </div>
-                    <div className="w-full">
+                    <div className="hidden md:block w-full">
                         <Carousel />
-                        {/* <div className="hidden md:block">
-                            <Tabs />
-                        </div> */}
+                    </div>
+                    <div className="md:hidden">
+                        <MobileCarousel />
                     </div>
                     <div className="grid grid-cols-1 gap-4 px-6">
                         <div>
