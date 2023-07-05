@@ -1,14 +1,30 @@
 /** @type {import('tailwindcss').Config} */
 
+function withOpacityValue(variable) {
+    return ({ opacityValue }) => {
+        if (opacityValue === undefined) {
+            return `hsl(var(${variable}))`;
+        }
+        return `hsl(var(${variable}) / ${opacityValue})`;
+    };
+}
+
 module.exports = {
     content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-    // darkMode: 'class',
-    // theme: ['dark'],
-    // important: true,
+    theme: {
+        extend: {
+            colors: {
+                'base-container': withOpacityValue('--base-container')
+            }
+        }
+    },
     daisyui: {
         themes: [
             {
                 light: {
+                    ...require('daisyui/src/colors/themes')['[data-theme=light]'],
+                    '--base-container': '0 0% 91%',
+
                     primary: '#047857',
 
                     secondary: '#fb923c',
@@ -17,7 +33,7 @@ module.exports = {
 
                     neutral: '#a3a3a3',
 
-                    'base-100': '#f3f4f6',
+                    'base-100': '#f7f7f7',
 
                     info: '#3b82f6',
 
@@ -30,6 +46,9 @@ module.exports = {
             },
             {
                 dark: {
+                    ...require('daisyui/src/colors/themes')['[data-theme=dark]'],
+                    '--base-container': '0 0% 10%',
+
                     primary: '#047857',
 
                     secondary: '#fb923c',
@@ -38,7 +57,7 @@ module.exports = {
 
                     neutral: '#8f8f8f',
 
-                    'base-100': '#0f0f0f',
+                    'base-100': '#0a0a0a',
 
                     info: '#3b82f6',
 
