@@ -24,14 +24,14 @@ export default function Header() {
         <>
             <p
                 className={clsx(
-                    'flex h-10 text-center items-center justify-center bg-primary text-sm text-primary-content font-medium px-2 lg:px-8'
+                    'flex h-10 z-50 text-center items-center justify-center bg-primary text-sm text-primary-content font-medium px-2 lg:px-8'
                 )}
             >
                 Site under construction. There may be broken links or fake content.
             </p>
             <header
                 className={clsx(
-                    'sticky top-0  w-full z-30 bg-base-100 transition duration-150 ease-in-out motion-reduce:transition-none',
+                    'sticky top-0 w-full z-50 bg-base-100 transition duration-150 ease-in-out motion-reduce:transition-none',
                     top ? '' : 'lg:shadow-md'
                 )}
             >

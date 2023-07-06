@@ -1,13 +1,24 @@
 import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
-import { navigation } from './navigation';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import {
+    XMarkIcon,
+    Bars3Icon,
+    BuildingStorefrontIcon,
+    QuestionMarkCircleIcon,
+    GlobeAmericasIcon,
+    Cog6ToothIcon,
+    Squares2X2Icon,
+    BellIcon
+} from '@heroicons/react/24/outline';
 import ThemeToggler from '@ui/ThemeToggler';
 import Button from '@ui/Button';
+import { FaInstagram } from 'react-icons/fa';
 
 export default function MobileMenu() {
     const [open, setOpen] = useState(false);
+    const { data: session } = useSession();
 
     return (
         <>
@@ -30,7 +41,7 @@ export default function MobileMenu() {
                     </Transition.Child>
 
                     <div className="absolute inset-0 overflow-hidden">
-                        <div className="fixed pointer-events-none inset-y-0 right-0 flex">
+                        <div className="flex fixed pointer-events-none inset-y-0 right-0">
                             <Transition.Child
                                 as={Fragment}
                                 enter="transform transition ease-in-out duration-300"
@@ -40,43 +51,131 @@ export default function MobileMenu() {
                                 leaveFrom="translate-x-0"
                                 leaveTo="translate-x-full"
                             >
-                                <Dialog.Panel className="pointer-events-auto  w-screen max-w-md bg-base-100">
-                                    <div className="flex justify-between px-4 pt-5 pb-2">
-                                        <ThemeToggler />
-                                        <Button
-                                            className="btn-ghost btn-square btn-sm"
-                                            onClick={() => setOpen(false)}
-                                        >
-                                            <span className="sr-only">Close menu</span>
-                                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                                        </Button>
-                                    </div>
-
-                                    {/* Links */}
-
-                                    <div className="mt-3">
-                                        <div className="border-b border-neutral">
-                                            <ul className="px-4 pb-2">
+                                <Dialog.Panel className="flex flex-col justify-between pointer-events-auto  w-screen max-w-md bg-base-100">
+                                    <div>
+                                        <div className="flex justify-end px-4 pt-5">
+                                            <Button
+                                                className="btn-ghost btn-square btn-sm"
+                                                onClick={() => setOpen(false)}
+                                            >
+                                                <span className="sr-only">Close menu</span>
+                                                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                                            </Button>
+                                        </div>
+                                        <div className="px-12 py-8 text-lg">
+                                            <ul className="space-y-3">
                                                 <li>
                                                     <Link
                                                         href="/products"
-                                                        className="font-semibold"
+                                                        className="flex gap-3 items-center font-semibold"
                                                     >
+                                                        <BuildingStorefrontIcon
+                                                            aria-hidden="true"
+                                                            className="h-6 w-6"
+                                                        />
                                                         Products
                                                     </Link>
                                                 </li>
-                                                {navigation.pages.map((page) => (
-                                                    <li key={page.name}>
-                                                        <Link
-                                                            href={page.href}
-                                                            className="font-semibold"
-                                                        >
-                                                            {page.name}
-                                                        </Link>
-                                                    </li>
-                                                ))}
+                                                <li>
+                                                    <Link
+                                                        href="/products"
+                                                        className="flex gap-3 items-center font-semibold"
+                                                    >
+                                                        <GlobeAmericasIcon
+                                                            aria-hidden="true"
+                                                            className="h-6 w-6"
+                                                        />
+                                                        About us
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link
+                                                        href="/products"
+                                                        className="flex gap-3 items-center font-semibold"
+                                                    >
+                                                        <QuestionMarkCircleIcon
+                                                            aria-hidden="true"
+                                                            className="h-6 w-6"
+                                                        />
+                                                        Frequent questions
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link
+                                                        href="/products"
+                                                        className="flex gap-3 items-center font-semibold"
+                                                    >
+                                                        <FaInstagram
+                                                            aria-hidden="true"
+                                                            className="h-6 w-6"
+                                                        />
+                                                        Instagram
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                            <div className="divider"></div>
+                                            <ul className="space-y-3">
+                                                <span className="text-sm uppercase">Account</span>
+                                                <li>
+                                                    <Link
+                                                        href="/products"
+                                                        className="flex gap-3 items-center font-semibold"
+                                                    >
+                                                        <Squares2X2Icon
+                                                            aria-hidden="true"
+                                                            className="h-6 w-6"
+                                                        />
+                                                        Dashboard
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link
+                                                        href="/products"
+                                                        className="flex gap-3 items-center font-semibold"
+                                                    >
+                                                        <BellIcon
+                                                            aria-hidden="true"
+                                                            className="h-6 w-6"
+                                                        />
+                                                        Notifications
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link
+                                                        href="/products"
+                                                        className="flex gap-3 items-center font-semibold"
+                                                    >
+                                                        <Cog6ToothIcon
+                                                            aria-hidden="true"
+                                                            className="h-6 w-6"
+                                                        />
+                                                        Settings
+                                                    </Link>
+                                                </li>
                                             </ul>
                                         </div>
+                                    </div>
+                                    <div className="flex justify-between px-12 py-8">
+                                        {session ? (
+                                            <Button
+                                                onClick={() => {
+                                                    signOut();
+                                                }}
+                                                className="btn-error btn-sm"
+                                            >
+                                                Sign out
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={() => {
+                                                    signIn();
+                                                }}
+                                                className="btn-primary btn-sm"
+                                            >
+                                                Sign in
+                                            </Button>
+                                        )}
+                                        <ThemeToggler />
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
