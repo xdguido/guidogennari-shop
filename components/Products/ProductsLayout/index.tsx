@@ -30,7 +30,7 @@ type Props = {
 export default function ProductsLayout({ children, sort, categoryNode, totalProducts }: Props) {
     return (
         <div>
-            <div className="mx-auto max-w-7xl p-2">
+            <div className="mx-auto max-w-7xl lg:p-2">
                 <div className="flex justify-between items-end p-2">
                     <h1 className="text-4xl font-bold tracking-tight lg:p-2">
                         {categoryNode.name}
@@ -91,20 +91,25 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                     <div className="grid grid-cols-1 gap-x-2 gap-y-10 lg:grid-cols-4 rounded-lg lg:bg-base-container p-2">
                         {/* Filters */}
 
-                        <div className="hidden lg:block sticky top-[5rem] self-start px-3 ">
-                            <div className="hidden lg:block max-w-[10rem] sm:max-w-none text-sm breadcrumbs mb-5">
-                                <ul>
-                                    {categoryNode.parent && (
-                                        <li className="text-info">
-                                            <Link href={`/products/${categoryNode.parent.slug}`}>
-                                                {categoryNode.parent.name}
-                                            </Link>
-                                        </li>
-                                    )}
-                                    <li>{categoryNode.name}</li>
-                                </ul>
-                            </div>
-                            <p className="badge badge-outline ml-3 mb-4">
+                        <div className="hidden lg:block sticky top-[5rem] self-start px-3">
+                            {categoryNode.parent ? (
+                                <div className="hidden lg:block max-w-[10rem] sm:max-w-none text-sm breadcrumbs">
+                                    <ul>
+                                        {categoryNode.parent && (
+                                            <li>
+                                                <Link
+                                                    href={`/products/${categoryNode.parent.slug}`}
+                                                >
+                                                    {categoryNode.parent.name}
+                                                </Link>
+                                            </li>
+                                        )}
+                                        <li>{categoryNode.name}</li>
+                                    </ul>
+                                </div>
+                            ) : null}
+
+                            <p className="badge badge-outline ml-3 my-5">
                                 {totalProducts + ' products'}
                             </p>
                             {categoryNode.children.length === 0 ? null : (

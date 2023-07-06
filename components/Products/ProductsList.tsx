@@ -49,7 +49,7 @@ export default function ProductsList({ products }: Props) {
                             href={`/product/${product.slug}`}
                             className="group bg-base-100 rounded"
                         >
-                            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8 rounded-b-none">
+                            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8 lg:rounded-b-none">
                                 {product.thumbnail ? (
                                     <Image
                                         src={product.thumbnail}
