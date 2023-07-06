@@ -13,10 +13,10 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
     return (
         <section id="recommended" className="my-12">
             <h3 className="mb-4 text-lg font-semibold">Recommended products</h3>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-10">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-y-4 gap-x-1 lg:gap-x-2">
                 {filteredProducts.slice(0, 5).map((product) => (
                     <Link key={product.id} href={`/product/${product.slug}`} className="group">
-                        <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8">
+                        <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200">
                             {product.thumbnail ? (
                                 <Image
                                     src={product.thumbnail}
@@ -34,7 +34,7 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
                                 </div>
                             )}
                         </div>
-                        <h3 className="mt-4 text-sm ">{product.name}</h3>
+                        <h3 className="mt-2 text-sm ">{product.name}</h3>
                         <p className="sr-only">{product.description}</p>
                         <p className="mt-1 text-lg font-medium ">
                             $ {product.price.toLocaleString('es')}
@@ -43,7 +43,7 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
                 ))}
                 {lastProduct && (
                     <Link href={`/product/${lastProduct.slug}`} className="block md:hidden group">
-                        <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8">
+                        <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200">
                             {lastProduct.thumbnail ? (
                                 <Image
                                     src={lastProduct.thumbnail}
@@ -61,7 +61,7 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
                                 </div>
                             )}
                         </div>
-                        <h3 className="mt-4 text-sm ">{lastProduct.name}</h3>
+                        <h3 className="mt-2 text-sm ">{lastProduct.name}</h3>
                         <p className="sr-only">{lastProduct.description}</p>
                         <p className="mt-1 text-lg font-medium ">
                             $ {lastProduct.price.toLocaleString('es')}

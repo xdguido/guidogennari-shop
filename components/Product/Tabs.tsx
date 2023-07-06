@@ -43,17 +43,17 @@ export default function Tabs() {
     return (
         <div className="mx-auto w-full mt-2 ">
             <Tab.Group>
-                <Tab.List className="flex space-x-1 rounded-xl bg-base-200 p-1">
+                <Tab.List className="flex space-x-1 rounded-xl bg-base-100 p-1">
                     {Object.keys(categories).map((category) => (
                         <Tab
                             key={category}
                             className={({ selected }) =>
                                 clsx(
                                     'w-full rounded-lg py-2.5 text-sm font-medium leading-5 ',
-                                    'ring-primary ring-offset-2 ring-offset-base-300 focus:outline-none focus:ring-2',
+                                    'ring-primary ring-offset-2 ring-offset-base-100 focus:outline-none focus:ring-2',
                                     selected
-                                        ? 'bg-base-100 shadow'
-                                        : 'text-base-content hover:bg-base-300'
+                                        ? 'bg-base-container shadow'
+                                        : 'text-base-content hover:bg-base-100'
                                 )
                             }
                         >
@@ -66,7 +66,7 @@ export default function Tabs() {
                         <Tab.Panel
                             key={idx}
                             className={clsx(
-                                'rounded-xl bg-base-200 p-3',
+                                'rounded-xl bg-base-100 p-3',
                                 ' ring-primary focus:outline-none focus:ring-2'
                             )}
                         >

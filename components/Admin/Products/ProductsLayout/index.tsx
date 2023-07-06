@@ -2,11 +2,11 @@ import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
+import type { CategoryNode } from '@lib/types';
 import PropTypes from 'prop-types';
-import { CategoryWithChildren } from '@lib/types';
 import Button from '@ui/Button';
 import MobileMenu from './MobileMenu';
-import AddProduct from '@components/Admin/ProductForm/AddProduct';
+import AddProduct from '@components/Admin/AddProduct';
 
 type Props = {
     children: React.ReactNode;
@@ -15,10 +15,7 @@ export default function ProductsList({ children }: Props) {
     const router = useRouter();
     const { category } = router.query;
 
-    const { data: categoryTree, isLoading } = useSwr<CategoryWithChildren[]>(
-        '/api/categories',
-        fetcher
-    );
+    const { data: categoryTree, isLoading } = useSwr<CategoryNode[]>('/api/category', fetcher);
 
     if (isLoading) {
         return <span className="flex justify-center font-semibold">Loading...</span>;

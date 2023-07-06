@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, Product } from '@prisma/client';
 
 export enum SortOption {
     CreatedAtDesc = 'newest',
@@ -9,10 +9,6 @@ export enum SortOption {
 export interface CartProduct {
     slug: string;
     quantity: number;
-    // name: string;
-    // price: number;
-    // imageSrc: string;
-    // imageAlt: string;
 }
 
 export interface CartContextType {
@@ -26,10 +22,13 @@ export interface CartContextType {
 export type CategoryNode = Prisma.CategoryGetPayload<{
     include: { children: true; parent: true };
 }>;
-export type CategoryWithChildren = Prisma.CategoryGetPayload<{
-    include: { children: true };
-}>;
+
+export type GetFilteredTypes = {
+    products: Product[];
+    categoryNode: CategoryNode;
+    count: number;
+};
 
 export interface CategoryContextType {
-    categories: CategoryWithChildren[];
+    categories: CategoryNode[];
 }

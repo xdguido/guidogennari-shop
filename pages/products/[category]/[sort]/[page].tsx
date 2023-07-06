@@ -1,13 +1,11 @@
 /* eslint-disable react/prop-types */
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import { SWRConfig, unstable_serialize } from 'swr';
-import getProducts from '@lib/api/getProducts';
-import getCategories from '@lib/api/getCategories';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
 import CategoryProvider from '@lib/store/CategoryContext';
-import type { CategoryWithChildren } from '@lib/types';
 import { SortOption } from '@lib/types';
+import { productServices, categoryServices } from '@lib/api/services';
 
 export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsContext) => {
     // `getStaticProps` is executed on the server side.
@@ -15,20 +13,31 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
     const sort = params?.sort || SortOption.CreatedAtDesc;
     const category = params?.category || 'all-products';
 
+    const takeNumber = 12;
+    const skipNumber = page * takeNumber;
+
     if (!Object.values(SortOption).includes(sort as SortOption)) {
         return {
             notFound: true
         };
     }
 
-    const categoryTree: CategoryWithChildren[] = await getCategories();
-    const data = await getProducts(page, sort as SortOption, category as string);
+    const categoryTree = await categoryServices.getTree();
+    // const categoryNode = await categoryServices.getOne(category as string);
+    // const categoryBranch = await categoryServices.getBranch(categoryNode);
+    const data = await productServices.getFiltered(
+        skipNumber,
+        takeNumber,
+        sort as SortOption,
+        category as string
+    );
 
-    if (!data?.products?.length) {
+    if (data?.count === 0) {
         return {
             notFound: true
         };
     }
+
     if (page === 1) {
         return {
             redirect: {
@@ -46,7 +55,7 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
                 [unstable_serialize(`/api/products/${category}/${sort}/${page}`)]: JSON.parse(
                     JSON.stringify(data)
                 ),
-                [unstable_serialize(`/api/categories`)]: JSON.parse(JSON.stringify(categoryTree))
+                [unstable_serialize(`/api/category`)]: JSON.parse(JSON.stringify(categoryTree))
             }
         },
         revalidate: 60 * 60 * 24

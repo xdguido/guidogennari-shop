@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
+import type { CategoryNode } from '@lib/types';
+import type { Category } from '@prisma/client';
+import type { FieldValues, Path, SetValueConfig } from 'react-hook-form';
 import { useState, useEffect, Fragment } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/20/solid';
-import { FieldValues, Path, SetValueConfig } from 'react-hook-form';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
-import { Category } from '@prisma/client';
-import type { CategoryWithChildren } from '@lib/types';
 import Input from '@ui/Input';
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
 export default function CategoryCombobox({ defaultValue, setValue, error, register }: Props) {
     const [query, setQuery] = useState<string>('');
     const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(undefined);
-    const { data: categories } = useSwr<CategoryWithChildren[]>('/api/categories', fetcher);
+    const { data: categories } = useSwr<CategoryNode[]>('/api/category', fetcher);
 
     useEffect(() => {
         if (defaultValue && categories) {
@@ -48,11 +48,8 @@ export default function CategoryCombobox({ defaultValue, setValue, error, regist
         }
     }, [selectedCategory, setValue]);
 
-    const filterCategories = (
-        categories: CategoryWithChildren[],
-        query: string
-    ): CategoryWithChildren[] => {
-        return categories.reduce<CategoryWithChildren[]>((acc, category) => {
+    const filterCategories = (categories: CategoryNode[], query: string): CategoryNode[] => {
+        return categories.reduce<CategoryNode[]>((acc, category) => {
             const filteredChildren =
                 category.children &&
                 category.children.filter((child) => {

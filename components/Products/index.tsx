@@ -3,20 +3,17 @@
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 import { NextSeo } from 'next-seo';
-
 import ProductsLayout from './ProductsLayout';
 import ProductsList from './ProductsList';
 import PaginationButtons from './PaginationButtons';
 
 export default function Products({ page, sort, category }) {
-    // const router = useRouter();
-    const size = 12;
-
     const {
-        data: { products, categoryNode, total }
+        data: { products, categoryNode, count }
     } = useSwr(`/api/products/${category}/${sort}/${page}`, fetcher);
 
-    const maxPageIndex = total ? Math.ceil(total / size) : page;
+    const size = 12;
+    const maxPageIndex = count ? Math.ceil(count / size) : page;
 
     return (
         <>
@@ -24,7 +21,7 @@ export default function Products({ page, sort, category }) {
                 title={`${categoryNode.name} | E-commerce`}
                 description={`Browse ${categoryNode.name} products`}
             />
-            <ProductsLayout sort={sort} categoryNode={categoryNode} totalProducts={total}>
+            <ProductsLayout sort={sort} categoryNode={categoryNode} totalProducts={count}>
                 <ProductsList products={products} />
                 <PaginationButtons
                     basePath="/products"

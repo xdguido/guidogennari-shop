@@ -30,33 +30,11 @@ type Props = {
 export default function ProductsLayout({ children, sort, categoryNode, totalProducts }: Props) {
     return (
         <div>
-            <div className="mx-auto max-w-7xl px-2">
-                <h1 className=" text-4xl font-bold tracking-tight mb-3">{categoryNode.name}</h1>
-                <div className="flex justify-between">
-                    <div className="hidden lg:block max-w-[10rem] sm:max-w-none text-sm breadcrumbs">
-                        <ul>
-                            {categoryNode.parent && (
-                                <li>
-                                    <Link href={`/products/${categoryNode.parent.slug}`}>
-                                        {categoryNode.parent.name}
-                                    </Link>
-                                </li>
-                            )}
-                            <li>{categoryNode.name}</li>
-                        </ul>
-                    </div>
-                    <div className="lg:hidden">
-                        {categoryNode.parent && (
-                            <Button
-                                className="btn-link btn-sm normal-case no-underline no-animation text-base-content gap-1 justify-start px-0"
-                                href={`/products/${categoryNode.parent.slug}`}
-                            >
-                                <ArrowLongLeftIcon aria-hidden="true" className="h-4 w-4" />
-                                Back to
-                                <span className="font-bold">{categoryNode.parent.name}</span>
-                            </Button>
-                        )}
-                    </div>
+            <div className="mx-auto max-w-7xl lg:p-2">
+                <div className="flex justify-between items-end p-2">
+                    <h1 className="text-4xl font-bold tracking-tight lg:p-2">
+                        {categoryNode.name}
+                    </h1>
                     <div className="flex gap-2 sm:gap-3">
                         <Menu as="div" className="relative text-left">
                             <Menu.Button
@@ -105,30 +83,33 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                     </div>
                 </div>
 
-                <section aria-labelledby="products-heading" className="pt-6 pb-24">
+                <section aria-labelledby="products-heading" className="pb-12">
                     <h2 id="products-heading" className="sr-only">
                         Products
                     </h2>
 
-                    <div className="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-x-2 gap-y-10 lg:grid-cols-4 rounded-lg lg:bg-base-container p-2">
                         {/* Filters */}
 
-                        <div className="hidden lg:block sticky top-[5rem] self-start">
-                            {/* <div className="block text-sm breadcrumbs ml-3">
-                                <ul>
-                                    {categoryNode.parent && (
-                                        <li>
-                                            <Link href={`/products/${categoryNode.parent.slug}`}>
-                                                {categoryNode.parent.name}
-                                            </Link>
-                                        </li>
-                                    )}
-                                    <li>
-                                        {categoryNode.name !== 'All products' && categoryNode.name}
-                                    </li>
-                                </ul>
-                            </div> */}
-                            <p className="badge badge-outline ml-3 mb-4">
+                        <div className="hidden lg:block sticky top-[5rem] self-start px-3">
+                            {categoryNode.parent ? (
+                                <div className="hidden lg:block max-w-[10rem] sm:max-w-none text-sm breadcrumbs">
+                                    <ul>
+                                        {categoryNode.parent && (
+                                            <li>
+                                                <Link
+                                                    href={`/products/${categoryNode.parent.slug}`}
+                                                >
+                                                    {categoryNode.parent.name}
+                                                </Link>
+                                            </li>
+                                        )}
+                                        <li>{categoryNode.name}</li>
+                                    </ul>
+                                </div>
+                            ) : null}
+
+                            <p className="badge badge-outline ml-3 my-5">
                                 {totalProducts + ' products'}
                             </p>
                             {categoryNode.children.length === 0 ? null : (
@@ -153,7 +134,7 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
 
                             <h3 className="text-base-content font-semibold mb-2 px-3">Filters</h3>
                             {filters.map((section) => (
-                                <Disclosure as="div" key={section.id} className="py-4">
+                                <Disclosure as="div" key={section.id} className="py-3">
                                     {({ open }) => (
                                         <>
                                             <h3 className="-my-3 flow-root">
