@@ -13,10 +13,11 @@ interface Props extends CartProduct {
 }
 
 export default function ProductItem({ slug, quantity, subtotal }: Props) {
-    const { data: product, error } = useSwr(`/api/product/${slug}`, fetcher);
+    const { data: product } = useSwr(`/api/product/${slug}`, fetcher);
     const { removeProduct, updateProductQuantity } = useCart();
-    if (error) {
+    if (!product) {
         removeProduct(slug);
+        return null;
     }
     return (
         <li className="grid grid-cols-4 py-6">
