@@ -12,22 +12,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     // `getStaticProps` is executed on the server side.
     const productSlug = params?.product;
 
-    const categoryTree = await categoryServices.getTree();
     const productData = await productServices.getOne(productSlug as string);
-    const productCategory = productData?.category?.slug;
-
-    const suggestedProducts = await productServices.getFiltered(
-        0,
-        8,
-        'newest' as SortOption,
-        productCategory
-    );
 
     if (!productData) {
         return {
             notFound: true
         };
     }
+
+    const productCategory = productData?.category?.slug;
+    const suggestedProducts = await productServices.getFiltered(
+        0,
+        8,
+        'newest' as SortOption,
+        productCategory
+    );
+    const categoryTree = await categoryServices.getTree();
 
     return {
         props: {
