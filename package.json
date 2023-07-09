@@ -34,6 +34,7 @@
         "react-dom": "18.2.0",
         "react-hook-form": "^7.43.9",
         "react-icons": "^4.7.1",
+        "react-swipeable": "^7.0.1",
         "slugify": "^1.6.5",
         "sonner": "^0.3.0",
         "swr": "^2.0.3"
