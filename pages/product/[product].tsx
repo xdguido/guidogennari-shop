@@ -58,7 +58,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export default function Index({ fallback, productSlug, categorySlug }) {
     return (
-        <SWRConfig value={{ fallback }}>
+        <SWRConfig value={{ fallback, revalidateOnFocus: false }}>
             <CategoryProvider>
                 <Layout>
                     <Product productSlug={productSlug} categorySlug={categorySlug} />
