@@ -48,11 +48,11 @@ function reducer(state: CarouselState, action: CarouselAction): CarouselState {
     }
 }
 
-const getInitialState = (numItems: number): CarouselState => ({
-    pos: numItems - 1,
+const initialState: CarouselState = {
+    pos: 0,
     px: 0,
     isTracking: false
-});
+};
 
 export default function MobileCarousel() {
     const images = [
@@ -62,7 +62,7 @@ export default function MobileCarousel() {
     ];
 
     const numItems = images.length;
-    const [state, dispatch] = useReducer(reducer, getInitialState(numItems));
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const slide = (dir: Motion) => {
         dispatch({ type: dir, numItems });
@@ -106,7 +106,7 @@ export default function MobileCarousel() {
             >
                 <div
                     className={`flex ${
-                        state.isTracking ? '' : 'transition-all duration-300 ease-in-out'
+                        state.isTracking ? '' : 'transition-all duration-300 ease-out'
                     } `}
                     style={{
                         transform: state.isTracking
