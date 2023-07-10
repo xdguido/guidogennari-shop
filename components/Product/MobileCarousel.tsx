@@ -35,7 +35,7 @@ function reducer(state: CarouselState, action: CarouselAction): CarouselState {
 
             return {
                 ...state,
-                px: isLastPosition || isFirstPosition ? reducedMotion : px,
+                px: isLastPosition ? reducedMotion : isFirstPosition ? 0 : px,
                 isTracking: true
             };
         case 'BLOCK':
@@ -81,9 +81,12 @@ export default function MobileCarousel() {
             const { dir, deltaX, first } = e;
             const isUp = dir === 'Up' && first;
             const isDown = dir === 'Down' && first;
+            const isRight = dir === 'Right';
+            const isLeft = dir === 'Left';
             if (isUp || isDown) {
                 preventSwipe();
-            } else {
+            }
+            if (isRight || isLeft) {
                 track(deltaX);
             }
         },
@@ -95,11 +98,16 @@ export default function MobileCarousel() {
 
     return (
         <>
-            <div {...handlers} className="flex w-full overflow-hidden aspect-w-1 aspect-h-1">
+            <div
+                {...handlers}
+                className={`flex w-full overflow-hidden aspect-w-1 aspect-h-1 ${
+                    state.isTracking ? 'touch-pan-x' : 'touch-pan-y'
+                }`}
+            >
                 <div
                     className={`flex ${
                         state.isTracking ? '' : 'transition-all duration-300 ease-in-out'
-                    }`}
+                    } `}
                     style={{
                         transform: state.isTracking
                             ? `translateX(-${state.pos * 100}%) translateX(${state.px}px)`
