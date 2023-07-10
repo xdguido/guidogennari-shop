@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import Image from 'next/image';
 
-type Direction = 'PREV' | 'NEXT' | 'TRACK' | 'BLOCK';
+type Motion = 'PREV' | 'NEXT' | 'TRACK' | 'BLOCK';
 
 interface CarouselState {
     pos: number;
@@ -10,7 +10,7 @@ interface CarouselState {
     isTracking: boolean;
 }
 
-type CarouselAction = { type?: Direction; numItems?: number; px?: number };
+type CarouselAction = { type?: Motion; numItems?: number; px?: number };
 
 function reducer(state: CarouselState, action: CarouselAction): CarouselState {
     const { pos } = state;
@@ -64,7 +64,7 @@ export default function MobileCarousel() {
     const numItems = images.length;
     const [state, dispatch] = useReducer(reducer, getInitialState(numItems));
 
-    const slide = (dir: Direction) => {
+    const slide = (dir: Motion) => {
         dispatch({ type: dir, numItems });
     };
 
@@ -78,10 +78,12 @@ export default function MobileCarousel() {
 
     const handlers = useSwipeable({
         onSwiping: (e) => {
-            const { dir, deltaX } = e;
-            if (dir === 'Up' || dir === 'Down') {
+            const { dir, deltaX, first } = e;
+            const isUp = dir === 'Up' && first;
+            const isDown = dir === 'Down' && first;
+            if (isUp || isDown) {
                 preventSwipe();
-            } else {
+            } else if (first) {
                 track(deltaX);
             }
         },
