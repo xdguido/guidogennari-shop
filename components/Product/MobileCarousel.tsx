@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import Image from 'next/image';
 
-type Direction = 'PREV' | 'NEXT' | 'TRACK';
+type Direction = 'PREV' | 'NEXT' | 'TRACK' | 'BLOCK';
 
 interface CarouselState {
     pos: number;
@@ -10,7 +10,7 @@ interface CarouselState {
     isTracking: boolean;
 }
 
-type CarouselAction = { type: Direction; numItems?: number; px?: number };
+type CarouselAction = { type?: Direction; numItems?: number; px?: number };
 
 function reducer(state: CarouselState, action: CarouselAction): CarouselState {
     const { pos } = state;
@@ -37,6 +37,11 @@ function reducer(state: CarouselState, action: CarouselAction): CarouselState {
                 ...state,
                 px: isLastPosition || isFirstPosition ? reducedMotion : px,
                 isTracking: true
+            };
+        case 'BLOCK':
+            return {
+                ...state,
+                isTracking: false
             };
         default:
             return state;
@@ -67,13 +72,22 @@ export default function MobileCarousel() {
         dispatch({ type: 'TRACK', px, numItems });
     };
 
+    const preventSwipe = () => {
+        dispatch({ type: 'BLOCK' });
+    };
+
     const handlers = useSwipeable({
         onSwiping: (e) => {
-            track(e.deltaX);
+            const { dir, deltaX } = e;
+            if (dir === 'Up' || dir === 'Down') {
+                preventSwipe();
+            } else {
+                track(deltaX);
+            }
         },
         onSwipedLeft: () => slide('NEXT'),
         onSwipedRight: () => slide('PREV'),
-        preventScrollOnSwipe: true,
+        trackTouch: true,
         trackMouse: true
     });
 
@@ -81,7 +95,9 @@ export default function MobileCarousel() {
         <>
             <div {...handlers} className="flex w-full overflow-hidden aspect-w-1 aspect-h-1">
                 <div
-                    className={`flex ${state.isTracking ? '' : 'transition-all duration-300'}`}
+                    className={`flex ${
+                        state.isTracking ? '' : 'transition-all duration-300 ease-in-out'
+                    }`}
                     style={{
                         transform: state.isTracking
                             ? `translateX(-${state.pos * 100}%) translateX(${state.px}px)`
@@ -95,7 +111,7 @@ export default function MobileCarousel() {
                     ))}
                 </div>
             </div>
-            <div className="flex justify-center p-2 gap-1">
+            <div className="flex justify-center p-3 gap-1">
                 {Array.from({ length: images.length }).map((_, index) => {
                     return (
                         <span
