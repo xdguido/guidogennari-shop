@@ -19,13 +19,15 @@ export default function Carousel() {
                         <button
                             key={imageUrl}
                             className={`overflow-hidden aspect-w-1 aspect-h-1`}
-                            onClick={() => setCurrentImage(imageUrl)}
+                            onMouseEnter={() => setCurrentImage(imageUrl)}
                         >
                             <Image
                                 src={imageUrl}
                                 alt="alt"
                                 className={`rounded-md ${
-                                    imageUrl === currentImage ? 'border-2 border-info' : ''
+                                    imageUrl === currentImage
+                                        ? 'border-2 border-info'
+                                        : 'border-2 border-neutral'
                                 }`}
                                 fill
                             />
