@@ -83,7 +83,7 @@ export default function MobileCarousel() {
             const isDown = dir === 'Down' && first;
             if (isUp || isDown) {
                 preventSwipe();
-            } else if (first) {
+            } else {
                 track(deltaX);
             }
         },
