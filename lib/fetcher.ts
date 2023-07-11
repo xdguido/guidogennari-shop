@@ -1,32 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// import { Exception } from '@lib/api/errorException';
-
-// class FetchError extends Error {
-//     clientString: { [key: string]: string };
-//     constructor(public readonly status: number, message: string) {
-//         super(message);
-//         this.name = 'FetchError';
-//     }
-// }
-
-async function parseResponse(res: Response): Promise<any> {
-    const contentType = res.headers.get('Content-Type');
-    if (contentType?.startsWith('application/json')) {
-        return res.json();
-    } else if (contentType?.startsWith('text/')) {
-        return res.text();
-    } else {
-        return res.blob();
-    }
-}
-
 interface FetchOptions {
     headers?: { [key: string]: string };
     method?: string;
     body?: any;
 }
 
-export default async function fetcher(url: string, options: FetchOptions = {}) {
+export default async function fetcher<T>(url: string, options: FetchOptions = {}): Promise<T> {
     const res = await fetch(url, {
         method: options.method || 'GET',
         headers: options.headers || {},
@@ -34,19 +12,13 @@ export default async function fetcher(url: string, options: FetchOptions = {}) {
     });
     if (!res.ok) {
         throw new Error('FetchError');
-        // let error;
-        // try {
-        //     error = await res.json();
-        //     if (!(error instanceof Exception)) {
-        //         throw new Error(res.statusText);
-        //     }
-        // } catch (e) {
-        //     error = new Error(res.statusText);
-        // }
-        // console.error(error);
-        // const message = error.name;
-        // throw new Error(message);
+    }
+    const contentType = res.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+        const data = await res.json();
+        return data as T;
     }
 
-    return parseResponse(res);
+    const textData = await res.text();
+    return textData as unknown as T;
 }
