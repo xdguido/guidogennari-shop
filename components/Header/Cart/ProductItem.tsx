@@ -13,9 +13,18 @@ interface Props extends CartProduct {
 }
 
 export default function ProductItem({ slug, quantity, subtotal }: Props) {
-    const { data: product } = useSwr(`/api/product/${slug}`, fetcher);
+    const { data: product, error, isLoading } = useSwr(`/api/product/${slug}`, fetcher);
     const { removeProduct, updateProductQuantity } = useCart();
+    if (error) {
+        removeProduct(slug);
+        return null;
+    }
+    if (isLoading) {
+        console.log('lol loading');
+        return null;
+    }
     if (!product) {
+        console.log('no product');
         removeProduct(slug);
         return null;
     }

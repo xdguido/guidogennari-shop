@@ -1,18 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Exception } from '@lib/api/errorException';
+// import { Exception } from '@lib/api/errorException';
 
-class FetchError extends Error {
-    clientString: { [key: string]: string };
-    constructor(
-        public readonly status: number,
-        message: string,
-        clientString: { [key: string]: string }
-    ) {
-        super(message);
-        this.name = 'FetchError';
-        this.clientString = clientString;
-    }
-}
+// class FetchError extends Error {
+//     clientString: { [key: string]: string };
+//     constructor(public readonly status: number, message: string) {
+//         super(message);
+//         this.name = 'FetchError';
+//     }
+// }
 
 async function parseResponse(res: Response): Promise<any> {
     const contentType = res.headers.get('Content-Type');
@@ -37,21 +32,20 @@ export default async function fetcher(url: string, options: FetchOptions = {}) {
         headers: options.headers || {},
         body: options.body
     });
-
     if (!res.ok) {
-        let error;
-        try {
-            error = await res.json();
-            if (!(error instanceof Exception)) {
-                throw new Error(res.statusText);
-            }
-        } catch (e) {
-            error = new Error(res.statusText);
-        }
-        console.error(error);
-        const message = error.name;
-        const clientString = error.clientString;
-        throw new FetchError(res.status, message, clientString);
+        throw new Error('FetchError');
+        // let error;
+        // try {
+        //     error = await res.json();
+        //     if (!(error instanceof Exception)) {
+        //         throw new Error(res.statusText);
+        //     }
+        // } catch (e) {
+        //     error = new Error(res.statusText);
+        // }
+        // console.error(error);
+        // const message = error.name;
+        // throw new Error(message);
     }
 
     return parseResponse(res);
