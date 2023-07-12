@@ -13,21 +13,25 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
     const sort = params?.sort || SortOption.CreatedAtDesc;
     const category = params?.category || 'all-products';
 
-    const takeNumber = 12;
-    const skipNumber = page * takeNumber;
-
+    if (page === 1) {
+        return {
+            redirect: {
+                destination: `/products/${category}/${sort}`,
+                permanent: false
+            }
+        };
+    }
     if (!Object.values(SortOption).includes(sort as SortOption)) {
         return {
             notFound: true
         };
     }
 
-    const categoryTree = await categoryServices.getTree();
-    // const categoryNode = await categoryServices.getOne(category as string);
-    // const categoryBranch = await categoryServices.getBranch(categoryNode);
+    const takeNumber = 12;
+
     const data = await productServices.getFiltered(
-        skipNumber,
         takeNumber,
+        page,
         sort as SortOption,
         category as string
     );
@@ -38,14 +42,8 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
         };
     }
 
-    if (page === 1) {
-        return {
-            redirect: {
-                destination: `/products/${category}/${sort}`,
-                permanent: false
-            }
-        };
-    }
+    const categoryTree = await categoryServices.getTree();
+
     return {
         props: {
             category,

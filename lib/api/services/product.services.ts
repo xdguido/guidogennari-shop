@@ -4,11 +4,13 @@ import type { GetFilteredTypes, CategoryNode, SortOption } from '@lib/types';
 import categoryServices from './category.services';
 
 const getFiltered = async (
-    skipNumber: number,
     takeNumber: number,
+    page: number,
     sort: SortOption,
     categorySlug: string
 ): Promise<GetFilteredTypes> => {
+    const skipNumber = (page - 1) * takeNumber;
+
     const categoryNode = await categoryServices.getOne(categorySlug);
     const categoryBranch = await categoryServices.getBranch(categoryNode);
     const count = await productServices.getCount(categoryBranch);

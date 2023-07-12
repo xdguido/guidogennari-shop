@@ -10,10 +10,12 @@ const getFiltered = async (req: NextApiRequest, res: NextApiResponse) => {
         page?: string;
         category?: string;
     };
-    const skipNumber = Number(page);
-    const takeNumber = 12;
 
-    const data = await productServices.getFiltered(skipNumber, takeNumber, sort, category);
+    // refactor this to select takeNumber
+    const takeNumber = 12;
+    const pageNumber = Number(page);
+
+    const data = await productServices.getFiltered(takeNumber, pageNumber, sort, category);
     return res.json(data);
 };
 

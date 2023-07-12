@@ -22,8 +22,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const productCategory = productData?.category?.slug;
     const suggestedProducts = await productServices.getFiltered(
-        0,
         8,
+        1,
         'newest' as SortOption,
         productCategory
     );
