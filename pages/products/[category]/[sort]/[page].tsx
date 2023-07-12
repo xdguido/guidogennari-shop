@@ -46,13 +46,11 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
 
     return {
         props: {
-            category,
+            data: JSON.parse(JSON.stringify(data)),
             sort,
             page,
+            category,
             fallback: {
-                [unstable_serialize(`/api/products/${category}/${sort}/${page}`)]: JSON.parse(
-                    JSON.stringify(data)
-                ),
                 [unstable_serialize(`/api/category`)]: JSON.parse(JSON.stringify(categoryTree))
             }
         },
@@ -75,12 +73,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, sort, page, category }) {
+export default function Page({ fallback, data, sort, page, category }) {
     return (
         <SWRConfig value={{ fallback, revalidateOnFocus: false }}>
             <CategoryProvider>
                 <Layout>
-                    <Products page={page} sort={sort} category={category} />
+                    <Products data={data} page={page} sort={sort} categorySlug={category} />
                 </Layout>
             </CategoryProvider>
         </SWRConfig>

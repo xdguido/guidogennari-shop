@@ -14,8 +14,8 @@ import RecomendedProductsList from './RecomendedProductsList';
 import Carousel from './Carousel';
 import MobileCarousel from './MobileCarousel';
 
-type Prop = { productSlug: string; categorySlug: string };
-export default function Index({ productSlug, categorySlug }: Prop) {
+type Prop = { productSlug: string; recommendedProducts: GetFilteredTypes };
+export default function Index({ productSlug, recommendedProducts }: Prop) {
     const [qty, setQty] = useState(1); // Initialize qty state with default value of 1
     const { addProduct } = useCart();
 
@@ -23,9 +23,10 @@ export default function Index({ productSlug, categorySlug }: Prop) {
         `/api/product/${productSlug}`,
         fetcher
     );
-    const {
-        data: { products, categoryNode }
-    } = useSwr<GetFilteredTypes>(() => `/api/products/${categorySlug}/newest/1`, fetcher);
+    const { products, categoryNode } = recommendedProducts;
+    // const {
+    //     data: { products, categoryNode }
+    // } = useSwr<GetFilteredTypes>(() => `/api/products/${categorySlug}/newest/1`, fetcher);
 
     function handleQtyChange(event) {
         setQty(parseInt(event.target.value)); // Update qty state with the selected value

@@ -20,25 +20,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         };
     }
 
-    const productCategory = productData?.category?.slug;
-    const suggestedProducts = await productServices.getFiltered(
+    const categorySlug = productData?.category?.slug;
+    const recommendedData = await productServices.getFiltered(
         8,
         1,
         'newest' as SortOption,
-        productCategory
+        categorySlug
     );
     const categoryTree = await categoryServices.getTree();
 
     return {
         props: {
             productSlug,
-            categorySlug: productCategory,
+            recommendedData: JSON.parse(JSON.stringify(recommendedData)),
             fallback: {
                 [unstable_serialize(`/api/product/${productSlug}`)]: JSON.parse(
                     JSON.stringify(productData)
-                ),
-                [unstable_serialize(`/api/products/${productCategory}/newest/1`)]: JSON.parse(
-                    JSON.stringify(suggestedProducts)
                 ),
                 [unstable_serialize(`/api/category`)]: JSON.parse(JSON.stringify(categoryTree))
             }
@@ -56,12 +53,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, productSlug, categorySlug }) {
+export default function Index({ fallback, productSlug, recommendedData }) {
     return (
         <SWRConfig value={{ fallback, revalidateOnFocus: false }}>
             <CategoryProvider>
                 <Layout>
-                    <Product productSlug={productSlug} categorySlug={categorySlug} />
+                    <Product recommendedProducts={recommendedData} productSlug={productSlug} />
                 </Layout>
             </CategoryProvider>
         </SWRConfig>
