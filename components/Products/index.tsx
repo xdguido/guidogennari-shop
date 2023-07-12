@@ -1,18 +1,18 @@
 /* eslint-disable react/prop-types */
-// import { useRouter } from 'next/router';
-import type { GetFilteredTypes } from '@lib/types';
-import useSwr from 'swr';
-import fetcher from '@lib/fetcher';
+import type { GetFilteredTypes, SortOption } from '@lib/types';
 import { NextSeo } from 'next-seo';
 import ProductsLayout from './ProductsLayout';
 import ProductsList from './ProductsList';
 import PaginationButtons from './PaginationButtons';
 
-export default function Products({ page, sort, category }) {
-    const {
-        data: { products, categoryNode, count }
-    } = useSwr<GetFilteredTypes>(`/api/products/${category}/${sort}/${page}`, fetcher);
-
+type Props = {
+    data: GetFilteredTypes;
+    page: number;
+    sort: SortOption;
+    categorySlug: string;
+};
+export default function Products({ data, page, sort, categorySlug }: Props) {
+    const { products, categoryNode, count } = data;
     const size = 12;
     const maxPageIndex = count ? Math.ceil(count / size) : page;
 
@@ -27,7 +27,7 @@ export default function Products({ page, sort, category }) {
                 <PaginationButtons
                     basePath="/products"
                     sort={sort}
-                    category={category}
+                    categorySlug={categorySlug}
                     currentPageIndex={page}
                     maxPageIndex={maxPageIndex}
                 />

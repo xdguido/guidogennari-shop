@@ -23,6 +23,8 @@ export type CategoryNode = Prisma.CategoryGetPayload<{
     include: { children: true; parent: true };
 }>;
 
+export type ProductWithCategory = Prisma.ProductGetPayload<{ include: { category: true } }>;
+
 export type GetFilteredTypes = {
     products: Product[];
     categoryNode: CategoryNode;

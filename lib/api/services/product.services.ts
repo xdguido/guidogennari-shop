@@ -1,6 +1,6 @@
 import type { Product } from '@prisma/client';
 import { productProviders } from '../providers';
-import type { GetFilteredTypes, CategoryNode, SortOption } from '@lib/types';
+import type { GetFilteredTypes, CategoryNode, SortOption, ProductWithCategory } from '@lib/types';
 import categoryServices from './category.services';
 
 const getFiltered = async (
@@ -27,7 +27,7 @@ const getCount = async (categoryBranch: CategoryNode[]) => {
     return await productProviders.getCount(categoryBranch);
 };
 
-const getOne = async (productSlug: string) => {
+const getOne = async (productSlug: string): Promise<ProductWithCategory> => {
     return await productProviders.getOne(productSlug);
 };
 

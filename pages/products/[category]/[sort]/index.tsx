@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { SWRConfig, unstable_serialize } from 'swr';
+// import { SWRConfig, unstable_serialize } from 'swr';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
 import CategoryProvider from '@lib/store/CategoryContext';
@@ -38,15 +38,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     return {
         props: {
-            category,
+            data: JSON.parse(JSON.stringify(data)),
             sort,
             page,
-            fallback: {
-                [unstable_serialize(`/api/products/${category}/${sort}/${page}`)]: JSON.parse(
-                    JSON.stringify(data)
-                ),
-                [unstable_serialize(`/api/category`)]: JSON.parse(JSON.stringify(categoryTree))
-            }
+            category,
+            categoryData: JSON.parse(JSON.stringify(categoryTree))
         },
         revalidate: 60 * 60 * 24
     };
@@ -61,14 +57,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Index({ fallback, sort, page, category }) {
+export default function Index({ data, sort, page, category, categoryData }) {
     return (
-        <SWRConfig value={{ fallback, revalidateOnFocus: false }}>
-            <CategoryProvider>
-                <Layout>
-                    <Products page={page} sort={sort} category={category} />
-                </Layout>
-            </CategoryProvider>
-        </SWRConfig>
+        <CategoryProvider data={categoryData}>
+            <Layout>
+                <Products data={data} page={page} sort={sort} categorySlug={category} />
+            </Layout>
+        </CategoryProvider>
     );
 }
