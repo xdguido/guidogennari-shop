@@ -30,13 +30,21 @@ export default function Carousel() {
                                         : 'border-2 border-neutral'
                                 }`}
                                 fill
+                                sizes="5vw"
                             />
                         </button>
                     );
                 })}
             </div>
             <div className=" aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-base-200 col-span-10">
-                <Image src={currentImage} alt="alt" className="object-cover object-center" fill />
+                <Image
+                    src={currentImage}
+                    alt="alt"
+                    className="object-cover"
+                    fill
+                    sizes="(max-width: 1500px) 50vw, 40vw"
+                    priority={true}
+                />
             </div>
         </div>
     );

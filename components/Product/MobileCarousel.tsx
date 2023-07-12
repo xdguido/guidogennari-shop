@@ -116,7 +116,13 @@ export default function MobileCarousel() {
                 >
                     {images.map((image, index) => (
                         <div key={index} className="relative shrink-0 basis-full">
-                            <Image src={image} alt={`Slide ${index}`} fill />
+                            <Image
+                                src={image}
+                                alt={`Slide ${index}`}
+                                fill
+                                sizes="100vw"
+                                priority={true}
+                            />
                         </div>
                     ))}
                 </div>
