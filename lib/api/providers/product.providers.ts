@@ -1,6 +1,6 @@
 import type { Category, Product } from '@prisma/client';
 import { prisma } from '@lib/db';
-import slugify from 'slugify';
+import slugify from '@lib/slugify';
 import { CategoryNode, SortOption } from '@lib/types';
 
 const getFiltered = async (

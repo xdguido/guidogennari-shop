@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import type { CartProduct, GetFilteredTypes } from '@lib/types';
+import type { Category, Product } from '@prisma/client';
 import { useState } from 'react';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
@@ -7,9 +9,7 @@ import Link from 'next/link';
 import { InformationCircleIcon, CheckIcon, TruckIcon } from '@heroicons/react/24/outline';
 import { NextSeo } from 'next-seo';
 import { useCart } from '@lib/store/CartContext';
-import type { CartProduct } from '@lib/types';
-import type { Category, Product } from '@prisma/client';
-import Tabs from './Tabs';
+// import Tabs from './Tabs';
 import RecomendedProductsList from './RecomendedProductsList';
 import Carousel from './Carousel';
 import MobileCarousel from './MobileCarousel';
@@ -25,7 +25,7 @@ export default function Index({ productSlug, categorySlug }: Prop) {
     );
     const {
         data: { products, categoryNode }
-    } = useSwr(() => `/api/products/${categorySlug}/newest/1`, fetcher);
+    } = useSwr<GetFilteredTypes>(() => `/api/products/${categorySlug}/newest/1`, fetcher);
 
     function handleQtyChange(event) {
         setQty(parseInt(event.target.value)); // Update qty state with the selected value

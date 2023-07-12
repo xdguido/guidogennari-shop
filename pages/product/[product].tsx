@@ -22,8 +22,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const productCategory = productData?.category?.slug;
     const suggestedProducts = await productServices.getFiltered(
-        0,
         8,
+        1,
         'newest' as SortOption,
         productCategory
     );
@@ -58,7 +58,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export default function Index({ fallback, productSlug, categorySlug }) {
     return (
-        <SWRConfig value={{ fallback }}>
+        <SWRConfig value={{ fallback, revalidateOnFocus: false }}>
             <CategoryProvider>
                 <Layout>
                     <Product productSlug={productSlug} categorySlug={categorySlug} />

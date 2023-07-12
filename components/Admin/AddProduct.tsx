@@ -1,3 +1,4 @@
+import type { Product } from '@prisma/client';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import Button from '@ui/Button';
@@ -13,21 +14,17 @@ export default function AddProduct() {
     const handleOpenWarn = () => setIsWarn(true);
     const handleCloseWarn = () => setIsWarn(false);
     const onFormSubmit = async (data: any) => {
-        try {
-            await fetcher(`/api/product`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }).then(() => {
-                handleClose();
-                // window.location.reload();
-                // use other refetch
+        fetcher(`/api/product`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(() => handleClose())
+            .catch(() => {
+                return null;
             });
-        } catch (error) {
-            console.log(error);
-        }
     };
 
     return (

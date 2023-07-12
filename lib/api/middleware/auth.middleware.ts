@@ -10,7 +10,7 @@ import { ErrorCode, Exception } from '../errorException';
  * @param {NextApiResponse} res - The Next.js API response object.
  * @throws {Exception} Throws an exception with the corresponding error code and message if validation fails.
  */
-const validateAdmin = async (req: NextApiRequest, res: NextApiResponse) => {
+const validateAdmin = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     const session = await getServerSession(req, res, authOptions);
 
     if (!session) {
@@ -19,6 +19,8 @@ const validateAdmin = async (req: NextApiRequest, res: NextApiResponse) => {
     if (session.user.role !== 'admin') {
         throw new Exception(ErrorCode.Forbidden, { message: 'Not allowed' });
     }
+
+    return;
 };
 
 const authMiddleware = { validateAdmin };

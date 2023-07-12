@@ -53,10 +53,10 @@ export default function ProductForm({
                 formData.append('ml_preset', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
                 formData.append('file', file);
 
-                const { timestamp, signature } = await fetcher('/api/cloudinary-sign', {
+                const { timestamp, signature } = await fetcher<any>('/api/cloudinary-sign', {
                     method: 'POST'
                 });
-                const data = await fetcher(
+                const data = await fetcher<any>(
                     `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload?api_key=${process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY}&timestamp=${timestamp}&signature=${signature}`,
                     {
                         method: 'POST',
@@ -74,10 +74,10 @@ export default function ProductForm({
         formData.append('ml_preset', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
         formData.append('file', thumbnailFile);
 
-        const { timestamp, signature } = await fetcher('/api/cloudinary-sign', {
+        const { timestamp, signature } = await fetcher<any>('/api/cloudinary-sign', {
             method: 'POST'
         });
-        const data = await fetcher(
+        const data = await fetcher<any>(
             `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload?api_key=${process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY}&timestamp=${timestamp}&signature=${signature}`,
             {
                 method: 'POST',

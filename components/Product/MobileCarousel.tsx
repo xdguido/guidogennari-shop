@@ -1,5 +1,58 @@
+import React, { useReducer } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import Image from 'next/image';
-import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
+
+type Motion = 'PREV' | 'NEXT' | 'TRACK' | 'BLOCK';
+
+interface CarouselState {
+    pos: number;
+    px: number;
+    isTracking: boolean;
+}
+
+type CarouselAction = { type?: Motion; numItems?: number; px?: number };
+
+function reducer(state: CarouselState, action: CarouselAction): CarouselState {
+    const { pos } = state;
+    const { numItems, px } = action;
+    switch (action.type) {
+        case 'PREV':
+            return {
+                ...state,
+                pos: pos === 0 ? pos : pos - 1,
+                isTracking: false
+            };
+        case 'NEXT':
+            return {
+                ...state,
+                pos: pos === numItems - 1 ? pos : pos + 1,
+                isTracking: false
+            };
+        case 'TRACK':
+            const reducedMotion = px / 4;
+            const isLastPosition = px < 0 && pos === numItems - 1;
+            const isFirstPosition = px > 0 && pos === 0;
+
+            return {
+                ...state,
+                px: isLastPosition ? reducedMotion : isFirstPosition ? 0 : px,
+                isTracking: true
+            };
+        case 'BLOCK':
+            return {
+                ...state,
+                isTracking: false
+            };
+        default:
+            return state;
+    }
+}
+
+const initialState: CarouselState = {
+    pos: 0,
+    px: 0,
+    isTracking: false
+};
 
 export default function MobileCarousel() {
     const images = [
@@ -8,22 +61,83 @@ export default function MobileCarousel() {
         'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg'
     ];
 
+    const numItems = images.length;
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    const slide = (dir: Motion) => {
+        dispatch({ type: dir, numItems });
+    };
+
+    const track = (px: number) => {
+        dispatch({ type: 'TRACK', px, numItems });
+    };
+
+    const preventSwipe = () => {
+        dispatch({ type: 'BLOCK' });
+    };
+
+    const handlers = useSwipeable({
+        onSwiping: (e) => {
+            const { dir, deltaX, first } = e;
+            const isUp = dir === 'Up' && first;
+            const isDown = dir === 'Down' && first;
+            const isRight = dir === 'Right';
+            const isLeft = dir === 'Left';
+            if (isUp || isDown) {
+                preventSwipe();
+            }
+            if (isRight || isLeft) {
+                track(deltaX);
+            }
+        },
+        onSwipedLeft: () => slide('NEXT'),
+        onSwipedRight: () => slide('PREV'),
+        trackTouch: true,
+        trackMouse: true
+    });
+
     return (
         <>
-            <div className="w-full carousel rounded-lg">
-                {images.map((imageUrl) => {
-                    return (
-                        <div
-                            key={imageUrl}
-                            className={`carousel-item w-full aspect-w-1 aspect-h-1`}
-                        >
-                            <Image src={imageUrl} alt="alt" className="" fill />
+            <div
+                {...handlers}
+                className={`flex w-full overflow-hidden aspect-w-1 aspect-h-1 ${
+                    state.isTracking ? 'touch-pan-x' : 'touch-pan-y'
+                }`}
+            >
+                <div
+                    className={`flex ${
+                        state.isTracking ? '' : 'transition-all duration-300 ease-out'
+                    } `}
+                    style={{
+                        transform: state.isTracking
+                            ? `translateX(-${state.pos * 100}%) translateX(${state.px}px)`
+                            : `translateX(-${state.pos * 100}%)`
+                    }}
+                >
+                    {images.map((image, index) => (
+                        <div key={index} className="relative shrink-0 basis-full">
+                            <Image
+                                src={image}
+                                alt={`Slide ${index}`}
+                                fill
+                                sizes="100vw"
+                                priority={true}
+                            />
                         </div>
+                    ))}
+                </div>
+            </div>
+            <div className="flex justify-center p-3 gap-1">
+                {Array.from({ length: images.length }).map((_, index) => {
+                    return (
+                        <span
+                            key={index}
+                            className={`h-1.5 w-1.5 rounded-full ${
+                                state.pos === index ? 'bg-info' : 'bg-gray-400'
+                            } `}
+                        ></span>
                     );
                 })}
-            </div>
-            <div className="flex justify-center">
-                <EllipsisHorizontalIcon aria-hidden="true" className="text-gray-400 w-10 h-10" />
             </div>
         </>
     );

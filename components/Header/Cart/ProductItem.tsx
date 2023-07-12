@@ -1,3 +1,5 @@
+import type { CartProduct } from '@lib/types';
+import type { Product } from '@prisma/client';
 import Image from 'next/image';
 import clsx from 'clsx';
 import useSwr from 'swr';
@@ -6,15 +8,21 @@ import { MinusIcon, PlusIcon, CheckIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useCart } from '@lib/store/CartContext';
 import Button from '@ui/Button';
-import { CartProduct } from '@lib/types';
 
 interface Props extends CartProduct {
     subtotal?: number;
 }
 
 export default function ProductItem({ slug, quantity, subtotal }: Props) {
-    const { data: product } = useSwr(`/api/product/${slug}`, fetcher);
+    const { data: product, error, isLoading } = useSwr<Product>(`/api/product/${slug}`, fetcher);
     const { removeProduct, updateProductQuantity } = useCart();
+    if (error) {
+        removeProduct(slug);
+        return null;
+    }
+    if (isLoading) {
+        return null;
+    }
     if (!product) {
         removeProduct(slug);
         return null;
@@ -51,7 +59,7 @@ export default function ProductItem({ slug, quantity, subtotal }: Props) {
                         <Button
                             className={clsx(
                                 'btn-outline btn-sm btn-square',
-                                product.quantity == 1 ? 'btn-disabled' : ''
+                                quantity == 1 ? 'btn-disabled' : ''
                             )}
                             onClick={() => updateProductQuantity(product.slug, quantity - 1)}
                         >
@@ -61,7 +69,7 @@ export default function ProductItem({ slug, quantity, subtotal }: Props) {
                         <Button
                             className={clsx(
                                 'btn-outline btn-sm btn-square',
-                                product.quantity == 5 ? 'btn-disabled' : ''
+                                quantity == 5 ? 'btn-disabled' : ''
                             )}
                             onClick={() => updateProductQuantity(product.slug, quantity + 1)}
                         >

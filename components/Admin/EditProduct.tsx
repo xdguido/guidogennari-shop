@@ -28,17 +28,19 @@ export default function EditProduct({ product, label, className }: Props) {
         );
         updatedData.stock = stockDiff;
 
-        await fetcher(`/api/product`, {
+        fetcher(`/api/product`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(updatedData)
-        }).then(() => {
-            handleClose();
-            // window.location.reload();
-            // use other refetch
-        });
+        })
+            .then(() => {
+                handleClose();
+            })
+            .catch(() => {
+                return null;
+            });
     };
 
     return (

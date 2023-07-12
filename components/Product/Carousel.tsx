@@ -19,22 +19,32 @@ export default function Carousel() {
                         <button
                             key={imageUrl}
                             className={`overflow-hidden aspect-w-1 aspect-h-1`}
-                            onClick={() => setCurrentImage(imageUrl)}
+                            onMouseEnter={() => setCurrentImage(imageUrl)}
                         >
                             <Image
                                 src={imageUrl}
                                 alt="alt"
                                 className={`rounded-md ${
-                                    imageUrl === currentImage ? 'border-2 border-info' : ''
+                                    imageUrl === currentImage
+                                        ? 'border-2 border-info'
+                                        : 'border-2 border-neutral'
                                 }`}
                                 fill
+                                sizes="5vw"
                             />
                         </button>
                     );
                 })}
             </div>
             <div className=" aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-base-200 col-span-10">
-                <Image src={currentImage} alt="alt" className="object-cover object-center" fill />
+                <Image
+                    src={currentImage}
+                    alt="alt"
+                    className="object-cover"
+                    fill
+                    sizes="(max-width: 1500px) 50vw, 40vw"
+                    priority={true}
+                />
             </div>
         </div>
     );
