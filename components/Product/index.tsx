@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-import type { CartProduct, GetFilteredTypes } from '@lib/types';
-import type { Category, Product } from '@prisma/client';
+import type { CartProduct, GetFilteredTypes, ProductWithCategory } from '@lib/types';
 import { useState } from 'react';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
@@ -19,14 +18,8 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
     const [qty, setQty] = useState(1); // Initialize qty state with default value of 1
     const { addProduct } = useCart();
 
-    const { data: product } = useSwr<Product & { category: Category }>(
-        `/api/product/${productSlug}`,
-        fetcher
-    );
+    const { data: product } = useSwr<ProductWithCategory>(`/api/product/${productSlug}`, fetcher);
     const { products, categoryNode } = recommendedProducts;
-    // const {
-    //     data: { products, categoryNode }
-    // } = useSwr<GetFilteredTypes>(() => `/api/products/${categorySlug}/newest/1`, fetcher);
 
     function handleQtyChange(event) {
         setQty(parseInt(event.target.value)); // Update qty state with the selected value
