@@ -50,7 +50,7 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                     ]
                 }}
             />
-            <div className="mx-auto max-w-[1600px] min-h-screen px-2 lg:px-4">
+            <div className="mx-auto max-w-[1600px] min-h-screen lg:px-4">
                 <div className="hidden lg:block text-sm breadcrumbs">
                     <ul>
                         {categoryNode.parent && (
@@ -69,7 +69,7 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                     </ul>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 xl:gap-8 lg:rounded-lg lg:p-4 lg:bg-base-container">
-                    <div className="md:hidden text-sm breadcrumbs">
+                    <div className="md:hidden text-sm breadcrumbs px-2">
                         <ul>
                             {categoryNode.parent && (
                                 <li>
@@ -92,7 +92,7 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                     <div className="lg:hidden">
                         <MobileCarousel />
                     </div>
-                    <div className="grid grid-cols-1 gap-4 px-6">
+                    <div className="grid grid-cols-1 gap-4 px-6 lg:px-10">
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight leading-9">
                                 {product.name}
@@ -214,7 +214,6 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                         {/* <Tabs /> */}
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"></div>
                 <div className="divider"></div>
                 <RecomendedProductsList products={products} currentProduct={productSlug} />
             </div>

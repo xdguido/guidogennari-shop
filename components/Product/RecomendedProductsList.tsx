@@ -11,7 +11,7 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
     const filteredProducts = products.filter((product) => product.slug !== currentProduct);
     const lastProduct = products[6];
     return (
-        <section id="recommended" className="my-12">
+        <section id="recommended" className="px-2 my-12">
             <h3 className="mb-4 text-lg font-semibold">Recommended products</h3>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-y-4 gap-x-1 lg:gap-x-2">
                 {filteredProducts.slice(0, 5).map((product) => (

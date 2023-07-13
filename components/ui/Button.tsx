@@ -10,7 +10,11 @@ export default function Button(props: ButtonAndLinkProps) {
     if ('href' in props) {
         const { className, href, children, ...otherProps } = props as LinkButtonProps;
         return (
-            <Link className={`btn ${className}`} href={href} {...(otherProps as LinkProps)}>
+            <Link
+                className={`btn rounded-md ${className}`}
+                href={href}
+                {...(otherProps as LinkProps)}
+            >
                 {children}
             </Link>
         );
@@ -18,7 +22,7 @@ export default function Button(props: ButtonAndLinkProps) {
 
     const { className, children, ...otherProps } = props as ButtonProps;
     return (
-        <button className={`btn ${className}`} {...otherProps}>
+        <button className={`btn rounded-md ${className}`} {...otherProps}>
             {children}
         </button>
     );

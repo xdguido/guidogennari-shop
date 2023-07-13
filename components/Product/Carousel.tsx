@@ -20,6 +20,7 @@ export default function Carousel() {
                             key={imageUrl}
                             className={`overflow-hidden aspect-w-1 aspect-h-1`}
                             onMouseEnter={() => setCurrentImage(imageUrl)}
+                            onClick={() => setCurrentImage(imageUrl)}
                         >
                             <Image
                                 src={imageUrl}
@@ -36,13 +37,13 @@ export default function Carousel() {
                     );
                 })}
             </div>
-            <div className=" aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-base-200 col-span-10">
+            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-base-200 col-span-10">
                 <Image
                     src={currentImage}
                     alt="alt"
                     className="object-cover"
                     fill
-                    sizes="(max-width: 1500px) 50vw, 40vw"
+                    sizes="50vw"
                     priority={true}
                 />
             </div>
