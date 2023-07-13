@@ -10,7 +10,7 @@ export default function MobileMenu() {
     return (
         <>
             <Menu as="div" className="relative lg:hidden">
-                {({ open }) => (
+                {({ open, close }) => (
                     <>
                         <Menu.Button className="w-full flex items-center gap-2 px-4 py-2 text-left border-y border-y-neutral">
                             {open ? (
@@ -50,6 +50,7 @@ export default function MobileMenu() {
                                                     <li className="flex">
                                                         <Link
                                                             href={`/products/${section.slug}/newest`}
+                                                            onClick={close}
                                                         >
                                                             View all
                                                         </Link>
@@ -58,6 +59,7 @@ export default function MobileMenu() {
                                                         <li key={item.name} className="flex">
                                                             <Link
                                                                 href={`/products/${item.slug}/newest`}
+                                                                onClick={close}
                                                             >
                                                                 {item.name}
                                                             </Link>
