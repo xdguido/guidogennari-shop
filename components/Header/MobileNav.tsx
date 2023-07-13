@@ -66,7 +66,7 @@ export default function MobileMenu() {
                                             <ul className="space-y-3">
                                                 <li>
                                                     <Link
-                                                        href="/products"
+                                                        href="/products/all-products/newest"
                                                         className="flex gap-3 items-center font-semibold"
                                                     >
                                                         <BuildingStorefrontIcon
@@ -78,7 +78,7 @@ export default function MobileMenu() {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        href="/products"
+                                                        href="/products/all-products/newest"
                                                         className="flex gap-3 items-center font-semibold"
                                                     >
                                                         <GlobeAmericasIcon
@@ -90,7 +90,7 @@ export default function MobileMenu() {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        href="/products"
+                                                        href="/products/all-products/newest"
                                                         className="flex gap-3 items-center font-semibold"
                                                     >
                                                         <QuestionMarkCircleIcon
@@ -102,7 +102,7 @@ export default function MobileMenu() {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        href="/products"
+                                                        href="/products/all-products/newest"
                                                         className="flex gap-3 items-center font-semibold"
                                                     >
                                                         <FaInstagram
@@ -118,7 +118,7 @@ export default function MobileMenu() {
                                                 <span className="text-sm uppercase">Account</span>
                                                 <li>
                                                     <Link
-                                                        href="/products"
+                                                        href="/products/all-products/newest"
                                                         className="flex gap-3 items-center font-semibold"
                                                     >
                                                         <Squares2X2Icon
@@ -130,7 +130,7 @@ export default function MobileMenu() {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        href="/products"
+                                                        href="/products/all-products/newest"
                                                         className="flex gap-3 items-center font-semibold"
                                                     >
                                                         <BellIcon
@@ -142,7 +142,7 @@ export default function MobileMenu() {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        href="/products"
+                                                        href="/products/all-products/newest"
                                                         className="flex gap-3 items-center font-semibold"
                                                     >
                                                         <Cog6ToothIcon

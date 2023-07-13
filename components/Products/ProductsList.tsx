@@ -49,14 +49,14 @@ export default function ProductsList({ products }: Props) {
                             href={`/product/${product.slug}`}
                             className="group bg-base-100 rounded"
                         >
-                            <div className="relative aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 xl:aspect-w-7 xl:aspect-h-8 lg:rounded-b-none">
+                            <div className="relative aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200 lg:rounded-b-none">
                                 {product.thumbnail ? (
                                     <Image
                                         src={product.thumbnail}
                                         alt={`${product.name} image`}
                                         className="object-cover"
                                         fill
-                                        sizes="(max-width: 1200px) 50vw, (max-width: 1300px) 25vw, 20vw"
+                                        sizes="(max-width: 1200px) 40vw, 25vw"
                                         priority={index < 6 ? true : false}
                                     />
                                 ) : (
