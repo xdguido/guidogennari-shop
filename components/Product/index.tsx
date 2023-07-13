@@ -50,7 +50,7 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                     ]
                 }}
             />
-            <div className="mx-auto max-w-7xl min-h-screen px-2 lg:px-4">
+            <div className="mx-auto max-w-[1600px] min-h-screen px-2 lg:px-4">
                 <div className="hidden lg:block text-sm breadcrumbs">
                     <ul>
                         {categoryNode.parent && (

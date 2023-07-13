@@ -25,7 +25,7 @@ type Props = {
 export default function ProductsLayout({ children, sort, categoryNode, totalProducts }: Props) {
     return (
         <div>
-            <div className="mx-auto max-w-7xl lg:p-2">
+            <div className="mx-auto max-w-[1600px] lg:p-2">
                 <div className="flex justify-between items-end p-2">
                     <h1 className="text-4xl font-bold tracking-tight lg:p-2">
                         {categoryNode.name}

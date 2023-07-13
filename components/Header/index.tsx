@@ -35,7 +35,7 @@ export default function Header() {
                     top ? '' : 'lg:shadow-md'
                 )}
             >
-                <nav aria-label="Top" className="mx-auto max-w-7xl">
+                <nav aria-label="Top" className="mx-auto max-w-[1600px]">
                     <div className="flex items-center h-16 px-2 lg:px-4">
                         {/* Logo */}
                         <div className="ml-2 flex lg:ml-0">
