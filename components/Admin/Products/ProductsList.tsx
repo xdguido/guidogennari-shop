@@ -57,7 +57,7 @@ export default function ProductsList() {
             </div>
             <PaginationButtons
                 basePath="/admin/products"
-                category={category as string}
+                categorySlug={category as string}
                 currentPageIndex={currentPageIndex}
                 maxPageIndex={maxPageIndex}
             />

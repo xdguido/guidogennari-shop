@@ -3,7 +3,7 @@ import clsx from 'clsx';
 type Props = {
     currentPageIndex: number;
     sort?: string;
-    category: string;
+    categorySlug: string;
     maxPageIndex: number;
     basePath: string;
 };
@@ -11,14 +11,14 @@ export default function PaginationButtons({
     currentPageIndex,
     maxPageIndex,
     sort = 'newest',
-    category,
+    categorySlug,
     basePath
 }: Props) {
     return (
         <div className={'px-4 py-3 sm:px-6'}>
             <nav className="flex items-center justify-center " aria-label="Pagination">
                 <Button
-                    href={`${basePath}/${category}/${sort}/${currentPageIndex - 1}`}
+                    href={`${basePath}/${categorySlug}/${sort}/${currentPageIndex - 1}`}
                     className={clsx(
                         'btn-outline btn-sm no-animation normal-case',
                         currentPageIndex === 1 ? 'btn-disabled' : ''
@@ -35,7 +35,7 @@ export default function PaginationButtons({
                     </span>
                 </div>
                 <Button
-                    href={`${basePath}/${category}/${sort}/${currentPageIndex + 1}`}
+                    href={`${basePath}/${categorySlug}/${sort}/${currentPageIndex + 1}`}
                     className={clsx(
                         'btn-outline btn-sm no-animation normal-case',
                         currentPageIndex === maxPageIndex ? 'btn-disabled' : ''

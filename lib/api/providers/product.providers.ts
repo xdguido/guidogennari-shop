@@ -1,7 +1,7 @@
 import type { Category, Product } from '@prisma/client';
 import { prisma } from '@lib/db';
 import slugify from '@lib/slugify';
-import { CategoryNode, SortOption } from '@lib/types';
+import { CategoryNode, ProductWithCategory, SortOption } from '@lib/types';
 
 const getFiltered = async (
     skipNumber: number,
@@ -45,7 +45,7 @@ Retrieves a single product based on its slug.
 @param {string} productSlug - The slug of the product.
 @returns {Promise<Product & { category: Category }>} - A promise that resolves to the product with its associated category.
 */
-const getOne = async (productSlug: string): Promise<Product & { category: Category }> => {
+const getOne = async (productSlug: string): Promise<ProductWithCategory> => {
     try {
         const product: Product & { category: Category } = await prisma.product.findUnique({
             where: { slug: productSlug },

@@ -2,8 +2,8 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext } from 'react';
 import { CategoryContextType } from '@lib/types';
-import useSwr from 'swr';
-import fetcher from '@lib/fetcher';
+// import useSwr from 'swr';
+// import fetcher from '@lib/fetcher';
 import type { CategoryNode } from '@lib/types';
 
 const defaultCategory: CategoryContextType = {
@@ -15,16 +15,16 @@ export const CategoryContext = createContext(defaultCategory);
 export const useCategory = () => useContext(CategoryContext);
 
 type Props = {
+    data: CategoryNode[];
     children: React.ReactNode;
 };
-
-export default function CategoryProvider({ children }: Props) {
-    const { data: categories } = useSwr<CategoryNode[]>('/api/category', fetcher);
+export default function CategoryProvider({ data, children }: Props) {
+    // const { data: categories } = useSwr<CategoryNode[]>('/api/category', fetcher);
 
     return (
         <CategoryContext.Provider
             value={{
-                categories
+                categories: data
             }}
         >
             {children}
