@@ -55,13 +55,15 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                     <ul>
                         {categoryNode.parent && (
                             <li>
-                                <Link href={`/products/${categoryNode.parent.slug}`}>
+                                <Link href={`/products/${categoryNode.parent.slug}/newest`}>
                                     {categoryNode.parent.name}
                                 </Link>
                             </li>
                         )}
                         <li>
-                            <Link href={`/products/${categoryNode.slug}`}>{categoryNode.name}</Link>
+                            <Link href={`/products/${categoryNode.slug}/newest`}>
+                                {categoryNode.name}
+                            </Link>
                         </li>
                         <li>{product.name}</li>
                     </ul>
@@ -71,13 +73,13 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                         <ul>
                             {categoryNode.parent && (
                                 <li>
-                                    <Link href={`/products/${categoryNode.parent.slug}`}>
+                                    <Link href={`/products/${categoryNode.parent.slug}/newest`}>
                                         {categoryNode.parent.name}
                                     </Link>
                                 </li>
                             )}
                             <li>
-                                <Link href={`/products/${categoryNode.slug}`}>
+                                <Link href={`/products/${categoryNode.slug}/newest`}>
                                     {categoryNode.name}
                                 </Link>
                             </li>
@@ -95,23 +97,6 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                             <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight leading-9">
                                 {product.name}
                             </h1>
-                            {/* <div className="hidden lg:block text-sm breadcrumbs">
-                                <ul>
-                                    {categoryNode.parent && (
-                                        <li>
-                                            <Link href={`/products/${categoryNode.parent.slug}`}>
-                                                {categoryNode.parent.name}
-                                            </Link>
-                                        </li>
-                                    )}
-                                    <li>
-                                        <Link href={`/products/${categoryNode.slug}`}>
-                                            {categoryNode.name}
-                                        </Link>
-                                    </li>
-                                    <li>{product.name}</li>
-                                </ul>
-                            </div> */}
                         </div>
                         <div>
                             <div className="flex items-center gap-2">

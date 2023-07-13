@@ -33,7 +33,7 @@ export default function Footer() {
 
                     <li className="flex items-center ">
                         <Button
-                            href={`/products/all-products`}
+                            href={`/products/all-products/newest`}
                             className="btn-link btn-sm normal-case no-underline text-base-content font-normal"
                         >
                             View all
@@ -42,7 +42,7 @@ export default function Footer() {
                     {categories.map((product) => (
                         <li key={product.name} className="flex items-center ">
                             <Button
-                                href={`/products/${product.slug}`}
+                                href={`/products/${product.slug}/newest`}
                                 className="btn-link btn-sm normal-case no-underline  text-base-content font-normal"
                             >
                                 {product.name}

@@ -64,7 +64,7 @@ export default function FlyoutMenu() {
                                                         >
                                                             <li className="flex">
                                                                 <Link
-                                                                    href={`/products/${section.slug}`}
+                                                                    href={`/products/${section.slug}/newest`}
                                                                     className=""
                                                                 >
                                                                     View all
@@ -76,7 +76,7 @@ export default function FlyoutMenu() {
                                                                     className="flex"
                                                                 >
                                                                     <Link
-                                                                        href={`/products/${item.slug}`}
+                                                                        href={`/products/${item.slug}/newest`}
                                                                         className=""
                                                                     >
                                                                         {item.name}

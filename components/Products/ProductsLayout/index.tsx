@@ -1,12 +1,7 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
 import { Menu, Transition, Disclosure } from '@headlessui/react';
-import {
-    ArrowLongLeftIcon,
-    ArrowsUpDownIcon,
-    MinusIcon,
-    PlusIcon
-} from '@heroicons/react/20/solid';
+import { ArrowsUpDownIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 
 import { SortOption } from '@lib/types';
@@ -98,7 +93,7 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                                         {categoryNode.parent && (
                                             <li>
                                                 <Link
-                                                    href={`/products/${categoryNode.parent.slug}`}
+                                                    href={`/products/${categoryNode.parent.slug}/newest`}
                                                 >
                                                     {categoryNode.parent.name}
                                                 </Link>

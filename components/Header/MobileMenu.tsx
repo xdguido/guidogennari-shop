@@ -48,13 +48,17 @@ export default function MobileMenu() {
                                                     className="mt-6 space-y-4"
                                                 >
                                                     <li className="flex">
-                                                        <Link href={`/products/${section.slug}`}>
+                                                        <Link
+                                                            href={`/products/${section.slug}/newest`}
+                                                        >
                                                             View all
                                                         </Link>
                                                     </li>
                                                     {section.children.map((item) => (
                                                         <li key={item.name} className="flex">
-                                                            <Link href={`/products/${item.slug}`}>
+                                                            <Link
+                                                                href={`/products/${item.slug}/newest`}
+                                                            >
                                                                 {item.name}
                                                             </Link>
                                                         </li>
