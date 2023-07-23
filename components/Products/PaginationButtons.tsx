@@ -20,13 +20,13 @@ export default function PaginationButtons({
                 <Button
                     href={`${basePath}/${categorySlug}/${sort}/${currentPageIndex - 1}`}
                     className={clsx(
-                        'btn-outline btn-sm no-animation normal-case',
+                        'btn-outline no-animation btn-sm normal-case',
                         currentPageIndex === 1 ? 'btn-disabled' : ''
                     )}
                 >
                     Previous
                 </Button>
-                <div className="flex items-center px-4 gap-2 text-sm">
+                <div className="flex items-center gap-2 px-4 text-sm">
                     <span aria-current="page" className="font-semibold">
                         {currentPageIndex}
                     </span>
@@ -37,7 +37,7 @@ export default function PaginationButtons({
                 <Button
                     href={`${basePath}/${categorySlug}/${sort}/${currentPageIndex + 1}`}
                     className={clsx(
-                        'btn-outline btn-sm no-animation normal-case',
+                        'btn-outline no-animation btn-sm normal-case',
                         currentPageIndex === maxPageIndex ? 'btn-disabled' : ''
                     )}
                 >

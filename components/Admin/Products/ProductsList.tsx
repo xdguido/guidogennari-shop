@@ -24,7 +24,7 @@ export default function ProductsList() {
 
     if (products?.length == 0) {
         return (
-            <div className="bg-base-100 mx-auto max-w-2xl p-4 sm:p-6 lg:max-w-7xl lg:p-8">
+            <div className="mx-auto max-w-2xl bg-base-100 p-4 sm:p-6 lg:max-w-7xl lg:p-8">
                 No products to display
             </div>
         );
@@ -32,24 +32,24 @@ export default function ProductsList() {
 
     return (
         <>
-            <div className="grid grid-cols-12 gap-2 group p-3 font-bold text-accent text-sm">
+            <div className="group grid grid-cols-12 gap-2 p-3 text-sm font-bold text-accent">
                 <p className="col-span-6 sm:col-span-9">Name</p>
                 <p className="col-span-2 sm:col-span-1">Stock</p>
                 <p className="col-span-3 sm:col-span-2 ">Price</p>
             </div>
-            <div className="grid grid-cols-1 gap-2 auto-rows-min max-h-screen overflow-auto rounded-lg font-semibold text-sm">
+            <div className="grid max-h-screen auto-rows-min grid-cols-1 gap-2 overflow-auto rounded-lg text-sm font-semibold">
                 {products.map((product: Product) => (
                     <div
                         key={product.id}
-                        className="grid grid-cols-12 gap-1 sm:gap-2 items-center group p-3 rounded-lg border border-neutral"
+                        className="group grid grid-cols-12 items-center gap-1 rounded-lg border border-neutral p-3 sm:gap-2"
                     >
                         <EditProduct
                             product={product}
                             label={product.name}
-                            className="text-left col-span-6 sm:col-span-9 leading-none"
+                            className="col-span-6 text-left leading-none sm:col-span-9"
                         />
                         <span className=" col-span-2 sm:col-span-1">{product.stock}</span>
-                        <p className="col-span-3 sm:col-span-2  overflow-hidden truncate">
+                        <p className="col-span-3 overflow-hidden  truncate sm:col-span-2">
                             $ {product.price.toLocaleString('es')}
                         </p>
                     </div>

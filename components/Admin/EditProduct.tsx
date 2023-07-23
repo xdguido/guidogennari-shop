@@ -73,7 +73,7 @@ export default function EditProduct({ product, label, className }: Props) {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-xl transform overflow-y-auto bg-base-100 rounded-xl p-6 text-left align-middle shadow-xl transition-all">
+                                <Dialog.Panel className="w-full max-w-xl transform overflow-y-auto rounded-xl bg-base-100 p-6 text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="div"
                                         className="mb-5 flex items-center justify-between text-lg font-semibold leading-6 "
@@ -83,7 +83,7 @@ export default function EditProduct({ product, label, className }: Props) {
                                             onClick={handleOpenWarn}
                                             className="btn-ghost btn-square"
                                         >
-                                            <XMarkIcon className="w-5 h-5" />
+                                            <XMarkIcon className="h-5 w-5" />
                                         </Button>
                                     </Dialog.Title>
 
@@ -123,7 +123,7 @@ export default function EditProduct({ product, label, className }: Props) {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-md transform overflow-y-auto bg-base-100 rounded-xl p-6 text-left align-middle shadow-xl transition-all">
+                                <Dialog.Panel className="w-full max-w-md transform overflow-y-auto rounded-xl bg-base-100 p-6 text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="div"
                                         className="mb-8 flex items-center justify-between text-lg font-semibold leading-6 "

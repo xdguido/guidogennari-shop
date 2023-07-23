@@ -142,7 +142,7 @@ export default function CategoryCombobox({ defaultValue, setValue, error, regist
                                                         </span>
                                                         {selected ? (
                                                             <span
-                                                                className={`text-accent absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                                                className={`absolute inset-y-0 left-0 flex items-center pl-3 text-accent ${
                                                                     selected ? 'block' : 'hidden'
                                                                 }`}
                                                             >

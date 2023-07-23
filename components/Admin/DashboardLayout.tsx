@@ -14,20 +14,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     ];
     return (
         <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-            <h1 className="text-4xl font-bold tracking-tight mb-4">Dashboard</h1>
+            <h1 className="mb-4 text-4xl font-bold tracking-tight">Dashboard</h1>
             <section className="pt-6 pb-24">
                 <div className="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-6">
                     <div className="hidden lg:block">
-                        <h3 className="text-base-content font-semibold mb-2 px-3">Options</h3>
-                        <ul role="list" className="pb-6  space-y-2 text-sm font-medium ">
+                        <h3 className="mb-2 px-3 font-semibold text-base-content">Options</h3>
+                        <ul role="list" className="space-y-2  pb-6 text-sm font-medium ">
                             {dashboardNav.map((link) => (
                                 <li key={link.label}>
                                     <Button
                                         href={link.href}
                                         className={clsx(
-                                            'btn-ghost btn-sm no-animation normal-case btn-block justify-start hover:text-base-content',
+                                            'btn-ghost no-animation btn-block btn-sm justify-start normal-case hover:text-base-content',
                                             router.asPath.includes(link.href)
-                                                ? 'pointer-events-none text-primary-content  bg-primary-focus'
+                                                ? 'pointer-events-none bg-primary-focus  text-primary-content'
                                                 : 'text-neutral'
                                         )}
                                     >

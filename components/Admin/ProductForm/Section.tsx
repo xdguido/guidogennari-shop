@@ -22,7 +22,7 @@ export default function FormSection({ title, children, ...props }: Props) {
                         {title}
                         <ChevronRightIcon
                             className={clsx(
-                                'text-neutral h-5 w-5',
+                                'h-5 w-5 text-neutral',
                                 open && 'rotate-90 transform duration-100'
                             )}
                         />

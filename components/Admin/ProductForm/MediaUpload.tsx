@@ -57,7 +57,7 @@ export default function MediaUpload({ defaultValues = [], setValue }: Props) {
                 <div className="mb-2 grid max-w-full grid-cols-2 gap-4 overflow-hidden">
                     {imageSrc.map((i, idx) => (
                         <div className="relative" key={idx}>
-                            <div className="aspect-w-1 aspect-h-1 rounded overflow-hidden">
+                            <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded">
                                 <Image
                                     className="object-cover object-center"
                                     src={i}
@@ -68,7 +68,7 @@ export default function MediaUpload({ defaultValues = [], setValue }: Props) {
                             <Button
                                 type="button"
                                 onClick={() => handleOnRemoveCloud(i)}
-                                className="absolute bottom-0 right-0 btn-accent btn-circle btn-sm"
+                                className="btn-accent btn-sm btn-circle absolute bottom-0 right-0"
                             >
                                 <TrashIcon aria-hidden={true} className="h-5 w-5" />
                             </Button>
@@ -76,7 +76,7 @@ export default function MediaUpload({ defaultValues = [], setValue }: Props) {
                     ))}
                     {imageFiles.map((i, idx) => (
                         <div className="relative" key={idx}>
-                            <div className="aspect-w-1 aspect-h-1 rounded overflow-hidden">
+                            <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded">
                                 <Image
                                     className="object-cover object-center"
                                     src={URL.createObjectURL(i)}
@@ -87,7 +87,7 @@ export default function MediaUpload({ defaultValues = [], setValue }: Props) {
                             <Button
                                 type="button"
                                 onClick={() => handleOnRemoveLocal(i)}
-                                className="absolute bottom-0 right-0 btn-accent btn-circle btn-sm"
+                                className="btn-accent btn-sm btn-circle absolute bottom-0 right-0"
                             >
                                 <TrashIcon aria-hidden={true} className="h-5 w-5" />
                             </Button>

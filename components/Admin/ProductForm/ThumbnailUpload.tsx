@@ -63,7 +63,7 @@ export default function ThumbnailUpload({ defaultValue, setValue }: Props) {
                 <div className="mb-2 grid max-w-full grid-cols-2 gap-4 overflow-hidden">
                     {imageSrc ? (
                         <div className="relative">
-                            <div className="aspect-w-1 aspect-h-1 rounded overflow-hidden">
+                            <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded">
                                 <Image
                                     className="object-cover object-center"
                                     src={imageSrc}
@@ -74,7 +74,7 @@ export default function ThumbnailUpload({ defaultValue, setValue }: Props) {
                             <Button
                                 type="button"
                                 onClick={() => handleOnRemoveCloud()}
-                                className="absolute bottom-0 right-0 btn-accent btn-circle btn-sm"
+                                className="btn-accent btn-sm btn-circle absolute bottom-0 right-0"
                             >
                                 <TrashIcon aria-hidden={true} className="h-5 w-5" />
                             </Button>
@@ -83,7 +83,7 @@ export default function ThumbnailUpload({ defaultValue, setValue }: Props) {
 
                     {imageFile ? (
                         <div className="relative">
-                            <div className="aspect-w-1 aspect-h-1 rounded overflow-hidden">
+                            <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded">
                                 <Image
                                     className="object-cover object-center"
                                     src={URL.createObjectURL(imageFile)}
@@ -94,7 +94,7 @@ export default function ThumbnailUpload({ defaultValue, setValue }: Props) {
                             <Button
                                 type="button"
                                 onClick={() => handleOnRemoveLocal()}
-                                className="absolute bottom-0 right-0 btn-accent btn-circle btn-sm"
+                                className="btn-accent btn-sm btn-circle absolute bottom-0 right-0"
                             >
                                 <TrashIcon aria-hidden={true} className="h-5 w-5" />
                             </Button>
