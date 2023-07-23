@@ -103,22 +103,41 @@ export default function ProductsLayout({
                         {/* Filters */}
 
                         <div className="sticky top-[5rem] hidden self-start rounded-md border border-neutral bg-base-contrast px-6 py-4 lg:col-span-2 lg:block xl:col-span-1">
-                            {categoryNode.parent ? (
-                                <div className="breadcrumbs mb-4 hidden max-w-[10rem] text-sm sm:max-w-none lg:block ">
-                                    <ul>
-                                        {categoryNode.parent && (
-                                            <li>
-                                                <Link
-                                                    href={`/products/${categoryNode.parent.slug}/newest`}
-                                                >
-                                                    {categoryNode.parent.name}
-                                                </Link>
-                                            </li>
-                                        )}
+                            <div className="breadcrumbs mb-4 hidden max-w-[10rem] text-sm sm:max-w-none lg:block ">
+                                <ul>
+                                    <li>
+                                        <Link
+                                            href={`/products/all-products/newest`}
+                                            className={`${
+                                                !categoryNode.parent
+                                                    ? 'pointer-events-none text-neutral'
+                                                    : 'text-base-content'
+                                            }`}
+                                        >
+                                            Home
+                                        </Link>
+                                    </li>
+                                    {categoryNode.parent && (
+                                        <li>
+                                            <Link
+                                                href={`/products/${category.slug}/newest`}
+                                                className={`${
+                                                    router.asPath.startsWith(
+                                                        `/products/${category.slug}`
+                                                    )
+                                                        ? 'pointer-events-none text-neutral'
+                                                        : 'text-base-content'
+                                                }`}
+                                            >
+                                                {category.name}
+                                            </Link>
+                                        </li>
+                                    )}
+                                    {categoryNode.children.length === 0 && (
                                         <li className="text-neutral">{categoryNode.name}</li>
-                                    </ul>
-                                </div>
-                            ) : null}
+                                    )}
+                                </ul>
+                            </div>
 
                             <h3 className="mb-2 flex items-center justify-between font-semibold text-base-content ">
                                 Categories{' '}
@@ -136,7 +155,7 @@ export default function ProductsLayout({
                                                 router.asPath.startsWith(
                                                     `/products/${category.slug}`
                                                 )
-                                                    ? 'pointer-events-none bg-info-content text-info'
+                                                    ? 'pointer-events-none bg-neutral bg-opacity-20 text-info'
                                                     : 'text-base-content hover:text-primary-content'
                                             }`}
                                         >
@@ -151,7 +170,10 @@ export default function ProductsLayout({
                                 <Disclosure as="div" key={section.id} className="mb-1">
                                     {({ open }) => (
                                         <>
-                                            <Disclosure.Button className="btn-ghost no-animation btn-block btn-sm btn items-center justify-between text-sm font-normal normal-case text-neutral hover:text-base-content">
+                                            <Disclosure.Button
+                                                as={Button}
+                                                className="no-animation btn-block btn-sm flex justify-between border-none bg-inherit text-left font-normal normal-case text-base-content hover:text-primary-content"
+                                            >
                                                 <span>{section.name}</span>
                                                 <span className="ml-6 flex items-center">
                                                     {open ? (

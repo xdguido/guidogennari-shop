@@ -12,32 +12,8 @@ export default function Carousel() {
     const [currentImage, setCurrentImage] = useState(images[0]);
 
     return (
-        <div className="sticky top-[6rem] grid grid-cols-12 gap-2 self-start">
-            <div className="col-span-2 flex w-full flex-col gap-2">
-                {images.map((imageUrl) => {
-                    return (
-                        <button
-                            key={imageUrl}
-                            className={`aspect-w-1 aspect-h-1 overflow-hidden`}
-                            onMouseEnter={() => setCurrentImage(imageUrl)}
-                            onClick={() => setCurrentImage(imageUrl)}
-                        >
-                            <Image
-                                src={imageUrl}
-                                alt="alt"
-                                className={`rounded-md ${
-                                    imageUrl === currentImage
-                                        ? 'border-2 border-info'
-                                        : 'border-2 border-neutral'
-                                }`}
-                                fill
-                                sizes="5vw"
-                            />
-                        </button>
-                    );
-                })}
-            </div>
-            <div className="aspect-w-1 aspect-h-1 col-span-10 w-full overflow-hidden rounded-md bg-base-200">
+        <div className="sticky top-[6rem] grid grid-cols-12 gap-2 self-start xl:gap-4">
+            <div className="aspect-w-1 aspect-h-1 col-span-10 w-full overflow-hidden rounded-md bg-base-200 xl:col-span-9">
                 <Image
                     src={currentImage}
                     alt="alt"
@@ -46,6 +22,31 @@ export default function Carousel() {
                     sizes="50vw"
                     priority={true}
                 />
+            </div>
+            <div className="col-span-2 flex w-full flex-col gap-2 xl:col-span-3 xl:gap-4">
+                {images.map((imageUrl) => {
+                    return (
+                        <button
+                            key={imageUrl}
+                            className={`aspect-w-1 aspect-h-1 overflow-hidden rounded-md border-2 border-base-contrast ring ${
+                                imageUrl === currentImage ? 'ring-info' : 'ring-neutral'
+                            }`}
+                            // className={`aspect-w-1 aspect-h-1 overflow-hidden`}
+                            onMouseEnter={() => setCurrentImage(imageUrl)}
+                            onClick={() => setCurrentImage(imageUrl)}
+                        >
+                            <Image
+                                src={imageUrl}
+                                alt="alt"
+                                // className={`rounded-md border-2 border-base-contrast ring ring-offset-1 ${
+                                //     imageUrl === currentImage ? 'ring-info' : 'ring-neutral'
+                                // }`}
+                                fill
+                                sizes="5vw"
+                            />
+                        </button>
+                    );
+                })}
             </div>
         </div>
     );
