@@ -46,9 +46,9 @@ function SortMenu({ sort, categoryNode }: { sort: SortOption; categoryNode: Cate
                                         href={`/products/${categoryNode.slug}/${SortOption[sortKey]}`}
                                         className={clsx(
                                             SortOption[sortKey] === sort
-                                                ? 'font-bold'
+                                                ? 'font-bold text-info'
                                                 : 'text-base-content',
-                                            active ? 'bg-base-300' : '',
+                                            active ? 'bg-base-300 text-info' : '',
                                             'block px-4 py-2 text-left text-sm'
                                         )}
                                     >
@@ -99,7 +99,7 @@ export default function ProductsLayout({
                         Products
                     </h2>
 
-                    <div className="grid grid-cols-1 gap-x-2 gap-y-10 p-2 lg:grid-cols-7 xl:grid-cols-4 xl:gap-4">
+                    <div className="grid grid-cols-1 gap-x-2 gap-y-10 p-2 lg:grid-cols-7 xl:grid-cols-4 xl:gap-6">
                         {/* Filters */}
 
                         <div className="sticky top-[5rem] hidden self-start rounded-md border border-neutral bg-base-contrast px-6 py-4 lg:col-span-2 lg:block xl:col-span-1">
