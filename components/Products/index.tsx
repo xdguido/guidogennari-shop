@@ -1,17 +1,23 @@
 /* eslint-disable react/prop-types */
-import type { GetFilteredTypes, SortOption } from '@lib/types';
+import type { CategoryNode, GetFilteredTypes, SortOption } from '@lib/types';
 import { NextSeo } from 'next-seo';
 import ProductsLayout from './ProductsLayout';
 import ProductsList from './ProductsList';
 import PaginationButtons from './PaginationButtons';
 
-type Props = {
+export default function Products({
+    data,
+    page,
+    sort,
+    categorySlug,
+    parentCategory
+}: {
     data: GetFilteredTypes;
     page: number;
     sort: SortOption;
     categorySlug: string;
-};
-export default function Products({ data, page, sort, categorySlug }: Props) {
+    parentCategory: CategoryNode | null;
+}) {
     const { products, categoryNode, count } = data;
     const size = 12;
     const maxPageIndex = count ? Math.ceil(count / size) : page;
@@ -22,7 +28,12 @@ export default function Products({ data, page, sort, categorySlug }: Props) {
                 title={`${categoryNode.name} | E-commerce`}
                 description={`Browse ${categoryNode.name} products`}
             />
-            <ProductsLayout sort={sort} categoryNode={categoryNode} totalProducts={count}>
+            <ProductsLayout
+                sort={sort}
+                categoryNode={categoryNode}
+                parentCategory={parentCategory}
+                totalProducts={count}
+            >
                 <ProductsList products={products} />
                 <PaginationButtons
                     basePath="/products"

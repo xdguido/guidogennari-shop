@@ -24,19 +24,19 @@ export default function Header() {
         <>
             <p
                 className={clsx(
-                    'flex h-10 z-50 text-center items-center justify-center bg-primary text-sm text-primary-content font-medium px-2 lg:px-8'
+                    'z-50 flex h-10 items-center justify-center bg-primary px-2 text-center text-sm font-medium text-primary-content lg:px-8'
                 )}
             >
                 Site under construction. There may be broken links or fake content.
             </p>
             <header
                 className={clsx(
-                    'sticky top-0 w-full z-50 bg-base-100',
-                    top ? '' : 'lg:border-b lg:border-b-base-container'
+                    'sticky top-0 z-50 w-full bg-base-100'
+                    // top ? '' : 'lg:border-b lg:border-b-neutral'
                 )}
             >
                 <nav aria-label="Top" className="mx-auto max-w-[1600px]">
-                    <div className="flex items-center h-16 px-2 lg:px-4">
+                    <div className="flex h-16 items-center px-2 lg:px-4">
                         {/* Logo */}
                         <div className="ml-2 flex lg:ml-0">
                             <Logo />
@@ -68,7 +68,7 @@ export default function Header() {
                                 )}
                             </div>
 
-                            <div className="hidden ml-4 lg:flex">
+                            <div className="ml-4 hidden lg:flex">
                                 <ThemeToggler />
                             </div>
 

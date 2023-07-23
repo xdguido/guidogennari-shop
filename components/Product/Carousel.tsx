@@ -12,13 +12,13 @@ export default function Carousel() {
     const [currentImage, setCurrentImage] = useState(images[0]);
 
     return (
-        <div className="sticky top-[6rem] self-start grid grid-cols-12 gap-2">
-            <div className="flex flex-col gap-2 w-full col-span-2">
+        <div className="sticky top-[6rem] grid grid-cols-12 gap-2 self-start">
+            <div className="col-span-2 flex w-full flex-col gap-2">
                 {images.map((imageUrl) => {
                     return (
                         <button
                             key={imageUrl}
-                            className={`overflow-hidden aspect-w-1 aspect-h-1`}
+                            className={`aspect-w-1 aspect-h-1 overflow-hidden`}
                             onMouseEnter={() => setCurrentImage(imageUrl)}
                             onClick={() => setCurrentImage(imageUrl)}
                         >
@@ -37,7 +37,7 @@ export default function Carousel() {
                     );
                 })}
             </div>
-            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-base-200 col-span-10">
+            <div className="aspect-w-1 aspect-h-1 col-span-10 w-full overflow-hidden rounded-md bg-base-200">
                 <Image
                     src={currentImage}
                     alt="alt"

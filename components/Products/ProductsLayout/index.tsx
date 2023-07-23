@@ -8,6 +8,7 @@ import { SortOption } from '@lib/types';
 import type { CategoryNode } from '@lib/types';
 import Button from '@ui/Button';
 import { filters } from './filters';
+import { useRouter } from 'next/router';
 
 const sortLabels = {
     [SortOption.CreatedAtDesc]: 'Newest',
@@ -15,65 +16,80 @@ const sortLabels = {
     [SortOption.PriceDesc]: 'Highest price'
 };
 
-type Props = {
+function SortMenu({ sort, categoryNode }: { sort: SortOption; categoryNode: CategoryNode }) {
+    return (
+        <Menu as="div" className="relative text-left">
+            <Menu.Button
+                as={Button}
+                className="btn-outline no-animation btn-sm flex-nowrap gap-2 whitespace-nowrap font-normal normal-case"
+            >
+                <ArrowsUpDownIcon className=" h-4 w-4" aria-hidden="true" />
+                <span className="sr-only">Sort by</span>
+                {sortLabels[sort]}
+            </Menu.Button>
+
+            <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+            >
+                <Menu.Items className="absolute right-0 z-20 mt-2 w-40 origin-top-right rounded-md border border-neutral bg-base-contrast">
+                    <div className="flex flex-col py-1">
+                        {Object.keys(SortOption).map((sortKey: string) => (
+                            <Menu.Item key={sortKey}>
+                                {({ active }) => (
+                                    <Link
+                                        href={`/products/${categoryNode.slug}/${SortOption[sortKey]}`}
+                                        className={clsx(
+                                            SortOption[sortKey] === sort
+                                                ? 'font-bold'
+                                                : 'text-base-content',
+                                            active ? 'bg-base-300' : '',
+                                            'block px-4 py-2 text-left text-sm'
+                                        )}
+                                    >
+                                        {sortLabels[SortOption[sortKey]]}
+                                    </Link>
+                                )}
+                            </Menu.Item>
+                        ))}
+                    </div>
+                </Menu.Items>
+            </Transition>
+        </Menu>
+    );
+}
+
+export default function ProductsLayout({
+    children,
+    sort,
+    categoryNode,
+    parentCategory,
+    totalProducts
+}: {
     children: React.ReactNode;
     sort: SortOption;
     categoryNode: CategoryNode;
+    parentCategory: CategoryNode | null;
     totalProducts: number;
-};
+}) {
+    const router = useRouter();
 
-export default function ProductsLayout({ children, sort, categoryNode, totalProducts }: Props) {
+    let category: CategoryNode;
+    parentCategory ? (category = parentCategory) : (category = categoryNode);
     return (
         <div>
             <div className="mx-auto max-w-[1600px] lg:p-2">
-                <div className="flex justify-between items-end p-2">
+                <div className="flex items-end justify-between p-2">
                     <h1 className="text-4xl font-bold tracking-tight lg:p-2">
                         {categoryNode.name}
                     </h1>
                     <div className="flex gap-2 sm:gap-3">
-                        <Menu as="div" className="relative text-left">
-                            <Menu.Button
-                                as={Button}
-                                className="btn-outline no-animation normal-case btn-sm gap-2 font-normal flex-nowrap whitespace-nowrap"
-                            >
-                                <ArrowsUpDownIcon className=" h-4 w-4" aria-hidden="true" />
-                                <span className="sr-only">Sort by</span>
-                                {sortLabels[sort]}
-                            </Menu.Button>
-
-                            <Transition
-                                as={Fragment}
-                                enter="transition ease-out duration-100"
-                                enterFrom="transform opacity-0 scale-95"
-                                enterTo="transform opacity-100 scale-100"
-                                leave="transition ease-in duration-75"
-                                leaveFrom="transform opacity-100 scale-100"
-                                leaveTo="transform opacity-0 scale-95"
-                            >
-                                <Menu.Items className="absolute right-0 z-20 mt-2 w-40 origin-top-right rounded-md bg-base-100 shadow-2xl">
-                                    <div className="flex flex-col py-1">
-                                        {Object.keys(SortOption).map((sortKey: string) => (
-                                            <Menu.Item key={sortKey}>
-                                                {({ active }) => (
-                                                    <Link
-                                                        href={`/products/${categoryNode.slug}/${SortOption[sortKey]}`}
-                                                        className={clsx(
-                                                            SortOption[sortKey] === sort
-                                                                ? 'font-bold'
-                                                                : 'text-base-content',
-                                                            active ? 'bg-base-300' : '',
-                                                            'block px-4 py-2 text-sm text-left'
-                                                        )}
-                                                    >
-                                                        {sortLabels[SortOption[sortKey]]}
-                                                    </Link>
-                                                )}
-                                            </Menu.Item>
-                                        ))}
-                                    </div>
-                                </Menu.Items>
-                            </Transition>
-                        </Menu>
+                        <SortMenu sort={sort} categoryNode={categoryNode} />
                         {/* <MobileMenu sort={sort} categoryNode={categoryNode} /> */}
                     </div>
                 </div>
@@ -83,12 +99,12 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                         Products
                     </h2>
 
-                    <div className="grid grid-cols-1 gap-x-2 gap-y-10 lg:grid-cols-4 rounded-lg lg:bg-base-container p-2">
+                    <div className="grid grid-cols-1 gap-x-2 gap-y-10 p-2 lg:grid-cols-7 xl:grid-cols-4 xl:gap-4">
                         {/* Filters */}
 
-                        <div className="hidden lg:block sticky top-[5rem] self-start px-3">
+                        <div className="sticky top-[5rem] hidden self-start rounded-md border border-neutral bg-base-contrast px-6 py-4 lg:col-span-2 lg:block xl:col-span-1">
                             {categoryNode.parent ? (
-                                <div className="hidden lg:block max-w-[10rem] sm:max-w-none text-sm breadcrumbs ">
+                                <div className="breadcrumbs mb-4 hidden max-w-[10rem] text-sm sm:max-w-none lg:block ">
                                     <ul>
                                         {categoryNode.parent && (
                                             <li>
@@ -99,44 +115,43 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                                                 </Link>
                                             </li>
                                         )}
-                                        <li>{categoryNode.name}</li>
+                                        <li className="text-neutral">{categoryNode.name}</li>
                                     </ul>
                                 </div>
                             ) : null}
 
-                            {/* <p className="badge badge-outline my-4">
-                                {totalProducts + ' products'}
-                            </p> */}
+                            <h3 className="mb-2 flex items-center justify-between font-semibold text-base-content ">
+                                Categories{' '}
+                                {/* <span className="badge badge-outline my-4">
+                                    {totalProducts + ' products'}
+                                </span> */}
+                            </h3>
 
-                            {categoryNode.children.length === 0 ? null : (
-                                <>
-                                    <h3 className="flex items-center justify-between text-base-content font-semibold mb-2 ">
-                                        Categories{' '}
-                                        <span className="badge badge-outline my-4">
-                                            {totalProducts + ' products'}
-                                        </span>
-                                    </h3>
-                                    <ul role="list" className="pb-6 text-sm">
-                                        {categoryNode.children.map((category) => (
-                                            <li className="mb-1" key={category.name}>
-                                                <Button
-                                                    href={`/products/${category.slug}/${sort}`}
-                                                    className="btn-ghost btn-sm no-animation normal-case btn-block justify-start text-neutral hover:text-base-content font-normal"
-                                                >
-                                                    {category.name}
-                                                </Button>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </>
-                            )}
+                            <ul role="list" className="pb-6 text-sm">
+                                {category.children.map((category) => (
+                                    <li className="mb-1" key={category.name}>
+                                        <Button
+                                            href={`/products/${category.slug}/${sort}`}
+                                            className={`no-animation btn-block btn-sm justify-start border-none bg-inherit text-left font-normal normal-case ${
+                                                router.asPath.startsWith(
+                                                    `/products/${category.slug}`
+                                                )
+                                                    ? 'pointer-events-none bg-info-content text-info'
+                                                    : 'text-base-content hover:text-primary-content'
+                                            }`}
+                                        >
+                                            {category.name}
+                                        </Button>
+                                    </li>
+                                ))}
+                            </ul>
 
-                            <h3 className="text-base-content font-semibold mb-2 ">Filters</h3>
+                            <h3 className="mb-2 font-semibold text-base-content ">Filters</h3>
                             {filters.map((section) => (
                                 <Disclosure as="div" key={section.id} className="mb-1">
                                     {({ open }) => (
                                         <>
-                                            <Disclosure.Button className="btn btn-sm btn-ghost btn-block no-animation normal-case items-center justify-between text-sm text-neutral hover:text-base-content font-normal">
+                                            <Disclosure.Button className="btn-ghost no-animation btn-block btn-sm btn items-center justify-between text-sm font-normal normal-case text-neutral hover:text-base-content">
                                                 <span>{section.name}</span>
                                                 <span className="ml-6 flex items-center">
                                                     {open ? (
@@ -166,7 +181,7 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                                                                 defaultValue={option.value}
                                                                 type="checkbox"
                                                                 defaultChecked={option.checked}
-                                                                className="h-4 w-4 rounded border-neutral text-primary focus:ring-primary cursor-pointer ml-3"
+                                                                className="ml-3 h-4 w-4 cursor-pointer rounded border-neutral text-primary focus:ring-primary"
                                                             />
                                                             <label
                                                                 htmlFor={`filter-${section.id}-${optionIdx}`}
@@ -184,7 +199,7 @@ export default function ProductsLayout({ children, sort, categoryNode, totalProd
                             ))}
                         </div>
                         {/* Product grid */}
-                        <div className="lg:col-span-3">{children}</div>
+                        <div className="lg:col-span-5 xl:col-span-3">{children}</div>
                     </div>
                 </section>
             </div>
