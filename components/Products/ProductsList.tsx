@@ -42,7 +42,7 @@ export default function ProductsList({ products }: Props) {
             <div className="mx-auto pb-4 sm:pb-6 lg:pb-8">
                 <h2 className="sr-only">Products</h2>
 
-                <div className="grid grid-cols-2 gap-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-2 xl:grid-cols-3">
+                <div className="grid grid-cols-2 gap-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-6">
                     {products.map((product, index) => (
                         <Link
                             key={product.id}

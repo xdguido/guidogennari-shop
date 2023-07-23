@@ -68,8 +68,8 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                         <li>{product.name}</li>
                     </ul>
                 </div>
-                <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:rounded-lg lg:border lg:border-neutral lg:bg-base-contrast lg:p-4 xl:grid-cols-3 xl:gap-8">
-                    <div className="breadcrumbs px-2 text-sm md:hidden">
+                <div className="grid grid-cols-1 gap-2 lg:grid-cols-3 lg:rounded-lg lg:border lg:border-neutral lg:bg-base-contrast lg:p-4 xl:grid-cols-3 xl:gap-8 xl:p-6">
+                    <div className="breadcrumbs px-2 text-sm lg:hidden">
                         <ul>
                             {categoryNode.parent && (
                                 <li>
@@ -86,13 +86,13 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                             <li>{product.name}</li>
                         </ul>
                     </div>
-                    <div className="hidden w-full lg:block xl:col-span-2 ">
+                    <div className="hidden w-full lg:col-span-2 lg:block ">
                         <Carousel />
                     </div>
                     <div className="lg:hidden">
                         <MobileCarousel />
                     </div>
-                    <div className="grid grid-cols-1 gap-4 px-6 lg:px-8">
+                    <div className="grid grid-cols-1 gap-4 px-6 xl:px-8">
                         <div>
                             <h1 className="text-2xl font-semibold leading-9 tracking-tight sm:text-3xl">
                                 {product.name}

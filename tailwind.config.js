@@ -25,7 +25,7 @@ module.exports = {
                     ...require('daisyui/src/colors/themes')['[data-theme=light]'],
                     '--base-contrast': '0 0% 99.5%',
 
-                    primary: '#0284c7',
+                    primary: '#059669',
 
                     secondary: '#86efac',
 
@@ -49,7 +49,7 @@ module.exports = {
                     ...require('daisyui/src/colors/themes')['[data-theme=dark]'],
                     '--base-contrast': '0 0% 1%',
 
-                    primary: '#0284c7',
+                    primary: '#059669',
 
                     secondary: '#86efac',
 
