@@ -14,7 +14,7 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                'base-container': withOpacityValue('--base-container')
+                'base-contrast': withOpacityValue('--base-contrast')
             }
         }
     },
@@ -23,11 +23,11 @@ module.exports = {
             {
                 light: {
                     ...require('daisyui/src/colors/themes')['[data-theme=light]'],
-                    '--base-container': '0 0% 91%',
+                    '--base-contrast': '0 0% 99.5%',
 
-                    primary: '#047857',
+                    primary: '#059669',
 
-                    secondary: '#fb923c',
+                    secondary: '#86efac',
 
                     accent: '#e879f9',
 
@@ -47,11 +47,11 @@ module.exports = {
             {
                 dark: {
                     ...require('daisyui/src/colors/themes')['[data-theme=dark]'],
-                    '--base-container': '0 0% 10%',
+                    '--base-contrast': '0 0% 1%',
 
-                    primary: '#047857',
+                    primary: '#059669',
 
-                    secondary: '#fb923c',
+                    secondary: '#86efac',
 
                     accent: '#e879f9',
 
@@ -76,6 +76,7 @@ module.exports = {
     plugins: [
         require('daisyui'),
         require('@tailwindcss/aspect-ratio'),
-        require('@tailwindcss/forms')
+        require('@tailwindcss/forms'),
+        require('prettier-plugin-tailwindcss')
     ]
 };

@@ -4,7 +4,7 @@ import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
 import CategoryProvider from '@lib/store/CategoryContext';
-import { SortOption } from '@lib/types';
+import { CategoryNode, SortOption } from '@lib/types';
 import { productServices, categoryServices } from '@lib/api/services';
 
 export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsContext) => {
@@ -12,6 +12,7 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
     const page = Number(params?.page) || 1;
     const sort = params?.sort || SortOption.CreatedAtDesc;
     const category = params?.category || 'all-products';
+    let parentCategory: CategoryNode;
 
     if (page === 1) {
         return {
@@ -42,6 +43,10 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
         };
     }
 
+    if (data?.categoryNode.children.length === 0) {
+        parentCategory = await categoryServices.getOne(data.categoryNode.parent.slug);
+    }
+
     const categoryTree = await categoryServices.getTree();
 
     return {
@@ -50,6 +55,7 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
             sort,
             page,
             category,
+            parentCategory: parentCategory ? JSON.parse(JSON.stringify(parentCategory)) : null,
             categoryData: JSON.parse(JSON.stringify(categoryTree))
         },
         revalidate: 60 * 60 * 24
@@ -71,11 +77,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default function Page({ data, sort, page, category, categoryData }) {
+export default function Page({ data, sort, page, category, parentCategory, categoryData }) {
     return (
         <CategoryProvider data={categoryData}>
             <Layout>
-                <Products data={data} page={page} sort={sort} categorySlug={category} />
+                <Products
+                    data={data}
+                    page={page}
+                    sort={sort}
+                    parentCategory={parentCategory}
+                    categorySlug={category}
+                />
             </Layout>
         </CategoryProvider>
     );

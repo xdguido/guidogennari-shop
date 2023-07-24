@@ -50,8 +50,8 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                     ]
                 }}
             />
-            <div className="mx-auto max-w-[1600px] min-h-screen lg:px-4">
-                <div className="hidden lg:block text-sm breadcrumbs">
+            <div className="mx-auto min-h-screen max-w-[1600px] lg:px-4">
+                <div className="breadcrumbs hidden text-sm lg:block">
                     <ul>
                         {categoryNode.parent && (
                             <li>
@@ -68,8 +68,8 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                         <li>{product.name}</li>
                     </ul>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 xl:gap-8 lg:rounded-lg lg:p-4 lg:bg-base-container">
-                    <div className="md:hidden text-sm breadcrumbs px-2">
+                <div className="grid grid-cols-1 gap-2 lg:grid-cols-3 lg:rounded-lg lg:border lg:border-neutral lg:bg-base-contrast lg:p-4 xl:grid-cols-3 xl:gap-8 xl:p-6">
+                    <div className="breadcrumbs px-2 text-sm lg:hidden">
                         <ul>
                             {categoryNode.parent && (
                                 <li>
@@ -86,15 +86,15 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                             <li>{product.name}</li>
                         </ul>
                     </div>
-                    <div className="hidden lg:block w-full">
+                    <div className="hidden w-full lg:col-span-2 lg:block ">
                         <Carousel />
                     </div>
                     <div className="lg:hidden">
                         <MobileCarousel />
                     </div>
-                    <div className="grid grid-cols-1 gap-4 px-6 lg:px-10">
+                    <div className="grid grid-cols-1 gap-4 px-6 xl:px-8">
                         <div>
-                            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight leading-9">
+                            <h1 className="text-2xl font-semibold leading-9 tracking-tight sm:text-3xl">
                                 {product.name}
                             </h1>
                         </div>
@@ -107,7 +107,7 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                                     className="tooltip tooltip-info before:w-[12rem] before:content-[attr(data-tip)]"
                                     data-tip="Special price paying with cash or bank deposit"
                                 >
-                                    <InformationCircleIcon className="text-info h-5 w-5" />
+                                    <InformationCircleIcon className="h-5 w-5 text-info" />
                                 </div>
                             </div>
                             <span className="text-sm text-info">See all payment methods</span>
@@ -120,7 +120,7 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                                     <label htmlFor="qty-select">Quantity:</label>
                                 </span>
                                 <select
-                                    className="select select-bordered border-base-100"
+                                    className="select-bordered select border-base-100"
                                     id="qty-select"
                                     value={qty}
                                     onChange={handleQtyChange}
@@ -142,7 +142,7 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                             </span>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                             <Button className="btn-primary btn-block">Buy now</Button>
                             <Button
                                 className="btn-outline btn-block"
@@ -167,7 +167,7 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
                         <div className="divider"></div>
 
                         <h3 className=" font-semibold">Details</h3>
-                        <ul className="text-sm ml-5">
+                        <ul className="ml-5 text-sm">
                             <li className="mb-1 list-disc">
                                 Material: Genuine Leather, Solid Wood Frame
                             </li>
@@ -180,14 +180,14 @@ export default function Index({ productSlug, recommendedProducts }: Prop) {
 
                         <h3 className="font-semibold">Dimensions</h3>
                         <div className="overflow-x-auto">
-                            <table className="table w-full text-sm bg-base-100 rounded-lg">
+                            <table className="table w-full rounded-lg bg-base-100 text-sm">
                                 {/* head */}
                                 <thead>
                                     <tr>
-                                        <th className="normal-case bg-base-100">Part</th>
-                                        <th className="normal-case bg-base-100">Height</th>
-                                        <th className="normal-case bg-base-100">Width</th>
-                                        <th className="normal-case bg-base-100">Length</th>
+                                        <th className="bg-base-100 normal-case">Part</th>
+                                        <th className="bg-base-100 normal-case">Height</th>
+                                        <th className="bg-base-100 normal-case">Width</th>
+                                        <th className="bg-base-100 normal-case">Length</th>
                                     </tr>
                                 </thead>
                                 <tbody>

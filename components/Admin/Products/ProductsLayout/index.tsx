@@ -23,10 +23,10 @@ export default function ProductsList({ children }: Props) {
 
     return (
         <>
-            <div className="bg-base-100 mx-auto">
-                <h1 className="text-4xl font-bold tracking-tight mb-4">Products list</h1>
+            <div className="mx-auto bg-base-100">
+                <h1 className="mb-4 text-4xl font-bold tracking-tight">Products list</h1>
 
-                <div className="flex items-center justify-between lg:justify-end border-b border-base-300 pb-2">
+                <div className="flex items-center justify-between border-b border-base-300 pb-2 lg:justify-end">
                     <AddProduct />
                     <div className="flex gap-2 sm:gap-3">
                         <MobileMenu categoryTree={categoryTree} />
@@ -35,7 +35,7 @@ export default function ProductsList({ children }: Props) {
                 <h2 className="sr-only">Products</h2>
 
                 <div className="grid grid-cols-1 gap-y-10 gap-x-4 sm:grid-cols-2 lg:grid-cols-4">
-                    <div className="hidden lg:grid grid-cols-1 max-h-screen overflow-auto">
+                    <div className="hidden max-h-screen grid-cols-1 overflow-auto lg:grid">
                         {categoryTree.map((section) => (
                             <div key={section.name}>
                                 <p id={`${section.name}-heading`} className="ml-3 font-medium ">
@@ -50,9 +50,9 @@ export default function ProductsList({ children }: Props) {
                                         <Button
                                             href={`/admin/products/${section.slug}/newest/1`}
                                             className={clsx(
-                                                'btn-ghost btn-sm no-animation normal-case btn-block justify-start hover:text-base-content',
+                                                'btn-ghost no-animation btn-block btn-sm justify-start normal-case hover:text-base-content',
                                                 category === section.slug
-                                                    ? 'pointer-events-none text-primary-content bg-primary-focus'
+                                                    ? 'pointer-events-none bg-primary-focus text-primary-content'
                                                     : 'text-neutral'
                                             )}
                                         >
@@ -64,9 +64,9 @@ export default function ProductsList({ children }: Props) {
                                             <Button
                                                 href={`/admin/products/${item.slug}/newest/1`}
                                                 className={clsx(
-                                                    'btn-ghost btn-sm no-animation normal-case btn-block text-left justify-start hover:text-base-content',
+                                                    'btn-ghost no-animation btn-block btn-sm justify-start text-left normal-case hover:text-base-content',
                                                     category === item.slug
-                                                        ? 'pointer-events-none text-primary-content  bg-primary-focus'
+                                                        ? 'pointer-events-none bg-primary-focus  text-primary-content'
                                                         : 'text-neutral'
                                                 )}
                                             >

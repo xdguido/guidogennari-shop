@@ -12,32 +12,24 @@ export default function Carousel() {
     const [currentImage, setCurrentImage] = useState(images[0]);
 
     return (
-        <div className="sticky top-[6rem] self-start grid grid-cols-12 gap-2">
-            <div className="flex flex-col gap-2 w-full col-span-2">
+        <div className="sticky top-[6rem] grid grid-cols-12 gap-2 self-start xl:gap-6">
+            <div className="col-span-2 flex w-full flex-col gap-2 xl:col-span-3 xl:gap-6">
                 {images.map((imageUrl) => {
                     return (
                         <button
                             key={imageUrl}
-                            className={`overflow-hidden aspect-w-1 aspect-h-1`}
+                            className={`aspect-w-1 aspect-h-1 overflow-hidden rounded-md border-2 border-base-contrast ring ${
+                                imageUrl === currentImage ? 'ring-info' : 'ring-neutral'
+                            }`}
                             onMouseEnter={() => setCurrentImage(imageUrl)}
                             onClick={() => setCurrentImage(imageUrl)}
                         >
-                            <Image
-                                src={imageUrl}
-                                alt="alt"
-                                className={`rounded-md ${
-                                    imageUrl === currentImage
-                                        ? 'border-2 border-info'
-                                        : 'border-2 border-neutral'
-                                }`}
-                                fill
-                                sizes="5vw"
-                            />
+                            <Image src={imageUrl} alt="alt" fill sizes="10vw" />
                         </button>
                     );
                 })}
             </div>
-            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-base-200 col-span-10">
+            <div className="aspect-w-1 aspect-h-1 col-span-10 w-full overflow-hidden rounded-md bg-base-200 xl:col-span-9">
                 <Image
                     src={currentImage}
                     alt="alt"
