@@ -18,8 +18,8 @@ export default function Carousel() {
                     return (
                         <button
                             key={imageUrl}
-                            className={`aspect-w-1 aspect-h-1 overflow-hidden rounded-md border-2 border-base-contrast ring ${
-                                imageUrl === currentImage ? 'ring-info' : 'ring-neutral'
+                            className={`aspect-w-1 aspect-h-1 overflow-hidden rounded-md border-2 border-base-contrast ${
+                                imageUrl === currentImage ? 'ring ring-info' : ''
                             }`}
                             onMouseEnter={() => setCurrentImage(imageUrl)}
                             onClick={() => setCurrentImage(imageUrl)}
