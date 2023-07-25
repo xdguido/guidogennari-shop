@@ -5,6 +5,9 @@
 .divider {
     @apply my-6;
 }
+.btn-outline {
+    @apply border-neutral;
+}
 html {
     scroll-padding-top: 100px;
 }

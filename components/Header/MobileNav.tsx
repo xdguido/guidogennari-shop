@@ -22,7 +22,10 @@ export default function MobileMenu() {
 
     return (
         <>
-            <Button className="btn-ghost btn-square btn-sm lg:hidden" onClick={() => setOpen(true)}>
+            <Button
+                className="btn-outline btn-square btn-sm bg-base-contrast lg:hidden"
+                onClick={() => setOpen(true)}
+            >
                 <span className="sr-only">Open menu</span>
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </Button>
@@ -41,7 +44,7 @@ export default function MobileMenu() {
                     </Transition.Child>
 
                     <div className="absolute inset-0 overflow-hidden">
-                        <div className="flex fixed pointer-events-none inset-y-0 right-0">
+                        <div className="pointer-events-none fixed inset-y-0 right-0 flex">
                             <Transition.Child
                                 as={Fragment}
                                 enter="transform transition ease-in-out duration-300"
@@ -51,7 +54,7 @@ export default function MobileMenu() {
                                 leaveFrom="translate-x-0"
                                 leaveTo="translate-x-full"
                             >
-                                <Dialog.Panel className="flex flex-col justify-between pointer-events-auto  w-screen max-w-md bg-base-100">
+                                <Dialog.Panel className="pointer-events-auto flex w-screen max-w-md  flex-col justify-between bg-base-100">
                                     <div>
                                         <div className="flex justify-end px-4 pt-5">
                                             <Button
@@ -67,7 +70,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex gap-3 items-center font-semibold"
+                                                        className="flex items-center gap-3 font-semibold"
                                                     >
                                                         <BuildingStorefrontIcon
                                                             aria-hidden="true"
@@ -79,7 +82,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex gap-3 items-center font-semibold"
+                                                        className="flex items-center gap-3 font-semibold"
                                                     >
                                                         <GlobeAmericasIcon
                                                             aria-hidden="true"
@@ -91,7 +94,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex gap-3 items-center font-semibold"
+                                                        className="flex items-center gap-3 font-semibold"
                                                     >
                                                         <QuestionMarkCircleIcon
                                                             aria-hidden="true"
@@ -103,7 +106,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex gap-3 items-center font-semibold"
+                                                        className="flex items-center gap-3 font-semibold"
                                                     >
                                                         <FaInstagram
                                                             aria-hidden="true"
@@ -119,7 +122,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex gap-3 items-center font-semibold"
+                                                        className="flex items-center gap-3 font-semibold"
                                                     >
                                                         <Squares2X2Icon
                                                             aria-hidden="true"
@@ -131,7 +134,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex gap-3 items-center font-semibold"
+                                                        className="flex items-center gap-3 font-semibold"
                                                     >
                                                         <BellIcon
                                                             aria-hidden="true"
@@ -143,7 +146,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex gap-3 items-center font-semibold"
+                                                        className="flex items-center gap-3 font-semibold"
                                                     >
                                                         <Cog6ToothIcon
                                                             aria-hidden="true"

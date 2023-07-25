@@ -10,17 +10,17 @@ export default function ThemeToggler() {
     if (!mounted) return null;
     return (
         <Button
-            className="btn-ghost btn-sm normal-case text-base"
+            className="btn-outline btn-sm bg-base-contrast text-base normal-case"
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             aria-label="Toggle Dark Mode"
         >
             {theme === 'light' ? (
-                <span className="flex gap-3 items-center">
-                    <FiSun className="w-5 h-5" /> Light
+                <span className="flex items-center gap-3">
+                    <FiSun className="h-5 w-5" /> Light
                 </span>
             ) : (
-                <span className="flex gap-3 items-center">
-                    <FiMoon className="w-5 h-5" /> Dark
+                <span className="flex items-center gap-3">
+                    <FiMoon className="h-5 w-5" /> Dark
                 </span>
             )}
         </Button>
