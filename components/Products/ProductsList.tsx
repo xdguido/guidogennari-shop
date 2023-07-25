@@ -42,14 +42,14 @@ export default function ProductsList({ products }: Props) {
             <div className="mx-auto pb-4 sm:pb-6 lg:pb-8">
                 <h2 className="sr-only">Products</h2>
 
-                <div className="grid grid-cols-2 gap-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-6">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
                     {products.map((product, index) => (
                         <Link
                             key={product.id}
                             href={`/product/${product.slug}`}
-                            className="group rounded bg-base-100 transition-shadow duration-300 hover:bg-base-contrast "
+                            className="group rounded-md bg-base-100 transition-shadow duration-300 hover:bg-base-contrast lg:border lg:border-neutral lg:bg-base-contrast"
                         >
-                            <div className="aspect-w-1 aspect-h-1 relative w-full overflow-hidden rounded-md bg-base-200 transition-all duration-500 group-hover:rounded-b-none">
+                            <div className="aspect-w-1 aspect-h-1 relative overflow-hidden rounded-md lg:m-2">
                                 {product.thumbnail ? (
                                     <Image
                                         src={product.thumbnail}
