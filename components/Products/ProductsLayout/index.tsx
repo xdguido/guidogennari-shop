@@ -21,7 +21,7 @@ function SortMenu({ sort, categoryNode }: { sort: SortOption; categoryNode: Cate
         <Menu as="div" className="relative text-left">
             <Menu.Button
                 as={Button}
-                className="btn-outline no-animation btn-sm flex-nowrap gap-2 whitespace-nowrap font-normal normal-case"
+                className="btn-outline no-animation btn-sm flex-nowrap gap-2 whitespace-nowrap bg-base-contrast font-normal normal-case"
             >
                 <ArrowsUpDownIcon className=" h-4 w-4" aria-hidden="true" />
                 <span className="sr-only">Sort by</span>
@@ -46,9 +46,9 @@ function SortMenu({ sort, categoryNode }: { sort: SortOption; categoryNode: Cate
                                         href={`/products/${categoryNode.slug}/${SortOption[sortKey]}`}
                                         className={clsx(
                                             SortOption[sortKey] === sort
-                                                ? 'font-bold text-info'
+                                                ? 'text-info'
                                                 : 'text-base-content',
-                                            active ? 'bg-base-300 text-info' : '',
+                                            active ? 'bg-base-300' : '',
                                             'block px-4 py-2 text-left text-sm'
                                         )}
                                     >
@@ -99,7 +99,7 @@ export default function ProductsLayout({
                         Products
                     </h2>
 
-                    <div className="grid grid-cols-1 gap-x-2 gap-y-10 p-2 lg:grid-cols-7 xl:grid-cols-4 xl:gap-6">
+                    <div className="grid grid-cols-1 gap-x-2 gap-y-10 p-2 lg:grid-cols-7 xl:grid-cols-5 xl:gap-6">
                         {/* Filters */}
 
                         <div className="sticky top-[5rem] hidden self-start rounded-md border border-neutral bg-base-contrast px-6 py-4 lg:col-span-2 lg:block xl:col-span-1">
@@ -221,7 +221,7 @@ export default function ProductsLayout({
                             ))}
                         </div>
                         {/* Product grid */}
-                        <div className="lg:col-span-5 xl:col-span-3">{children}</div>
+                        <div className="lg:col-span-5 xl:col-span-4">{children}</div>
                     </div>
                 </section>
             </div>
