@@ -19,10 +19,7 @@ export default function Cart() {
                     <span className="badge-info badge badge-sm indicator-item">{cart.length}</span>
                 ) : null}
 
-                <Button
-                    className="btn-outline btn-square btn-sm bg-base-contrast"
-                    onClick={() => setOpen(true)}
-                >
+                <Button className="btn-outline btn-square btn-sm" onClick={() => setOpen(true)}>
                     <span className="sr-only">Open cart</span>
                     <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
                 </Button>

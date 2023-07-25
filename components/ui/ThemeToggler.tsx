@@ -10,7 +10,7 @@ export default function ThemeToggler() {
     if (!mounted) return null;
     return (
         <Button
-            className="btn-outline btn-sm bg-base-contrast text-base normal-case"
+            className="btn-outline btn-sm text-base normal-case"
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             aria-label="Toggle Dark Mode"
         >

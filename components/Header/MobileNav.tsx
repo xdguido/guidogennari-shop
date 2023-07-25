@@ -23,7 +23,7 @@ export default function MobileMenu() {
     return (
         <>
             <Button
-                className="btn-outline btn-square btn-sm bg-base-contrast lg:hidden"
+                className="btn-outline btn-square btn-sm lg:hidden"
                 onClick={() => setOpen(true)}
             >
                 <span className="sr-only">Open menu</span>
@@ -31,7 +31,7 @@ export default function MobileMenu() {
             </Button>
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-50 lg:hidden" onClose={setOpen}>
-                    <Transition.Child
+                    {/* <Transition.Child
                         as={Fragment}
                         enter="transition-opacity ease-linear duration-300"
                         enterFrom="opacity-0"
@@ -41,20 +41,20 @@ export default function MobileMenu() {
                         leaveTo="opacity-0"
                     >
                         <div className="fixed inset-0 bg-base-300 bg-opacity-70 transition-opacity" />
-                    </Transition.Child>
+                    </Transition.Child> */}
 
                     <div className="absolute inset-0 overflow-hidden">
                         <div className="pointer-events-none fixed inset-y-0 right-0 flex">
                             <Transition.Child
                                 as={Fragment}
-                                enter="transform transition ease-in-out duration-300"
+                                enter="transform transition ease-out duration-300"
                                 enterFrom="translate-x-full"
                                 enterTo="translate-x-0"
-                                leave="transform transition ease-in-out duration-300"
+                                leave="transform transition ease-out duration-300"
                                 leaveFrom="translate-x-0"
                                 leaveTo="translate-x-full"
                             >
-                                <Dialog.Panel className="pointer-events-auto flex w-screen max-w-md  flex-col justify-between bg-base-100">
+                                <Dialog.Panel className="pointer-events-auto flex w-screen max-w-md  flex-col justify-between border border-neutral bg-base-100">
                                     <div>
                                         <div className="flex justify-end px-4 pt-5">
                                             <Button
