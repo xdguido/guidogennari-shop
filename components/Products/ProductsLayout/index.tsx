@@ -103,7 +103,7 @@ export default function ProductsLayout({
                         {/* Filters */}
 
                         <div className="sticky top-[5rem] hidden self-start rounded-md border border-neutral bg-base-contrast px-6 py-4 lg:col-span-2 lg:block xl:col-span-1">
-                            <div className="breadcrumbs mb-4 hidden max-w-[10rem] text-sm sm:max-w-none lg:block ">
+                            <div className="breadcrumbs mb-8 hidden max-w-[10rem] text-sm sm:max-w-none lg:block ">
                                 <ul>
                                     <li>
                                         <Link
@@ -139,14 +139,14 @@ export default function ProductsLayout({
                                 </ul>
                             </div>
 
-                            <h3 className="mb-2 flex items-center justify-between font-semibold text-base-content ">
+                            <h3 className="mx-3 mb-2 font-semibold text-neutral">
                                 Categories{' '}
                                 {/* <span className="badge badge-outline my-4">
                                     {totalProducts + ' products'}
                                 </span> */}
                             </h3>
 
-                            <ul role="list" className="pb-6 text-sm">
+                            <ul role="list" className="mb-10 text-sm">
                                 {category.children.map((category) => (
                                     <li className="mb-1" key={category.name}>
                                         <Button
@@ -156,7 +156,7 @@ export default function ProductsLayout({
                                                     `/products/${category.slug}`
                                                 )
                                                     ? 'pointer-events-none bg-neutral bg-opacity-20 text-info'
-                                                    : 'text-base-content hover:text-primary-content'
+                                                    : 'text-base-content hover:bg-opacity-20 hover:text-info'
                                             }`}
                                         >
                                             {category.name}
@@ -165,8 +165,10 @@ export default function ProductsLayout({
                                 ))}
                             </ul>
 
-                            <h3 className="mb-2 font-semibold text-base-content ">Filters</h3>
-                            {filters.map((section) => (
+                            <h3 className="mx-3 mb-2 font-semibold text-neutral">
+                                Filters <span className="text-xs font-normal">(Coming soon)</span>
+                            </h3>
+                            {/* {filters.map((section) => (
                                 <Disclosure as="div" key={section.id} className="mb-1">
                                     {({ open }) => (
                                         <>
@@ -218,7 +220,7 @@ export default function ProductsLayout({
                                         </>
                                     )}
                                 </Disclosure>
-                            ))}
+                            ))} */}
                         </div>
                         {/* Product grid */}
                         <div className="lg:col-span-5 xl:col-span-4">{children}</div>

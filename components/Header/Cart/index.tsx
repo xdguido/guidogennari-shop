@@ -49,27 +49,26 @@ export default function Cart() {
                                 leaveFrom="translate-x-0"
                                 leaveTo="translate-x-full"
                             >
-                                <Dialog.Panel className="pointer-events-auto w-screen max-w-md border border-neutral bg-base-100">
+                                <Dialog.Panel className="pointer-events-auto w-screen border border-neutral bg-base-contrast md:max-w-md">
                                     <div className="flex h-full flex-col overflow-y-scroll shadow-xl">
-                                        <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
-                                            <div className="flex items-start justify-between">
-                                                <Dialog.Title className="text-lg font-medium ">
-                                                    Shopping cart
-                                                </Dialog.Title>
-                                                <div className="ml-3 flex h-7 items-center">
-                                                    <Button
-                                                        className="btn-ghost btn-square -m-2 p-2 "
-                                                        onClick={() => setOpen(false)}
-                                                    >
-                                                        <span className="sr-only">Close panel</span>
-                                                        <XMarkIcon
-                                                            className="h-6 w-6"
-                                                            aria-hidden="true"
-                                                        />
-                                                    </Button>
-                                                </div>
+                                        <div className="flex items-start justify-between px-4 py-6 sm:px-6">
+                                            <Dialog.Title className="text-lg font-medium ">
+                                                Shopping cart
+                                            </Dialog.Title>
+                                            <div className="ml-3 flex h-7 items-center">
+                                                <Button
+                                                    className="btn-ghost btn-square -m-2 p-2 "
+                                                    onClick={() => setOpen(false)}
+                                                >
+                                                    <span className="sr-only">Close panel</span>
+                                                    <XMarkIcon
+                                                        className="h-6 w-6"
+                                                        aria-hidden="true"
+                                                    />
+                                                </Button>
                                             </div>
-
+                                        </div>
+                                        <div className="flex-1 overflow-y-auto px-4 sm:px-6">
                                             <div className="mt-8">
                                                 {!cart.length ? (
                                                     <p className="text-center text-lg text-neutral">
@@ -120,7 +119,7 @@ export default function Cart() {
                                                     Checkout
                                                 </Button>
                                             </div>
-                                            <div className="flex justify-center text-center text-sm text-neutral sm:mt-6">
+                                            {/* <div className="flex justify-center text-center text-sm text-neutral sm:mt-6">
                                                 <p>
                                                     or
                                                     <Button
@@ -131,7 +130,7 @@ export default function Cart() {
                                                         <span aria-hidden="true"> &rarr;</span>
                                                     </Button>
                                                 </p>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </Dialog.Panel>

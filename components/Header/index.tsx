@@ -31,7 +31,7 @@ export default function Header() {
             </p>
             <header
                 className={clsx(
-                    'sticky top-0 z-50 w-full bg-base-100'
+                    'sticky top-0 z-50 w-full bg-base-contrast lg:bg-base-100'
                     // top ? '' : 'lg:border-b lg:border-b-neutral'
                 )}
             >

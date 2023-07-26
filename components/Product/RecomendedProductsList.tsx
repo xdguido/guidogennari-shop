@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { CameraIcon } from '@heroicons/react/24/outline';
 import type { Product } from '@prisma/client';
 
-type Props = {
+export default function RecomendedProductsList({
+    products,
+    currentProduct
+}: {
     products: Product[];
     currentProduct: string;
-};
-export default function RecomendedProductsList({ products, currentProduct }: Props) {
+}) {
     const filteredProducts = products.filter((product) => product.slug !== currentProduct);
     const lastProduct = products[6];
     return (
@@ -18,16 +20,16 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
                     <Link
                         key={product.id}
                         href={`/product/${product.slug}`}
-                        className="group rounded-md bg-base-100 hover:bg-base-contrast lg:border lg:border-neutral lg:bg-base-contrast"
+                        className="group rounded-md bg-base-contrast hover:bg-base-contrast lg:border lg:border-neutral"
                     >
                         <div className="aspect-w-1 aspect-h-1 relative overflow-hidden rounded-md lg:m-2">
                             {product.thumbnail ? (
                                 <Image
                                     src={product.thumbnail}
                                     alt={`${product.name} image`}
-                                    className="object-cover"
+                                    className="object-cover transition-transform duration-200 group-hover:scale-105"
                                     fill
-                                    sizes="(max-width: 1200px) 40vw, 25vw"
+                                    sizes="(max-width: 1200px) 50vw, 25vw"
                                 />
                             ) : (
                                 <div className="flex items-center justify-center">
@@ -50,8 +52,11 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
                     </Link>
                 ))}
                 {lastProduct && (
-                    <Link href={`/product/${lastProduct.slug}`} className="group block md:hidden">
-                        <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200">
+                    <Link
+                        href={`/product/${lastProduct.slug}`}
+                        className="group block bg-base-contrast md:hidden"
+                    >
+                        <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded ">
                             {lastProduct.thumbnail ? (
                                 <Image
                                     src={lastProduct.thumbnail}

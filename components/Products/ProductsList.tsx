@@ -4,10 +4,7 @@ import { CameraIcon } from '@heroicons/react/24/outline';
 import PropTypes from 'prop-types';
 import type { Product } from '@prisma/client';
 
-type Props = {
-    products: Product[];
-};
-export default function ProductsList({ products }: Props) {
+export default function ProductsList({ products }: { products: Product[] }) {
     // if (products?.length == 0) {
     //     return (
     //         <div className="bg-base-100 mx-auto max-w-2xl p-4 sm:p-6 lg:max-w-7xl lg:p-8">
@@ -47,16 +44,16 @@ export default function ProductsList({ products }: Props) {
                         <Link
                             key={product.id}
                             href={`/product/${product.slug}`}
-                            className="group rounded-md bg-base-100 hover:bg-base-contrast lg:border lg:border-neutral lg:bg-base-contrast"
+                            className="group rounded-md bg-base-contrast hover:bg-base-contrast lg:border lg:border-neutral"
                         >
                             <div className="aspect-w-1 aspect-h-1 relative overflow-hidden rounded-md lg:m-2">
                                 {product.thumbnail ? (
                                     <Image
                                         src={product.thumbnail}
                                         alt={`${product.name} image`}
-                                        className="object-cover"
+                                        className="object-cover lg:transition-transform lg:duration-200 lg:group-hover:scale-105"
                                         fill
-                                        sizes="(max-width: 1200px) 40vw, 25vw"
+                                        sizes="(max-width: 1200px) 50vw, 25vw"
                                         priority={index < 6 ? true : false}
                                     />
                                 ) : (

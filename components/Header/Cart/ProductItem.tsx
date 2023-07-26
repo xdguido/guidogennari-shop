@@ -29,20 +29,18 @@ export default function ProductItem({ slug, quantity, subtotal }: Props) {
     }
     return (
         <li className="grid grid-cols-4 py-6">
-            <div>
-                <div className=" overflow-hidden rounded bg-base-200">
-                    <Image
-                        src={product.thumbnail}
-                        alt={product.name}
-                        width={100}
-                        height={100}
-                        className="object-cover object-center"
-                    />
-                </div>
+            <div className="aspect-w-1 aspect-h-1 relative overflow-hidden rounded bg-base-200">
+                <Image
+                    src={product.thumbnail}
+                    alt={product.name}
+                    fill
+                    sizes="5vw"
+                    className="object-cover"
+                />
             </div>
 
-            <div className="ml-4 col-span-3 grid grid-col-1 gap-2">
-                <h3 className=" leading-tight text-sm font-medium  ">
+            <div className="grid-col-1 col-span-3 ml-4 grid gap-2">
+                <h3 className=" text-sm font-medium leading-tight  ">
                     <Link href={`/product/${product.slug}`}>{product.name}</Link>
                 </h3>
 
@@ -55,20 +53,20 @@ export default function ProductItem({ slug, quantity, subtotal }: Props) {
                 </div>
 
                 <div className="flex flex-1 justify-between text-sm">
-                    <div className="flex items-center mr-2">
+                    <div className="mr-2 flex items-center">
                         <Button
                             className={clsx(
-                                'btn-outline btn-sm btn-square',
+                                'btn-outline btn-square btn-sm',
                                 quantity == 1 ? 'btn-disabled' : ''
                             )}
                             onClick={() => updateProductQuantity(product.slug, quantity - 1)}
                         >
                             <MinusIcon className="h-5 w-5" />
                         </Button>
-                        <span className="px-3 font-semibold text-base">{quantity}</span>
+                        <span className="px-3 text-base font-semibold">{quantity}</span>
                         <Button
                             className={clsx(
-                                'btn-outline btn-sm btn-square',
+                                'btn-outline btn-square btn-sm',
                                 quantity == 5 ? 'btn-disabled' : ''
                             )}
                             onClick={() => updateProductQuantity(product.slug, quantity + 1)}
