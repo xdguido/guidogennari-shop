@@ -51,7 +51,7 @@ export default function ProductsList({ products }: { products: Product[] }) {
                                     <Image
                                         src={product.thumbnail}
                                         alt={`${product.name} image`}
-                                        className="object-cover transition-transform duration-200 group-hover:scale-105"
+                                        className="object-cover lg:transition-transform lg:duration-200 lg:group-hover:scale-105"
                                         fill
                                         sizes="(max-width: 1200px) 50vw, 25vw"
                                         priority={index < 6 ? true : false}

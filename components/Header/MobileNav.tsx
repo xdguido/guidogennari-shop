@@ -82,7 +82,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex items-center gap-3 font-semibold"
+                                                        className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
                                                     >
                                                         <GlobeAmericasIcon
                                                             aria-hidden="true"
@@ -94,7 +94,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex items-center gap-3 font-semibold"
+                                                        className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
                                                     >
                                                         <QuestionMarkCircleIcon
                                                             aria-hidden="true"
@@ -106,7 +106,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex items-center gap-3 font-semibold"
+                                                        className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
                                                     >
                                                         <FaInstagram
                                                             aria-hidden="true"
@@ -122,7 +122,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex items-center gap-3 font-semibold"
+                                                        className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
                                                     >
                                                         <Squares2X2Icon
                                                             aria-hidden="true"
@@ -134,7 +134,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex items-center gap-3 font-semibold"
+                                                        className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
                                                     >
                                                         <BellIcon
                                                             aria-hidden="true"
@@ -146,7 +146,7 @@ export default function MobileMenu() {
                                                 <li>
                                                     <Link
                                                         href="/products/all-products/newest"
-                                                        className="flex items-center gap-3 font-semibold"
+                                                        className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
                                                     >
                                                         <Cog6ToothIcon
                                                             aria-hidden="true"
