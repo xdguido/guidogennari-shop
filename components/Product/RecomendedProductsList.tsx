@@ -18,7 +18,7 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
                     <Link
                         key={product.id}
                         href={`/product/${product.slug}`}
-                        className="group rounded-md bg-base-100 hover:bg-base-contrast lg:border lg:border-neutral lg:bg-base-contrast"
+                        className="group rounded-md bg-base-contrast hover:bg-base-contrast lg:border lg:border-neutral"
                     >
                         <div className="aspect-w-1 aspect-h-1 relative overflow-hidden rounded-md lg:m-2">
                             {product.thumbnail ? (
@@ -50,8 +50,11 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
                     </Link>
                 ))}
                 {lastProduct && (
-                    <Link href={`/product/${lastProduct.slug}`} className="group block md:hidden">
-                        <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded bg-base-200">
+                    <Link
+                        href={`/product/${lastProduct.slug}`}
+                        className="group block bg-base-contrast md:hidden"
+                    >
+                        <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded ">
                             {lastProduct.thumbnail ? (
                                 <Image
                                     src={lastProduct.thumbnail}
