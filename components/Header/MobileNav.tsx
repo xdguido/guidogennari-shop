@@ -54,7 +54,7 @@ export default function MobileMenu() {
                                 leaveFrom="translate-x-0"
                                 leaveTo="translate-x-full"
                             >
-                                <Dialog.Panel className="pointer-events-auto flex w-screen max-w-md  flex-col justify-between border border-neutral bg-base-100">
+                                <Dialog.Panel className="pointer-events-auto flex w-screen max-w-md  flex-col justify-between border border-neutral bg-base-contrast">
                                     <div>
                                         <div className="flex justify-end px-4 pt-5">
                                             <Button
