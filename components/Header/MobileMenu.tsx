@@ -12,7 +12,7 @@ export default function MobileMenu() {
             <Menu as="div" className="relative lg:hidden">
                 {({ open, close }) => (
                     <>
-                        <Menu.Button className="w-full flex items-center gap-2 px-4 py-2 text-left border-y border-y-neutral">
+                        <Menu.Button className="flex w-full items-center gap-2 border-y border-y-neutral px-4 py-2 text-left">
                             {open ? (
                                 <ChevronDownIcon className="h-4 w-4" />
                             ) : (
@@ -29,7 +29,7 @@ export default function MobileMenu() {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                         >
-                            <Menu.Items className="absolute inset-x-0 z-40 flex flex-col h-[80vh] overflow-y-scroll bg-base-100 border-b border-b-neutral">
+                            <Menu.Items className="absolute inset-x-0 z-40 flex h-[80vh] flex-col overflow-y-scroll border-b border-b-neutral bg-base-contrast">
                                 {/* Links */}
 
                                 <div className="mt-3">
@@ -38,7 +38,7 @@ export default function MobileMenu() {
                                             <div key={section.name}>
                                                 <p
                                                     id={`${section.id}-heading-mobile`}
-                                                    className="font-bold "
+                                                    className="font-bold text-neutral"
                                                 >
                                                     {section.name}
                                                 </p>
@@ -47,18 +47,20 @@ export default function MobileMenu() {
                                                     aria-labelledby={`${section.name}-heading`}
                                                     className="mt-6 space-y-4"
                                                 >
-                                                    <li className="flex">
+                                                    <li>
                                                         <Link
                                                             href={`/products/${section.slug}/newest`}
+                                                            className="block"
                                                             onClick={close}
                                                         >
                                                             View all
                                                         </Link>
                                                     </li>
                                                     {section.children.map((item) => (
-                                                        <li key={item.name} className="flex">
+                                                        <li key={item.name}>
                                                             <Link
                                                                 href={`/products/${item.slug}/newest`}
+                                                                className="block"
                                                                 onClick={close}
                                                             >
                                                                 {item.name}
