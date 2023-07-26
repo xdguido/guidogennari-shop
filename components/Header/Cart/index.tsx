@@ -16,17 +16,17 @@ export default function Cart() {
         <>
             <div className="indicator">
                 {cart.length ? (
-                    <span className="indicator-item  badge badge-accent px-1.5">{cart.length}</span>
+                    <span className="badge-info badge badge-sm indicator-item">{cart.length}</span>
                 ) : null}
 
-                <Button className="btn-ghost btn-square btn-sm" onClick={() => setOpen(true)}>
+                <Button className="btn-outline btn-square btn-sm" onClick={() => setOpen(true)}>
                     <span className="sr-only">Open cart</span>
                     <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
                 </Button>
             </div>
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={setOpen}>
-                    <Transition.Child
+                    {/* <Transition.Child
                         as={Fragment}
                         enter="ease-in-out duration-200"
                         enterFrom="opacity-0"
@@ -36,20 +36,20 @@ export default function Cart() {
                         leaveTo="opacity-0"
                     >
                         <div className="fixed inset-0 bg-base-300 bg-opacity-75 transition-opacity" />
-                    </Transition.Child>
+                    </Transition.Child> */}
 
                     <div className="absolute inset-0 overflow-hidden">
-                        <div className="fixed pointer-events-none inset-y-0 right-0 flex">
+                        <div className="pointer-events-none fixed inset-y-0 right-0 flex">
                             <Transition.Child
                                 as={Fragment}
-                                enter="transform transition ease-in-out duration-300"
+                                enter="transform transition ease-out duration-300"
                                 enterFrom="translate-x-full"
                                 enterTo="translate-x-0"
-                                leave="transform transition ease-in-out duration-300"
+                                leave="transform transition ease-out duration-300"
                                 leaveFrom="translate-x-0"
                                 leaveTo="translate-x-full"
                             >
-                                <Dialog.Panel className="pointer-events-auto w-screen max-w-md bg-base-100">
+                                <Dialog.Panel className="pointer-events-auto w-screen max-w-md border border-neutral bg-base-100">
                                     <div className="flex h-full flex-col overflow-y-scroll shadow-xl">
                                         <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                                             <div className="flex items-start justify-between">
@@ -72,7 +72,7 @@ export default function Cart() {
 
                                             <div className="mt-8">
                                                 {!cart.length ? (
-                                                    <p className="text-lg text-center text-neutral">
+                                                    <p className="text-center text-lg text-neutral">
                                                         Your cart is empty
                                                     </p>
                                                 ) : (
@@ -103,7 +103,7 @@ export default function Cart() {
                                                         className="tooltip tooltip-left tooltip-info before:w-[12rem] before:content-[attr(data-tip)]"
                                                         data-tip="Special price paying with cash or bank deposit"
                                                     >
-                                                        <InformationCircleIcon className="text-info h-5 w-5" />
+                                                        <InformationCircleIcon className="h-5 w-5 text-info" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -120,7 +120,7 @@ export default function Cart() {
                                                     Checkout
                                                 </Button>
                                             </div>
-                                            <div className="sm:mt-6 flex justify-center text-center text-sm text-neutral">
+                                            <div className="flex justify-center text-center text-sm text-neutral sm:mt-6">
                                                 <p>
                                                     or
                                                     <Button

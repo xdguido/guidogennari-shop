@@ -47,7 +47,7 @@ export default function ProductsList({ products }: Props) {
                         <Link
                             key={product.id}
                             href={`/product/${product.slug}`}
-                            className="group rounded-md bg-base-100 transition-shadow duration-300 hover:bg-base-contrast lg:border lg:border-neutral lg:bg-base-contrast"
+                            className="group rounded-md bg-base-100 hover:bg-base-contrast lg:border lg:border-neutral lg:bg-base-contrast"
                         >
                             <div className="aspect-w-1 aspect-h-1 relative overflow-hidden rounded-md lg:m-2">
                                 {product.thumbnail ? (

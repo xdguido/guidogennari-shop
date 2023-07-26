@@ -35,7 +35,7 @@ export default function Header() {
                     // top ? '' : 'lg:border-b lg:border-b-neutral'
                 )}
             >
-                <nav aria-label="Top" className="mx-auto max-w-[1600px]">
+                <nav aria-label="Top" className="mx-auto">
                     <div className="flex h-16 items-center px-2 lg:px-4">
                         {/* Logo */}
                         <div className="ml-2 flex lg:ml-0">
