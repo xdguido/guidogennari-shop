@@ -37,7 +37,7 @@ export default function CartProvider({ children }) {
 
         if (isProductAlreadyInCart) {
             return toast.custom((t) => (
-                <div className=" flex  items-center bg-base-100 shadow-lg rounded-lg border border-primary px-6 py-4 ">
+                <div className=" flex  items-center rounded-lg border border-primary bg-base-contrast px-6 py-4 shadow-lg ">
                     <div className=" flex-auto">
                         <div className="flex items-start">
                             <div className=" flex-1">
@@ -56,7 +56,7 @@ export default function CartProvider({ children }) {
         setCart((prevCart) => [...prevCart, product]);
         localStorage.setItem(cartDataKey, JSON.stringify(updatedCart));
         toast.custom((t) => (
-            <div className=" flex items-center bg-base-100 shadow-lg rounded-lg border border-primary px-6 py-4">
+            <div className=" flex items-center rounded-lg border border-primary bg-base-contrast px-6 py-4 shadow-lg">
                 <div className="flex-1 ">
                     <div className="flex items-start">
                         <div className="flex-1">

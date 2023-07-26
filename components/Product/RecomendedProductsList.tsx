@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { CameraIcon } from '@heroicons/react/24/outline';
 import type { Product } from '@prisma/client';
 
-type Props = {
+export default function RecomendedProductsList({
+    products,
+    currentProduct
+}: {
     products: Product[];
     currentProduct: string;
-};
-export default function RecomendedProductsList({ products, currentProduct }: Props) {
+}) {
     const filteredProducts = products.filter((product) => product.slug !== currentProduct);
     const lastProduct = products[6];
     return (
@@ -25,9 +27,9 @@ export default function RecomendedProductsList({ products, currentProduct }: Pro
                                 <Image
                                     src={product.thumbnail}
                                     alt={`${product.name} image`}
-                                    className="object-cover"
+                                    className="object-cover transition-transform duration-200 group-hover:scale-105"
                                     fill
-                                    sizes="(max-width: 1200px) 40vw, 25vw"
+                                    sizes="(max-width: 1200px) 50vw, 25vw"
                                 />
                             ) : (
                                 <div className="flex items-center justify-center">
