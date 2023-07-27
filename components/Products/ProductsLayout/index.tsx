@@ -139,14 +139,9 @@ export default function ProductsLayout({
                                 </ul>
                             </div>
 
-                            <h3 className="mx-3 mb-2 font-semibold text-neutral">
-                                Categories{' '}
-                                {/* <span className="badge badge-outline my-4">
-                                    {totalProducts + ' products'}
-                                </span> */}
-                            </h3>
+                            <h3 className="mx-3 mb-2 text-sm text-neutral">Categories</h3>
 
-                            <ul role="list" className="mb-10 text-sm">
+                            <ul role="list" className="mb-10">
                                 {category.children.map((category) => (
                                     <li className="mb-1" key={category.name}>
                                         <Button
@@ -156,7 +151,7 @@ export default function ProductsLayout({
                                                     `/products/${category.slug}`
                                                 )
                                                     ? 'pointer-events-none bg-neutral bg-opacity-20 text-info'
-                                                    : 'text-base-content hover:bg-opacity-20 hover:text-info'
+                                                    : 'text-base-content hover:bg-opacity-0 hover:text-info'
                                             }`}
                                         >
                                             {category.name}
@@ -165,7 +160,7 @@ export default function ProductsLayout({
                                 ))}
                             </ul>
 
-                            <h3 className="mx-3 mb-2 font-semibold text-neutral">
+                            <h3 className="mx-3 mb-2 text-sm text-neutral">
                                 Filters <span className="text-xs font-normal">(Coming soon)</span>
                             </h3>
                             {/* {filters.map((section) => (
