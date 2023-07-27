@@ -46,7 +46,7 @@ export default function ProductsList({ products }: { products: Product[] }) {
                             href={`/product/${product.slug}`}
                             className="group rounded-md bg-base-contrast hover:bg-base-contrast lg:border lg:border-neutral"
                         >
-                            <div className="aspect-w-1 aspect-h-1 relative overflow-hidden rounded-md lg:m-2">
+                            <div className="aspect-w-1 aspect-h-1 relative overflow-hidden rounded-md lg:m-2 lg:rounded-none">
                                 {product.thumbnail ? (
                                     <Image
                                         src={product.thumbnail}
