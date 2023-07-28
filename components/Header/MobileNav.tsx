@@ -116,46 +116,52 @@ export default function MobileMenu() {
                                                     </Link>
                                                 </li>
                                             </ul>
-                                            <div className="divider"></div>
-                                            <ul className="space-y-3">
-                                                <span className="text-sm uppercase">Account</span>
-                                                <li>
-                                                    <Link
-                                                        href="/products/all-products/newest"
-                                                        className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
-                                                    >
-                                                        <Squares2X2Icon
-                                                            aria-hidden="true"
-                                                            className="h-6 w-6"
-                                                        />
-                                                        Dashboard
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link
-                                                        href="/products/all-products/newest"
-                                                        className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
-                                                    >
-                                                        <BellIcon
-                                                            aria-hidden="true"
-                                                            className="h-6 w-6"
-                                                        />
-                                                        Notifications
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link
-                                                        href="/products/all-products/newest"
-                                                        className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
-                                                    >
-                                                        <Cog6ToothIcon
-                                                            aria-hidden="true"
-                                                            className="h-6 w-6"
-                                                        />
-                                                        Settings
-                                                    </Link>
-                                                </li>
-                                            </ul>
+                                            {session?.user.role === 'admin' ? (
+                                                <>
+                                                    <div className="divider"></div>
+                                                    <ul className="space-y-3">
+                                                        <span className="text-sm uppercase">
+                                                            Account
+                                                        </span>
+                                                        <li>
+                                                            <Link
+                                                                href="/admin/products"
+                                                                className="flex items-center gap-3 font-semibold"
+                                                            >
+                                                                <Squares2X2Icon
+                                                                    aria-hidden="true"
+                                                                    className="h-6 w-6"
+                                                                />
+                                                                Dashboard
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/products/all-products/newest"
+                                                                className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
+                                                            >
+                                                                <BellIcon
+                                                                    aria-hidden="true"
+                                                                    className="h-6 w-6"
+                                                                />
+                                                                Notifications
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/products/all-products/newest"
+                                                                className="pointer-events-none flex items-center gap-3 font-semibold text-neutral"
+                                                            >
+                                                                <Cog6ToothIcon
+                                                                    aria-hidden="true"
+                                                                    className="h-6 w-6"
+                                                                />
+                                                                Settings
+                                                            </Link>
+                                                        </li>
+                                                    </ul>
+                                                </>
+                                            ) : null}
                                         </div>
                                     </div>
                                     <div className="flex justify-between px-12 py-8">

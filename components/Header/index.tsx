@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import clsx from 'clsx';
 import MobileMenu from './MobileMenu';
 import MobileNav from './MobileNav';
 import FlyoutMenu from './FlyoutMenu';
 import Cart from './Cart';
 import Logo from '@ui/Logo';
-import ThemeToggler from '@ui/ThemeToggler';
 import Button from '@ui/Button';
+import PopoverMenu from './PopoverMenu';
 
 export default function Header() {
     const [top, setTop] = useState(true);
@@ -36,61 +36,35 @@ export default function Header() {
                 )}
             >
                 <nav aria-label="Top" className="mx-auto">
-                    <div className="flex h-16 items-center px-2 lg:px-4">
-                        {/* Logo */}
+                    <div className="flex h-16 items-center px-2 lg:h-20 lg:px-4">
                         <div className="ml-2 flex lg:ml-0">
                             <Logo />
                         </div>
-
-                        {/* Flyout menus */}
                         <FlyoutMenu />
-
                         <div className="ml-auto flex items-center">
                             <div className="flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                {session ? (
-                                    <Button
-                                        onClick={() => {
-                                            signOut();
-                                        }}
-                                        className="btn-primary btn-sm normal-case "
-                                    >
-                                        Sign out
-                                    </Button>
-                                ) : (
+                                {session ? null : (
                                     <Button
                                         onClick={() => {
                                             signIn();
                                         }}
-                                        className="btn-primary btn-sm normal-case "
+                                        className="btn-primary btn-sm shadow lg:btn-md"
                                     >
                                         Sign in
                                     </Button>
                                 )}
                             </div>
-
-                            <div className="ml-4 hidden lg:flex">
-                                <ThemeToggler />
-                            </div>
-
-                            {/* Search */}
-                            {/* <div className="flex lg:ml-6">
-                                <a href="#" className="p-2 ">
-                                    <span className="sr-only">Search</span>
-                                    <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
-                                </a>
-                            </div> */}
-
-                            {/* Cart */}
                             <div className="ml-3">
                                 <Cart />
                             </div>
-                            {/* Mobile nav */}
                             <div className="ml-3">
                                 <MobileNav />
                             </div>
+                            <div className="ml-1">
+                                <PopoverMenu />
+                            </div>
                         </div>
                     </div>
-                    {/* Mobile menu */}
                     <MobileMenu />
                 </nav>
             </header>
