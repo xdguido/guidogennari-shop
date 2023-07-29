@@ -53,7 +53,7 @@ export default function ProductsList({ products }: { products: Product[] }) {
                                         alt={`${product.name} image`}
                                         className="object-cover lg:transition-transform lg:duration-200 lg:group-hover:scale-105"
                                         fill
-                                        sizes="(max-width: 1200px) 50vw, 25vw"
+                                        sizes="(max-width: 1280px) 50vw, 25vw"
                                         priority={index < 6 ? true : false}
                                     />
                                 ) : (

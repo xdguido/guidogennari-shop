@@ -1,13 +1,12 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
-import { Menu, Transition, Disclosure } from '@headlessui/react';
-import { ArrowsUpDownIcon, MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
+import { Menu, Transition } from '@headlessui/react';
+import { ArrowsUpDownIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 
 import { SortOption } from '@lib/types';
 import type { CategoryNode } from '@lib/types';
 import Button from '@ui/Button';
-import { filters } from './filters';
 import { useRouter } from 'next/router';
 
 const sortLabels = {
@@ -21,7 +20,7 @@ function SortMenu({ sort, categoryNode }: { sort: SortOption; categoryNode: Cate
         <Menu as="div" className="relative text-left">
             <Menu.Button
                 as={Button}
-                className="btn-outline no-animation btn-sm flex-nowrap gap-2 whitespace-nowrap bg-base-contrast font-normal normal-case"
+                className="btn-outline no-animation btn-sm flex-nowrap gap-2 whitespace-nowrap bg-base-100 font-normal normal-case"
             >
                 <ArrowsUpDownIcon className=" h-4 w-4" aria-hidden="true" />
                 <span className="sr-only">Sort by</span>
@@ -37,8 +36,8 @@ function SortMenu({ sort, categoryNode }: { sort: SortOption; categoryNode: Cate
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="absolute right-0 z-20 mt-2 w-40 origin-top-right rounded-md border border-neutral bg-base-contrast">
-                    <div className="flex flex-col py-1">
+                <Menu.Items className="absolute right-0 z-20 w-44 origin-top-right translate-y-3 rounded-md border border-neutral bg-base-contrast">
+                    <div className="flex flex-col py-3">
                         {Object.keys(SortOption).map((sortKey: string) => (
                             <Menu.Item key={sortKey}>
                                 {({ active }) => (
@@ -46,10 +45,10 @@ function SortMenu({ sort, categoryNode }: { sort: SortOption; categoryNode: Cate
                                         href={`/products/${categoryNode.slug}/${SortOption[sortKey]}`}
                                         className={clsx(
                                             SortOption[sortKey] === sort
-                                                ? 'text-info'
+                                                ? 'font-semibold text-info'
                                                 : 'text-base-content',
-                                            active ? 'bg-base-300' : '',
-                                            'block px-4 py-2 text-left text-sm'
+                                            active ? 'text-info' : '',
+                                            'block px-6 py-2 text-left text-sm'
                                         )}
                                     >
                                         {sortLabels[SortOption[sortKey]]}
