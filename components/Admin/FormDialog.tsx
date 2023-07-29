@@ -6,16 +6,25 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import fetcher from '@lib/fetcher';
 import ProductForm from './ProductForm';
 
-type Props = { product: Product; label: string; className: string };
-
-export default function EditProduct({ product, label, className }: Props) {
+export default function FormDialog({
+    type = 'add',
+    product,
+    label,
+    className
+}: {
+    type?: 'add' | 'update';
+    product?: Product;
+    label: string;
+    className: string;
+}) {
     const [isOpen, setIsOpen] = useState(false);
     const [isWarn, setIsWarn] = useState(false);
     const handleClose = () => setIsOpen(false);
     const handleOpen = () => setIsOpen(true);
     const handleOpenWarn = () => setIsWarn(true);
     const handleCloseWarn = () => setIsWarn(false);
-    const onFormSubmit = async (data: Product) => {
+
+    const onUpdateSubmit = async (data: Product) => {
         const stockDiff: number = Number(data.stock) - product.stock;
 
         const updatedData = Object.fromEntries(
@@ -43,6 +52,20 @@ export default function EditProduct({ product, label, className }: Props) {
             });
     };
 
+    const onAddSubmit = async (data: any) => {
+        fetcher(`/api/product`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(() => handleClose())
+            .catch(() => {
+                return null;
+            });
+    };
+
     return (
         <>
             <button onClick={handleOpen} className={className}>
@@ -52,18 +75,18 @@ export default function EditProduct({ product, label, className }: Props) {
                 <Dialog as="div" className="relative z-10" onClose={handleOpenWarn}>
                     <Transition.Child
                         as={Fragment}
-                        enter="ease-out duration-300"
+                        enter="ease-out duration-75"
                         enterFrom="opacity-0"
                         enterTo="opacity-100"
-                        leave="ease-in duration-200"
+                        leave="ease-in duration-75"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="z-100 fixed inset-0 bg-base-300 bg-opacity-75" />
+                        <div className="fixed inset-0 bg-neutral-800 bg-opacity-80" />
                     </Transition.Child>
 
-                    <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                    <div className="fixed inset-0">
+                        <div className="flex h-full flex-col items-center justify-center p-4">
                             <Transition.Child
                                 as={Fragment}
                                 enter="ease-out duration-300"
@@ -73,25 +96,31 @@ export default function EditProduct({ product, label, className }: Props) {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-xl transform overflow-y-auto rounded-xl bg-base-100 p-6 text-left align-middle shadow-xl transition-all">
-                                    <Dialog.Title
-                                        as="div"
-                                        className="mb-5 flex items-center justify-between text-lg font-semibold leading-6 "
-                                    >
-                                        <h3>Edit Product</h3>
+                                <Dialog.Panel className="flex w-full max-w-[820px] flex-auto flex-col overflow-hidden rounded-xl bg-base-contrast p-4 text-left shadow-xl lg:p-6">
+                                    <Dialog.Title className="mb-2 flex items-start justify-between">
+                                        <p className="text-xl font-semibold leading-6 text-neutral">
+                                            {type === 'add'
+                                                ? 'Add a new product'
+                                                : 'Update product content'}
+                                        </p>
                                         <Button
                                             onClick={handleOpenWarn}
-                                            className="btn-ghost btn-square"
+                                            className="btn-outline btn-square"
                                         >
                                             <XMarkIcon className="h-5 w-5" />
                                         </Button>
                                     </Dialog.Title>
-
-                                    <ProductForm
-                                        type="update"
-                                        defaultValues={product}
-                                        onFormSubmit={onFormSubmit}
-                                    />
+                                    <div className="flex-auto overflow-y-auto">
+                                        {type === 'add' ? (
+                                            <ProductForm type={type} onFormSubmit={onAddSubmit} />
+                                        ) : (
+                                            <ProductForm
+                                                type={type}
+                                                defaultValues={product}
+                                                onFormSubmit={onUpdateSubmit}
+                                            />
+                                        )}
+                                    </div>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
@@ -100,41 +129,23 @@ export default function EditProduct({ product, label, className }: Props) {
             </Transition>
             <Transition appear show={isWarn} as={Fragment}>
                 <Dialog as="div" className="relative z-20" onClose={handleCloseWarn}>
-                    <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                    >
-                        <div className="z-100 fixed inset-0 bg-base-300 bg-opacity-75" />
-                    </Transition.Child>
-
-                    <div className="fixed inset-0 overflow-y-auto">
+                    <div className="fixed inset-0">
                         <div className="flex min-h-full items-center justify-center p-4 text-center">
                             <Transition.Child
                                 as={Fragment}
-                                enter="ease-out duration-300"
+                                enter="ease-out duration-175"
                                 enterFrom="opacity-0 scale-95"
                                 enterTo="opacity-100 scale-100"
-                                leave="ease-in duration-200"
+                                leave="ease-in duration-175"
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-md transform overflow-y-auto rounded-xl bg-base-100 p-6 text-left align-middle shadow-xl transition-all">
+                                <Dialog.Panel className="w-full max-w-md transform rounded-xl border border-neutral bg-base-100 p-6 text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="div"
                                         className="mb-8 flex items-center justify-between text-lg font-semibold leading-6 "
                                     >
                                         <h3>Do you want to discard changes?</h3>
-                                        {/* <Button
-                                            onClick={handleCloseWarn}
-                                            className="btn-ghost btn-square"
-                                        >
-                                            <XMarkIcon className="w-5 h-5" />
-                                        </Button> */}
                                     </Dialog.Title>
                                     <div className="flex justify-end gap-3">
                                         <Button

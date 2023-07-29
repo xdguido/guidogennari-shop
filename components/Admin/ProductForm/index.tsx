@@ -6,22 +6,20 @@ import clsx from 'clsx';
 import Button from '@ui/Button';
 import Input from '@ui/Input';
 import MediaUpload from './MediaUpload';
-import CategoryCombobox from './CategoryMenu';
+import CategoryCombobox from './CategoryCombobox';
 import fetcher from '@lib/fetcher';
 import ThumbnailUpload from './ThumbnailUpload';
 
-type Props = {
-    type?: 'add' | 'update';
-    defaultValues?: Product;
-    onFormSubmit: (data: FieldValues) => Promise<void>;
-} & React.HTMLProps<HTMLDivElement>;
-
 export default function ProductForm({
-    type = 'add',
+    type,
     defaultValues,
     onFormSubmit,
     ...props
-}: Props) {
+}: {
+    type: 'add' | 'update';
+    defaultValues?: Product;
+    onFormSubmit: (data: FieldValues) => Promise<void>;
+} & React.HTMLProps<HTMLDivElement>) {
     const [isLoading, setIsLoading] = useState(false);
     // const [thumbnailFile, setThumbnailFile] = useState('');
     // const [mediaFiles, setMediaFiles] = useState([]);
@@ -110,7 +108,7 @@ export default function ProductForm({
     });
 
     return (
-        <div {...props} className="flex flex-col space-y-6">
+        <div {...props} className="flex h-full flex-col justify-between space-y-6 px-1">
             <form>
                 <Input
                     name="name"
@@ -176,12 +174,11 @@ export default function ProductForm({
                 <ThumbnailUpload defaultValue={defaultValues?.thumbnail} setValue={setValue} />
                 <MediaUpload defaultValues={defaultValues?.media} setValue={setValue} />
             </form>
-
             <Button
                 onClick={onSubmit}
                 className={clsx('btn-primary btn-block', isLoading ? 'loading' : '')}
             >
-                {`${type} Product`}
+                {`${type} product`}
             </Button>
         </div>
     );

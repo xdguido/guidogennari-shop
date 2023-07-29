@@ -1,26 +1,28 @@
 /* eslint-disable react/prop-types */
-import clsx from 'clsx';
 
-type Props = {
+export default function Input({
+    name,
+    label,
+    register,
+    error,
+    className,
+    ...props
+}: {
     name: string;
     label: string;
     register?: object;
     error?: string | null;
     className?: string;
-} & React.HTMLProps<HTMLInputElement>;
-export default function Input({ name, label, register, error, className, ...props }: Props) {
+} & React.HTMLProps<HTMLInputElement>) {
     return (
         <div className="mb-2">
             <label htmlFor={name} className="mb-1 block text-sm font-medium ">
                 {label}
             </label>
             <input
-                className={clsx([
-                    'block w-full border border-solid bg-base-100 bg-clip-padding px-4 py-2 font-normal focus:ring-2',
-                    error ? 'border-error' : 'border-neutral',
-                    'm-0 rounded-md transition ease-in-out focus:border-accent  focus:outline-none focus:ring-accent',
-                    className
-                ])}
+                className={`m-0 block w-full rounded-md border border-solid bg-base-100 bg-clip-padding px-4 py-2 font-normal transition ease-in-out focus:border-base-contrast focus:outline-none focus:ring focus:ring-accent
+                    ${error ? 'border-error' : 'border-neutral'}
+                    ${className}`}
                 autoComplete="off"
                 name={name}
                 {...register}

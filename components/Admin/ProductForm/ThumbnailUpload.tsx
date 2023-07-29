@@ -11,16 +11,17 @@ export type CloudinarySignatureResponse = {
     signature: string;
 };
 
-type Props = {
+export default function ThumbnailUpload({
+    defaultValue,
+    setValue
+}: {
     defaultValue: string;
     setValue: (
         name: Path<FieldValues>,
         value: FieldValues[Path<FieldValues>],
         options?: SetValueConfig
     ) => void;
-};
-
-export default function ThumbnailUpload({ defaultValue, setValue }: Props) {
+}) {
     const [imageSrc, setImageSrc] = useState<string>(defaultValue);
     const [imageFile, setImageFile] = useState<File>(null);
 
@@ -83,9 +84,9 @@ export default function ThumbnailUpload({ defaultValue, setValue }: Props) {
 
                     {imageFile ? (
                         <div className="relative">
-                            <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded">
+                            <div className="aspect-w-1 aspect-h-1 overflow-hidden">
                                 <Image
-                                    className="object-cover object-center"
+                                    className="object-cover"
                                     src={URL.createObjectURL(imageFile)}
                                     alt="image preview"
                                     fill
@@ -94,7 +95,7 @@ export default function ThumbnailUpload({ defaultValue, setValue }: Props) {
                             <Button
                                 type="button"
                                 onClick={() => handleOnRemoveLocal()}
-                                className="btn-accent btn-sm btn-circle absolute bottom-0 right-0"
+                                className="btn-accent btn-sm btn-circle absolute bottom-1 right-1"
                             >
                                 <TrashIcon aria-hidden={true} className="h-5 w-5" />
                             </Button>

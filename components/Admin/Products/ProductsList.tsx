@@ -5,12 +5,11 @@ import fetcher from '@lib/fetcher';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import PaginationButtons from '@components/Products/PaginationButtons';
-import EditProduct from '../EditProduct';
+import FormDialog from '../FormDialog';
 
 export default function ProductsList() {
     const router = useRouter();
     const { category, page } = router.query;
-
     const size = 12;
     const { data } = useSwr<GetFilteredTypes>(`/api/products/${category}/newest/${page}`, fetcher);
 
@@ -32,18 +31,19 @@ export default function ProductsList() {
 
     return (
         <>
-            <div className="group grid grid-cols-12 gap-2 p-3 text-sm font-bold text-accent">
+            <div className="group grid grid-cols-12 gap-2 p-3 text-sm font-bold text-primary">
                 <p className="col-span-6 sm:col-span-9">Name</p>
                 <p className="col-span-2 sm:col-span-1">Stock</p>
                 <p className="col-span-3 sm:col-span-2 ">Price</p>
             </div>
-            <div className="grid max-h-screen auto-rows-min grid-cols-1 gap-2 overflow-auto rounded-lg text-sm font-semibold">
+            <div className="grid max-h-screen auto-rows-min grid-cols-1 overflow-auto rounded-lg border border-neutral text-sm font-semibold">
                 {products.map((product: Product) => (
                     <div
                         key={product.id}
-                        className="group grid grid-cols-12 items-center gap-1 rounded-lg border border-neutral p-3 sm:gap-2"
+                        className="group grid grid-cols-12 items-center gap-1 border-b border-neutral p-3 sm:gap-2 lg:p-4"
                     >
-                        <EditProduct
+                        <FormDialog
+                            type="update"
                             product={product}
                             label={product.name}
                             className="col-span-6 text-left leading-none sm:col-span-9"

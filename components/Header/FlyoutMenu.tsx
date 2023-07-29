@@ -1,13 +1,7 @@
 import { Fragment } from 'react';
-// import Image from 'next/image';
 import Link from 'next/link';
 import { Popover, Transition } from '@headlessui/react';
-import { navigation } from './navigation';
 import { useCategory } from '@lib/store/CategoryContext';
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ');
-}
 
 export default function FlyoutMenu() {
     const { categories } = useCategory();
@@ -19,12 +13,14 @@ export default function FlyoutMenu() {
                         <>
                             <div className="relative flex">
                                 <Popover.Button
-                                    className={classNames(
-                                        open
-                                            ? 'border-primary text-primary'
-                                            : 'border-transparent ',
-                                        'relative z-50 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out'
-                                    )}
+                                    className={`
+                                    relative z-50 -mb-px flex items-center border-b-2 pt-px text-sm font-medium uppercase transition-colors duration-200 ease-out
+                                        ${
+                                            open
+                                                ? 'border-primary text-primary'
+                                                : 'border-transparent '
+                                        }
+                                        `}
                                 >
                                     Products
                                 </Popover.Button>
@@ -39,13 +35,12 @@ export default function FlyoutMenu() {
                                 leaveFrom="opacity-100"
                                 leaveTo="opacity-0"
                             >
-                                <Popover.Panel className="absolute z-50 inset-x-0 top-full text-sm ">
+                                <Popover.Panel className="absolute inset-x-0 top-full z-50 border-b border-b-neutral text-sm">
                                     {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                                     <div
                                         className="absolute inset-0 top-1/2 shadow"
                                         aria-hidden="true"
                                     />
-
                                     <div className="relative bg-base-100">
                                         <div className="mx-auto max-w-7xl px-8">
                                             <div className="grid grid-cols-4 gap-8 p-8 text-sm">
@@ -95,7 +90,21 @@ export default function FlyoutMenu() {
                     )}
                 </Popover>
 
-                {navigation.pages.map((page) => (
+                <a
+                    href="#"
+                    className="pointer-events-none flex items-center text-sm font-medium uppercase text-neutral"
+                >
+                    About
+                </a>
+
+                <a
+                    href="#"
+                    className="pointer-events-none flex items-center text-sm font-medium uppercase text-neutral"
+                >
+                    Help
+                </a>
+
+                {/* {navigation.pages.map((page) => (
                     <a
                         key={page.name}
                         href={page.href}
@@ -103,7 +112,7 @@ export default function FlyoutMenu() {
                     >
                         {page.name}
                     </a>
-                ))}
+                ))} */}
             </div>
         </Popover.Group>
     );

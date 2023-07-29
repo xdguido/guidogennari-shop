@@ -9,7 +9,7 @@ import Logo from '@ui/Logo';
 import Button from '@ui/Button';
 import PopoverMenu from './PopoverMenu';
 
-export default function Header() {
+export default function Header({ shop }: { shop: boolean }) {
     const [top, setTop] = useState(true);
     const { data: session } = useSession();
     // detect whether user has scrolled the page down by 10px
@@ -22,20 +22,20 @@ export default function Header() {
     }, [top]);
     return (
         <>
-            <p
+            {/* <p
                 className={clsx(
                     'z-50 flex h-10 items-center justify-center bg-primary px-2 text-center text-sm font-medium text-primary-content lg:px-8'
                 )}
             >
                 Site under construction. There may be broken links or fake content.
-            </p>
+            </p> */}
             <header
                 className={clsx(
                     'sticky top-0 z-50 w-full bg-base-contrast lg:bg-base-100'
                     // top ? '' : 'lg:border-b lg:border-b-neutral'
                 )}
             >
-                <nav aria-label="Top" className="mx-auto">
+                <nav aria-label="Top" className="mx-auto max-w-[1600px]">
                     <div className="flex h-16 items-center px-2 lg:h-20 lg:px-4">
                         <div className="ml-2 flex lg:ml-0">
                             <Logo />
@@ -65,7 +65,7 @@ export default function Header() {
                             </div>
                         </div>
                     </div>
-                    <MobileMenu />
+                    {shop && <MobileMenu />}
                 </nav>
             </header>
         </>

@@ -21,7 +21,7 @@ export default function PopoverMenu() {
     const isAdmin = session?.user.role === 'admin';
 
     return (
-        <Popover className="relative hidden lg:block">
+        <Popover className="relative hidden text-left lg:inline-block">
             <Popover.Button
                 as={Button}
                 className="btn-outline btn-square btn-sm hidden lg:flex lg:btn-md"
@@ -38,7 +38,7 @@ export default function PopoverMenu() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
             >
-                <Popover.Panel className="absolute z-10 -translate-x-60 translate-y-3">
+                <Popover.Panel className="absolute right-0 z-10 translate-y-3">
                     <div className="flex min-h-[450px] w-[290px] flex-col justify-between rounded-lg border border-neutral bg-base-contrast shadow-xl">
                         <div>
                             <div className="text-md px-10 py-8">
