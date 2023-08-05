@@ -31,8 +31,8 @@ export default function Header({ shop }: { shop: boolean }) {
             </p> */}
             <header
                 className={clsx(
-                    'sticky top-0 z-50 w-full bg-base-contrast lg:bg-base-100'
-                    // top ? '' : 'lg:border-b lg:border-b-neutral'
+                    'sticky top-0 z-50 w-full bg-base-contrast lg:bg-base-100',
+                    top ? '' : 'lg:shadow'
                 )}
             >
                 <nav aria-label="Top" className="mx-auto max-w-[1600px]">
