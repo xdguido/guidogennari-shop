@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import type { CartProduct, GetFilteredTypes, ProductWithCategory } from '@lib/types';
+import type { CartProduct, GetFilteredTypes, ProductWithCategory } from '@/types';
 import { useState } from 'react';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';

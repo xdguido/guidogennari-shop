@@ -1,5 +1,5 @@
 import { prisma } from '@lib/db';
-import type { CategoryNode } from '@lib/types';
+import type { CategoryNode } from '@/types';
 
 const getOne = async (categorySlug: string): Promise<CategoryNode> => {
     return await prisma.category.findUnique({

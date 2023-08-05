@@ -4,7 +4,7 @@ import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import Layout from '@components/Layout';
 import Products from '@components/Products';
 import CategoryProvider from '@lib/store/CategoryContext';
-import { CategoryNode, SortOption } from '@lib/types';
+import { CategoryNode, SortOption } from '@/types';
 import { productServices, categoryServices } from '@lib/api/services';
 
 export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsContext) => {

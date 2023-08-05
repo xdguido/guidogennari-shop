@@ -1,6 +1,6 @@
 import type { Product } from '@prisma/client';
 import { productProviders } from '../providers';
-import type { GetFilteredTypes, CategoryNode, SortOption, ProductWithCategory } from '@lib/types';
+import type { GetFilteredTypes, CategoryNode, SortOption, ProductWithCategory } from '@/types';
 import categoryServices from './category.services';
 
 const getFiltered = async (

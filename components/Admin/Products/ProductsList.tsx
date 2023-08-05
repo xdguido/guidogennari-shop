@@ -1,5 +1,5 @@
 import type { Product } from '@prisma/client';
-import type { GetFilteredTypes } from '@lib/types';
+import type { GetFilteredTypes } from '@/types';
 import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 import { useRouter } from 'next/router';

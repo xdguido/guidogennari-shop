@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import type { CategoryNode, GetFilteredTypes, SortOption } from '@lib/types';
+import type { CategoryNode, GetFilteredTypes, SortOption } from '@/types';
 import { NextSeo } from 'next-seo';
 import ProductsLayout from './ProductsLayout';
 import ProductsList from './ProductsList';

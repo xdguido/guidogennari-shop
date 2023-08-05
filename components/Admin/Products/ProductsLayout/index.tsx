@@ -2,7 +2,7 @@ import useSwr from 'swr';
 import fetcher from '@lib/fetcher';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
-import type { CategoryNode } from '@lib/types';
+import type { CategoryNode } from '@/types';
 import PropTypes from 'prop-types';
 import Button from '@ui/Button';
 import MobileMenu from './MobileMenu';
