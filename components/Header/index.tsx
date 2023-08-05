@@ -8,6 +8,7 @@ import Cart from './Cart';
 import Logo from '@ui/Logo';
 import Button from '@ui/Button';
 import PopoverMenu from './PopoverMenu';
+import SearchBar from '@components/SearchBar';
 
 export default function Header({ shop }: { shop: boolean }) {
     const [top, setTop] = useState(true);
@@ -40,7 +41,12 @@ export default function Header({ shop }: { shop: boolean }) {
                         <div className="ml-2 flex lg:ml-0">
                             <Logo />
                         </div>
-                        <FlyoutMenu />
+                        <div className="mr-8">
+                            <FlyoutMenu />
+                        </div>
+                        <div className="hidden lg:block">
+                            <SearchBar />
+                        </div>
                         <div className="ml-auto flex items-center">
                             <div className="flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                                 {session ? null : (
