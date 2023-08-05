@@ -6,8 +6,8 @@ import {
     MinusIcon,
     PlusIcon
 } from '@heroicons/react/24/outline';
-import type { CategoryNode } from '@lib/types';
-import { SortOption } from '@lib/types';
+import type { CategoryNode } from '@/types';
+import { SortOption } from '@/types';
 import Button from '@ui/Button';
 import { filters } from './filters';
 

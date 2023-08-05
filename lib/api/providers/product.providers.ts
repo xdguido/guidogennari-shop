@@ -1,7 +1,7 @@
 import type { Category, Product } from '@prisma/client';
 import { prisma } from '@lib/db';
 import slugify from '@lib/slugify';
-import { CategoryNode, ProductWithCategory, SortOption } from '@lib/types';
+import { CategoryNode, ProductWithCategory, SortOption } from '@/types';
 
 const getFiltered = async (
     skipNumber: number,

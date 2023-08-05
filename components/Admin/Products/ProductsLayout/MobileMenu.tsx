@@ -1,4 +1,4 @@
-import type { CategoryNode } from '@lib/types';
+import type { CategoryNode } from '@/types';
 import { Fragment, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Dialog, Transition } from '@headlessui/react';

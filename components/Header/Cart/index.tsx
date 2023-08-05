@@ -16,10 +16,13 @@ export default function Cart() {
         <>
             <div className="indicator">
                 {cart.length ? (
-                    <span className="badge-info badge badge-sm indicator-item">{cart.length}</span>
+                    <span className="badge badge-info badge-sm indicator-item">{cart.length}</span>
                 ) : null}
 
-                <Button className="btn-outline btn-square btn-sm" onClick={() => setOpen(true)}>
+                <Button
+                    className="btn-outline btn-square btn-sm lg:btn-md"
+                    onClick={() => setOpen(true)}
+                >
                     <span className="sr-only">Open cart</span>
                     <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
                 </Button>
@@ -57,7 +60,7 @@ export default function Cart() {
                                             </Dialog.Title>
                                             <div className="ml-3 flex h-7 items-center">
                                                 <Button
-                                                    className="btn-ghost btn-square -m-2 p-2 "
+                                                    className="btn-outline btn-square -m-2 p-2 "
                                                     onClick={() => setOpen(false)}
                                                 >
                                                     <span className="sr-only">Close panel</span>

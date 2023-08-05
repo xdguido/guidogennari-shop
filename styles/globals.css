@@ -5,8 +5,14 @@
 .divider {
     @apply my-6;
 }
+.btn {
+    @apply rounded-md;
+}
 .btn-outline {
     @apply border-neutral;
+}
+.btn-link {
+    @apply normal-case no-underline;
 }
 html {
     scroll-padding-top: 100px;

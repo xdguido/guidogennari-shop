@@ -3,14 +3,16 @@ import Footer from './Footer';
 
 export const siteTitle = 'Guido Gennari - Web Development';
 
-type Props = {
+export default function Layout({
+    children,
+    shop = true
+}: {
     children: React.ReactNode;
-};
-
-export default function Layout({ children }: Props) {
+    shop?: boolean;
+}) {
     return (
         <div className="flex min-h-screen flex-col bg-base-contrast text-base-content lg:bg-base-100">
-            <Header />
+            <Header shop={shop} />
             <main className="pt-4 lg:pt-10">{children}</main>
             <Footer />
         </div>

@@ -29,7 +29,7 @@ module.exports = {
 
                     secondary: '#86efac',
 
-                    accent: '#e879f9',
+                    accent: '#3b82f6',
 
                     neutral: '#b8b8b8',
 
@@ -53,7 +53,7 @@ module.exports = {
 
                     secondary: '#86efac',
 
-                    accent: '#e879f9',
+                    accent: '#3b82f6',
 
                     neutral: '#555555',
 

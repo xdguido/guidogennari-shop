@@ -1,4 +1,4 @@
-import type { CategoryNode } from '@lib/types';
+import type { CategoryNode } from '@/types';
 import { categoryProvider } from '../providers';
 
 const getOne = async (categorySlug: string): Promise<CategoryNode> => {

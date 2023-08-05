@@ -6,15 +6,17 @@ import Button from '@ui/Button';
 import Input from '@ui/Input';
 import type { FieldValues, Path, SetValueConfig } from 'react-hook-form';
 
-type Props = {
+export default function MediaUpload({
+    defaultValues = [],
+    setValue
+}: {
     defaultValues: string[];
     setValue: (
         name: Path<FieldValues>,
         value: FieldValues[Path<FieldValues>],
         options?: SetValueConfig
     ) => void;
-};
-export default function MediaUpload({ defaultValues = [], setValue }: Props) {
+}) {
     const [imageSrc, setImageSrc] = useState<string[]>([...defaultValues]);
     const [imageFiles, setImageFiles] = useState<File[]>([]);
 

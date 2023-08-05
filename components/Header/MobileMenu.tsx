@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Menu, Transition } from '@headlessui/react';
 import { useCategory } from '@lib/store/CategoryContext';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import SearchBar from '@components/SearchBar';
 
 export default function MobileMenu() {
     const { categories } = useCategory();
@@ -30,6 +31,9 @@ export default function MobileMenu() {
                             leaveTo="transform opacity-0 scale-95"
                         >
                             <Menu.Items className="absolute inset-x-0 z-40 flex h-[80vh] flex-col overflow-y-scroll border-b border-b-neutral bg-base-contrast">
+                                <div className="mt-2 p-2">
+                                    <SearchBar />
+                                </div>
                                 {/* Links */}
 
                                 <div className="mt-3">

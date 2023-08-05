@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import type { CategoryNode } from '@lib/types';
+import type { CategoryNode } from '@/types';
 import type { Category } from '@prisma/client';
 import type { FieldValues, Path, SetValueConfig } from 'react-hook-form';
 import { useState, useEffect, Fragment } from 'react';

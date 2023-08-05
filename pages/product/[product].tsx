@@ -3,7 +3,7 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 import { SWRConfig, unstable_serialize } from 'swr';
 import Layout from '@components/Layout';
 import Product from '@components/Product';
-import { SortOption } from '@lib/types';
+import { SortOption } from '@/types';
 import CategoryProvider from '@lib/store/CategoryContext';
 import categoryServices from '@lib/api/services/category.services';
 import { productServices } from '@lib/api/services';

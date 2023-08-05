@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import clsx from 'clsx';
 import MobileMenu from './MobileMenu';
 import MobileNav from './MobileNav';
 import FlyoutMenu from './FlyoutMenu';
 import Cart from './Cart';
 import Logo from '@ui/Logo';
-import ThemeToggler from '@ui/ThemeToggler';
 import Button from '@ui/Button';
+import PopoverMenu from './PopoverMenu';
+import SearchBar from '@components/SearchBar';
 
-export default function Header() {
+export default function Header({ shop }: { shop: boolean }) {
     const [top, setTop] = useState(true);
     const { data: session } = useSession();
     // detect whether user has scrolled the page down by 10px
@@ -22,76 +23,55 @@ export default function Header() {
     }, [top]);
     return (
         <>
-            <p
+            {/* <p
                 className={clsx(
                     'z-50 flex h-10 items-center justify-center bg-primary px-2 text-center text-sm font-medium text-primary-content lg:px-8'
                 )}
             >
                 Site under construction. There may be broken links or fake content.
-            </p>
+            </p> */}
             <header
                 className={clsx(
-                    'sticky top-0 z-50 w-full bg-base-contrast lg:bg-base-100'
-                    // top ? '' : 'lg:border-b lg:border-b-neutral'
+                    'sticky top-0 z-50 w-full bg-base-contrast lg:bg-base-100',
+                    top ? '' : 'lg:shadow'
                 )}
             >
-                <nav aria-label="Top" className="mx-auto">
-                    <div className="flex h-16 items-center px-2 lg:px-4">
-                        {/* Logo */}
+                <nav aria-label="Top" className="mx-auto max-w-[1600px]">
+                    <div className="flex h-16 items-center px-2 lg:h-20 lg:px-4">
                         <div className="ml-2 flex lg:ml-0">
                             <Logo />
                         </div>
-
-                        {/* Flyout menus */}
-                        <FlyoutMenu />
-
+                        <div className="mr-8">
+                            <FlyoutMenu />
+                        </div>
+                        <div className="hidden lg:block">
+                            <SearchBar />
+                        </div>
                         <div className="ml-auto flex items-center">
                             <div className="flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                {session ? (
-                                    <Button
-                                        onClick={() => {
-                                            signOut();
-                                        }}
-                                        className="btn-primary btn-sm normal-case "
-                                    >
-                                        Sign out
-                                    </Button>
-                                ) : (
+                                {session ? null : (
                                     <Button
                                         onClick={() => {
                                             signIn();
                                         }}
-                                        className="btn-primary btn-sm normal-case "
+                                        className="btn-primary btn-sm shadow lg:btn-md"
                                     >
                                         Sign in
                                     </Button>
                                 )}
                             </div>
-
-                            <div className="ml-4 hidden lg:flex">
-                                <ThemeToggler />
-                            </div>
-
-                            {/* Search */}
-                            {/* <div className="flex lg:ml-6">
-                                <a href="#" className="p-2 ">
-                                    <span className="sr-only">Search</span>
-                                    <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
-                                </a>
-                            </div> */}
-
-                            {/* Cart */}
                             <div className="ml-3">
                                 <Cart />
                             </div>
-                            {/* Mobile nav */}
                             <div className="ml-3">
                                 <MobileNav />
                             </div>
+                            <div className="ml-1">
+                                <PopoverMenu />
+                            </div>
                         </div>
                     </div>
-                    {/* Mobile menu */}
-                    <MobileMenu />
+                    {shop && <MobileMenu />}
                 </nav>
             </header>
         </>

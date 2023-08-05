@@ -1,4 +1,4 @@
-import type { CartProduct } from '@lib/types';
+import type { CartProduct } from '@/types';
 import type { Product } from '@prisma/client';
 import Image from 'next/image';
 import clsx from 'clsx';

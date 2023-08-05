@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState, useEffect } from 'react';
-import { CartContextType, CartProduct } from '@lib/types';
+import { CartContextType, CartProduct } from '@/types';
 import { toast } from 'sonner';
 import { CheckCircleIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 

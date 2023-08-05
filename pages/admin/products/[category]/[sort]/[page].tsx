@@ -4,11 +4,9 @@ import withAuth from '@components/Admin/withAuth';
 
 function Page() {
     return (
-        <>
-            <DashboardLayout>
-                <Products />
-            </DashboardLayout>
-        </>
+        <DashboardLayout>
+            <Products />
+        </DashboardLayout>
     );
 }
 

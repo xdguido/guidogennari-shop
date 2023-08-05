@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { Product } from '@prisma/client';
-import type { SortOption } from '@lib/types';
+import type { SortOption } from '@/types';
 import { productServices } from '../services';
 import { authMiddleware } from '@lib/api/middleware';
 
