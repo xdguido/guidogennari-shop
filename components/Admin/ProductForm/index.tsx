@@ -14,10 +14,12 @@ export default function ProductForm({
     type,
     defaultValues,
     onFormSubmit,
+    setIsDirty,
     ...props
 }: {
     type: 'add' | 'update';
     defaultValues?: Product;
+    setIsDirty: (t: boolean) => void;
     onFormSubmit: (data: FieldValues) => Promise<void>;
 } & React.HTMLProps<HTMLDivElement>) {
     const [isLoading, setIsLoading] = useState(false);
@@ -26,10 +28,14 @@ export default function ProductForm({
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isDirty },
         reset,
         setValue
     } = useForm();
+
+    useEffect(() => {
+        setIsDirty(isDirty);
+    }, [isDirty, setIsDirty]);
 
     useEffect(() => {
         if (defaultValues) {

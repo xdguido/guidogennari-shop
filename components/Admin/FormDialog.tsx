@@ -19,6 +19,8 @@ export default function FormDialog({
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isWarn, setIsWarn] = useState(false);
+    const [isDirty, setIsDirty] = useState(false);
+
     const handleClose = () => setIsOpen(false);
     const handleOpen = () => setIsOpen(true);
     const handleOpenWarn = () => setIsWarn(true);
@@ -72,7 +74,11 @@ export default function FormDialog({
                 {label}
             </button>
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={handleOpenWarn}>
+                <Dialog
+                    as="div"
+                    className="relative z-10"
+                    onClose={isDirty ? handleOpenWarn : handleClose}
+                >
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-75"
@@ -104,20 +110,26 @@ export default function FormDialog({
                                                 : 'Update product content'}
                                         </p>
                                         <Button
-                                            onClick={handleOpenWarn}
+                                            onClick={isDirty ? handleOpenWarn : handleClose}
                                             className="btn-outline btn-square"
                                         >
-                                            <XMarkIcon className="h-5 w-5" />
+                                            <span className="sr-only">close modal</span>
+                                            <XMarkIcon className="h-5 w-5" aria-hidden="true" />
                                         </Button>
                                     </Dialog.Title>
                                     <div className="flex-auto overflow-y-auto">
                                         {type === 'add' ? (
-                                            <ProductForm type={type} onFormSubmit={onAddSubmit} />
+                                            <ProductForm
+                                                type={type}
+                                                onFormSubmit={onAddSubmit}
+                                                setIsDirty={setIsDirty}
+                                            />
                                         ) : (
                                             <ProductForm
                                                 type={type}
                                                 defaultValues={product}
                                                 onFormSubmit={onUpdateSubmit}
+                                                setIsDirty={setIsDirty}
                                             />
                                         )}
                                     </div>
