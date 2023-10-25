@@ -24,7 +24,7 @@
         "cloudinary": "^1.36.2",
         "daisyui": "^2.51.2",
         "nanoid": "^3.3.4",
-        "next": "^13.1.6",
+        "next": "^13.5.0",
         "next-auth": "^4.22.0",
         "next-connect": "^1.0.0-next.3",
         "next-seo": "^5.15.0",
